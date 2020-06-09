@@ -1,0 +1,1236 @@
+{
+  "{\"filename\":\"/app/server/index.js\",\"env\":{\"development\":{\"plugins\":[]}},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/server\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.24.1": {
+    "metadata": {
+      "usedHelpers": [
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "express",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "express"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/server/index.js",
+      "filenameRelative": "/app/server/index.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "index.js",
+      "sourceFileName": "index.js",
+      "sourceRoot": "/app/server",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/server",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "index"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nvar _express = require('express');\n\nvar _express2 = _interopRequireDefault(_express);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nrequire('babel-register');\nrequire('babel-polyfill');\n\nvar app = (0, _express2.default)();\n\napp.use(_express2.default.static('public'));\n\napp.get(\"/\", function (request, response) {\n  response.sendFile(__dirname + '/views/index.html');\n});\n\nvar listener = app.listen(process.env.PORT, function () {\n  console.log('Your app is listening on port ' + listener.address().port);\n});\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sIm5hbWVzIjpbInJlcXVpcmUiLCJhcHAiLCJ1c2UiLCJzdGF0aWMiLCJnZXQiLCJyZXF1ZXN0IiwicmVzcG9uc2UiLCJzZW5kRmlsZSIsIl9fZGlybmFtZSIsImxpc3RlbmVyIiwibGlzdGVuIiwicHJvY2VzcyIsImVudiIsIlBPUlQiLCJjb25zb2xlIiwibG9nIiwiYWRkcmVzcyIsInBvcnQiXSwibWFwcGluZ3MiOiI7O0FBR0E7Ozs7OztBQUhBQSxRQUFRLGdCQUFSO0FBQ0FBLFFBQVEsZ0JBQVI7O0FBSUEsSUFBTUMsTUFBTSx3QkFBWjs7QUFFQUEsSUFBSUMsR0FBSixDQUFRLGtCQUFRQyxNQUFSLENBQWUsUUFBZixDQUFSOztBQUVBRixJQUFJRyxHQUFKLENBQVEsR0FBUixFQUFhLFVBQUNDLE9BQUQsRUFBVUMsUUFBVixFQUF1QjtBQUNsQ0EsV0FBU0MsUUFBVCxDQUFxQkMsU0FBckI7QUFDRCxDQUZEOztBQUlBLElBQU1DLFdBQVdSLElBQUlTLE1BQUosQ0FBV0MsUUFBUUMsR0FBUixDQUFZQyxJQUF2QixFQUE2QixZQUFNO0FBQ2xEQyxVQUFRQyxHQUFSLENBQVksbUNBQW1DTixTQUFTTyxPQUFULEdBQW1CQyxJQUFsRTtBQUNELENBRmdCLENBQWpCIiwiZmlsZSI6ImluZGV4LmpzIiwic291cmNlUm9vdCI6Ii9hcHAvc2VydmVyIiwic291cmNlc0NvbnRlbnQiOlsicmVxdWlyZSgnYmFiZWwtcmVnaXN0ZXInKTtcbnJlcXVpcmUoJ2JhYmVsLXBvbHlmaWxsJyk7XG5cbmltcG9ydCBleHByZXNzIGZyb20gJ2V4cHJlc3MnO1xuXG5jb25zdCBhcHAgPSBleHByZXNzKCk7XG5cbmFwcC51c2UoZXhwcmVzcy5zdGF0aWMoJ3B1YmxpYycpKTtcblxuYXBwLmdldChcIi9cIiwgKHJlcXVlc3QsIHJlc3BvbnNlKSA9PiB7XG4gIHJlc3BvbnNlLnNlbmRGaWxlKGAke19fZGlybmFtZX0vdmlld3MvaW5kZXguaHRtbGApO1xufSk7XG5cbmNvbnN0IGxpc3RlbmVyID0gYXBwLmxpc3Rlbihwcm9jZXNzLmVudi5QT1JULCAoKSA9PiB7XG4gIGNvbnNvbGUubG9nKCdZb3VyIGFwcCBpcyBsaXN0ZW5pbmcgb24gcG9ydCAnICsgbGlzdGVuZXIuYWRkcmVzcygpLnBvcnQpO1xufSk7XG5cbiJdfQ==",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "index.js"
+      ],
+      "names": [
+        "require",
+        "app",
+        "use",
+        "static",
+        "get",
+        "request",
+        "response",
+        "sendFile",
+        "__dirname",
+        "listener",
+        "listen",
+        "process",
+        "env",
+        "PORT",
+        "console",
+        "log",
+        "address",
+        "port"
+      ],
+      "mappings": ";;AAGA;;;;;;AAHAA,QAAQ,gBAAR;AACAA,QAAQ,gBAAR;;AAIA,IAAMC,MAAM,wBAAZ;;AAEAA,IAAIC,GAAJ,CAAQ,kBAAQC,MAAR,CAAe,QAAf,CAAR;;AAEAF,IAAIG,GAAJ,CAAQ,GAAR,EAAa,UAACC,OAAD,EAAUC,QAAV,EAAuB;AAClCA,WAASC,QAAT,CAAqBC,SAArB;AACD,CAFD;;AAIA,IAAMC,WAAWR,IAAIS,MAAJ,CAAWC,QAAQC,GAAR,CAAYC,IAAvB,EAA6B,YAAM;AAClDC,UAAQC,GAAR,CAAY,mCAAmCN,SAASO,OAAT,GAAmBC,IAAlE;AACD,CAFgB,CAAjB",
+      "file": "index.js",
+      "sourceRoot": "/app/server",
+      "sourcesContent": [
+        "require('babel-register');\nrequire('babel-polyfill');\n\nimport express from 'express';\n\nconst app = express();\n\napp.use(express.static('public'));\n\napp.get(\"/\", (request, response) => {\n  response.sendFile(`${__dirname}/views/index.html`);\n});\n\nconst listener = app.listen(process.env.PORT, () => {\n  console.log('Your app is listening on port ' + listener.address().port);\n});\n\n"
+      ]
+    },
+    "mtime": 1497985239458
+  },
+  "{\"filename\":\"/app/server.js\",\"env\":{\"development\":{\"plugins\":[]}},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.24.1": {
+    "metadata": {
+      "usedHelpers": [
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "express",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "express"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/server.js",
+      "filenameRelative": "/app/server.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "server.js",
+      "sourceFileName": "server.js",
+      "sourceRoot": "/app",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "server"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nvar _express = require('express');\n\nvar _express2 = _interopRequireDefault(_express);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar app = (0, _express2.default)();\n\napp.use(_express2.default.static('public'));\n\napp.get(\"/\", function (request, response) {\n  response.sendFile(__dirname + '/views/index.html');\n});\n\nvar listener = app.listen(process.env.PORT, function () {\n  console.log('Your app is listening on port ' + listener.address().port);\n});\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNlcnZlci5qcyJdLCJuYW1lcyI6WyJhcHAiLCJ1c2UiLCJzdGF0aWMiLCJnZXQiLCJyZXF1ZXN0IiwicmVzcG9uc2UiLCJzZW5kRmlsZSIsIl9fZGlybmFtZSIsImxpc3RlbmVyIiwibGlzdGVuIiwicHJvY2VzcyIsImVudiIsIlBPUlQiLCJjb25zb2xlIiwibG9nIiwiYWRkcmVzcyIsInBvcnQiXSwibWFwcGluZ3MiOiI7O0FBQUE7Ozs7OztBQUVBLElBQU1BLE1BQU0sd0JBQVo7O0FBRUFBLElBQUlDLEdBQUosQ0FBUSxrQkFBUUMsTUFBUixDQUFlLFFBQWYsQ0FBUjs7QUFFQUYsSUFBSUcsR0FBSixDQUFRLEdBQVIsRUFBYSxVQUFDQyxPQUFELEVBQVVDLFFBQVYsRUFBdUI7QUFDbENBLFdBQVNDLFFBQVQsQ0FBcUJDLFNBQXJCO0FBQ0QsQ0FGRDs7QUFJQSxJQUFNQyxXQUFXUixJQUFJUyxNQUFKLENBQVdDLFFBQVFDLEdBQVIsQ0FBWUMsSUFBdkIsRUFBNkIsWUFBTTtBQUNsREMsVUFBUUMsR0FBUixDQUFZLG1DQUFtQ04sU0FBU08sT0FBVCxHQUFtQkMsSUFBbEU7QUFDRCxDQUZnQixDQUFqQiIsImZpbGUiOiJzZXJ2ZXIuanMiLCJzb3VyY2VSb290IjoiL2FwcCIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBleHByZXNzIGZyb20gJ2V4cHJlc3MnO1xuXG5jb25zdCBhcHAgPSBleHByZXNzKCk7XG5cbmFwcC51c2UoZXhwcmVzcy5zdGF0aWMoJ3B1YmxpYycpKTtcblxuYXBwLmdldChcIi9cIiwgKHJlcXVlc3QsIHJlc3BvbnNlKSA9PiB7XG4gIHJlc3BvbnNlLnNlbmRGaWxlKGAke19fZGlybmFtZX0vdmlld3MvaW5kZXguaHRtbGApO1xufSk7XG5cbmNvbnN0IGxpc3RlbmVyID0gYXBwLmxpc3Rlbihwcm9jZXNzLmVudi5QT1JULCAoKSA9PiB7XG4gIGNvbnNvbGUubG9nKCdZb3VyIGFwcCBpcyBsaXN0ZW5pbmcgb24gcG9ydCAnICsgbGlzdGVuZXIuYWRkcmVzcygpLnBvcnQpO1xufSk7XG5cbiJdfQ==",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "server.js"
+      ],
+      "names": [
+        "app",
+        "use",
+        "static",
+        "get",
+        "request",
+        "response",
+        "sendFile",
+        "__dirname",
+        "listener",
+        "listen",
+        "process",
+        "env",
+        "PORT",
+        "console",
+        "log",
+        "address",
+        "port"
+      ],
+      "mappings": ";;AAAA;;;;;;AAEA,IAAMA,MAAM,wBAAZ;;AAEAA,IAAIC,GAAJ,CAAQ,kBAAQC,MAAR,CAAe,QAAf,CAAR;;AAEAF,IAAIG,GAAJ,CAAQ,GAAR,EAAa,UAACC,OAAD,EAAUC,QAAV,EAAuB;AAClCA,WAASC,QAAT,CAAqBC,SAArB;AACD,CAFD;;AAIA,IAAMC,WAAWR,IAAIS,MAAJ,CAAWC,QAAQC,GAAR,CAAYC,IAAvB,EAA6B,YAAM;AAClDC,UAAQC,GAAR,CAAY,mCAAmCN,SAASO,OAAT,GAAmBC,IAAlE;AACD,CAFgB,CAAjB",
+      "file": "server.js",
+      "sourceRoot": "/app",
+      "sourcesContent": [
+        "import express from 'express';\n\nconst app = express();\n\napp.use(express.static('public'));\n\napp.get(\"/\", (request, response) => {\n  response.sendFile(`${__dirname}/views/index.html`);\n});\n\nconst listener = app.listen(process.env.PORT, () => {\n  console.log('Your app is listening on port ' + listener.address().port);\n});\n\n"
+      ]
+    },
+    "mtime": 1497985631657
+  },
+  "{\"filename\":\"/app/server.js\",\"env\":{\"development\":{\"plugins\":[]}},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.24.1": {
+    "metadata": {
+      "usedHelpers": [
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "express",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "express"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/server.js",
+      "filenameRelative": "/app/server.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "server.js",
+      "sourceFileName": "server.js",
+      "sourceRoot": "/app",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "server"
+    },
+    "ignored": false,
+    "code": "\"use strict\";\n\nvar _express = require(\"express\");\n\nvar _express2 = _interopRequireDefault(_express);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nvar compression = require(\"compression\");\nvar cors = require(\"cors\");\nvar app = (0, _express2.default)();\nvar Pipefyapi = require(\"./back/api.js\");\n\n// Enable Compression\napp.use(compression());\n\n// Enable CORS\napp.use(cors({ origin: \"*\" }));\n\n// http://expressjs.com/en/starter/static-files.html\napp.use(_express2.default.static(\"public\"));\n\napp.get(\"/\", function (request, response) {\n  response.sendFile(__dirname + \"/views/index.html\");\n});\n\napp.get(\"/manifest.json\", function (request, response) {\n  response.sendFile(__dirname + \"/views/manifest.json\");\n});\n\napp.get(\"/view.html\", function (request, response) {\n  response.sendFile(__dirname + \"/views/pipe-view.html\");\n});\n\napp.get(\"/pipes/:pipeId/cards\", function (request, response) {\n  var pipeId = request.params.pipeId;\n  var pipefyapi = new Pipefyapi();\n  pipefyapi.get_all_cards(pipeId).then(function (res) {\n    var data = res.data;\n    console.log(data.data.allCards.edges.length);\n    response.json(res.data);\n  }).catch(function (err) {\n    return response.json(err);\n  });\n});\n\nvar listener = app.listen(process.env.PORT, function () {\n  console.log(\"Your app is listening on port \" + listener.address().port + \". \\uD83D\\uDEA2\");\n});\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNlcnZlci5qcyJdLCJuYW1lcyI6WyJjb21wcmVzc2lvbiIsInJlcXVpcmUiLCJjb3JzIiwiYXBwIiwiUGlwZWZ5YXBpIiwidXNlIiwib3JpZ2luIiwic3RhdGljIiwiZ2V0IiwicmVxdWVzdCIsInJlc3BvbnNlIiwic2VuZEZpbGUiLCJfX2Rpcm5hbWUiLCJwaXBlSWQiLCJwYXJhbXMiLCJwaXBlZnlhcGkiLCJnZXRfYWxsX2NhcmRzIiwidGhlbiIsImRhdGEiLCJyZXMiLCJjb25zb2xlIiwibG9nIiwiYWxsQ2FyZHMiLCJlZGdlcyIsImxlbmd0aCIsImpzb24iLCJjYXRjaCIsImVyciIsImxpc3RlbmVyIiwibGlzdGVuIiwicHJvY2VzcyIsImVudiIsIlBPUlQiLCJhZGRyZXNzIiwicG9ydCJdLCJtYXBwaW5ncyI6Ijs7QUFBQTs7Ozs7O0FBRUEsSUFBTUEsY0FBY0MsUUFBUSxhQUFSLENBQXBCO0FBQ0EsSUFBTUMsT0FBT0QsUUFBUSxNQUFSLENBQWI7QUFDQSxJQUFNRSxNQUFNLHdCQUFaO0FBQ0EsSUFBTUMsWUFBWUgsUUFBUSxlQUFSLENBQWxCOztBQUVBO0FBQ0FFLElBQUlFLEdBQUosQ0FBUUwsYUFBUjs7QUFFQTtBQUNBRyxJQUFJRSxHQUFKLENBQVFILEtBQUssRUFBRUksUUFBUSxHQUFWLEVBQUwsQ0FBUjs7QUFFQTtBQUNBSCxJQUFJRSxHQUFKLENBQVEsa0JBQVFFLE1BQVIsQ0FBZSxRQUFmLENBQVI7O0FBRUFKLElBQUlLLEdBQUosQ0FBUSxHQUFSLEVBQWEsVUFBQ0MsT0FBRCxFQUFVQyxRQUFWLEVBQXVCO0FBQ2xDQSxXQUFTQyxRQUFULENBQXFCQyxTQUFyQjtBQUNELENBRkQ7O0FBSUFULElBQUlLLEdBQUosQ0FBUSxnQkFBUixFQUEwQixVQUFDQyxPQUFELEVBQVVDLFFBQVYsRUFBdUI7QUFDL0NBLFdBQVNDLFFBQVQsQ0FBcUJDLFNBQXJCO0FBQ0QsQ0FGRDs7QUFJQVQsSUFBSUssR0FBSixDQUFRLFlBQVIsRUFBc0IsVUFBQ0MsT0FBRCxFQUFVQyxRQUFWLEVBQXVCO0FBQzNDQSxXQUFTQyxRQUFULENBQXFCQyxTQUFyQjtBQUNELENBRkQ7O0FBSUFULElBQUlLLEdBQUosQ0FBUSxzQkFBUixFQUFnQyxVQUFDQyxPQUFELEVBQVVDLFFBQVYsRUFBdUI7QUFDckQsTUFBTUcsU0FBU0osUUFBUUssTUFBUixDQUFlRCxNQUE5QjtBQUNBLE1BQU1FLFlBQVksSUFBSVgsU0FBSixFQUFsQjtBQUNBVyxZQUNHQyxhQURILENBQ2lCSCxNQURqQixFQUVHSSxJQUZILENBRVEsZUFBTztBQUNYLFFBQU1DLE9BQU9DLElBQUlELElBQWpCO0FBQ0FFLFlBQVFDLEdBQVIsQ0FBWUgsS0FBS0EsSUFBTCxDQUFVSSxRQUFWLENBQW1CQyxLQUFuQixDQUF5QkMsTUFBckM7QUFDQWQsYUFBU2UsSUFBVCxDQUFjTixJQUFJRCxJQUFsQjtBQUNELEdBTkgsRUFPR1EsS0FQSCxDQU9TO0FBQUEsV0FBT2hCLFNBQVNlLElBQVQsQ0FBY0UsR0FBZCxDQUFQO0FBQUEsR0FQVDtBQVFELENBWEQ7O0FBYUEsSUFBTUMsV0FBV3pCLElBQUkwQixNQUFKLENBQVdDLFFBQVFDLEdBQVIsQ0FBWUMsSUFBdkIsRUFBNkIsWUFBTTtBQUNsRFosVUFBUUMsR0FBUixvQ0FBNkNPLFNBQVNLLE9BQVQsR0FBbUJDLElBQWhFO0FBQ0QsQ0FGZ0IsQ0FBakIiLCJmaWxlIjoic2VydmVyLmpzIiwic291cmNlUm9vdCI6Ii9hcHAiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgZXhwcmVzcyBmcm9tIFwiZXhwcmVzc1wiO1xuXG5jb25zdCBjb21wcmVzc2lvbiA9IHJlcXVpcmUoXCJjb21wcmVzc2lvblwiKTtcbmNvbnN0IGNvcnMgPSByZXF1aXJlKFwiY29yc1wiKTtcbmNvbnN0IGFwcCA9IGV4cHJlc3MoKTtcbmNvbnN0IFBpcGVmeWFwaSA9IHJlcXVpcmUoXCIuL2JhY2svYXBpLmpzXCIpO1xuXG4vLyBFbmFibGUgQ29tcHJlc3Npb25cbmFwcC51c2UoY29tcHJlc3Npb24oKSk7XG5cbi8vIEVuYWJsZSBDT1JTXG5hcHAudXNlKGNvcnMoeyBvcmlnaW46IFwiKlwiIH0pKTtcblxuLy8gaHR0cDovL2V4cHJlc3Nqcy5jb20vZW4vc3RhcnRlci9zdGF0aWMtZmlsZXMuaHRtbFxuYXBwLnVzZShleHByZXNzLnN0YXRpYyhcInB1YmxpY1wiKSk7XG5cbmFwcC5nZXQoXCIvXCIsIChyZXF1ZXN0LCByZXNwb25zZSkgPT4ge1xuICByZXNwb25zZS5zZW5kRmlsZShgJHtfX2Rpcm5hbWV9L3ZpZXdzL2luZGV4Lmh0bWxgKTtcbn0pO1xuXG5hcHAuZ2V0KFwiL21hbmlmZXN0Lmpzb25cIiwgKHJlcXVlc3QsIHJlc3BvbnNlKSA9PiB7XG4gIHJlc3BvbnNlLnNlbmRGaWxlKGAke19fZGlybmFtZX0vdmlld3MvbWFuaWZlc3QuanNvbmApO1xufSk7XG5cbmFwcC5nZXQoXCIvdmlldy5odG1sXCIsIChyZXF1ZXN0LCByZXNwb25zZSkgPT4ge1xuICByZXNwb25zZS5zZW5kRmlsZShgJHtfX2Rpcm5hbWV9L3ZpZXdzL3BpcGUtdmlldy5odG1sYCk7XG59KTtcblxuYXBwLmdldChcIi9waXBlcy86cGlwZUlkL2NhcmRzXCIsIChyZXF1ZXN0LCByZXNwb25zZSkgPT4ge1xuICBjb25zdCBwaXBlSWQgPSByZXF1ZXN0LnBhcmFtcy5waXBlSWQ7XG4gIGNvbnN0IHBpcGVmeWFwaSA9IG5ldyBQaXBlZnlhcGkoKTtcbiAgcGlwZWZ5YXBpXG4gICAgLmdldF9hbGxfY2FyZHMocGlwZUlkKVxuICAgIC50aGVuKHJlcyA9PiB7XG4gICAgICBjb25zdCBkYXRhID0gcmVzLmRhdGE7XG4gICAgICBjb25zb2xlLmxvZyhkYXRhLmRhdGEuYWxsQ2FyZHMuZWRnZXMubGVuZ3RoKTtcbiAgICAgIHJlc3BvbnNlLmpzb24ocmVzLmRhdGEpO1xuICAgIH0pXG4gICAgLmNhdGNoKGVyciA9PiByZXNwb25zZS5qc29uKGVycikpO1xufSk7XG5cbmNvbnN0IGxpc3RlbmVyID0gYXBwLmxpc3Rlbihwcm9jZXNzLmVudi5QT1JULCAoKSA9PiB7XG4gIGNvbnNvbGUubG9nKGBZb3VyIGFwcCBpcyBsaXN0ZW5pbmcgb24gcG9ydCAke2xpc3RlbmVyLmFkZHJlc3MoKS5wb3J0fS4g8J+aomApO1xufSk7XG4iXX0=",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "server.js"
+      ],
+      "names": [
+        "compression",
+        "require",
+        "cors",
+        "app",
+        "Pipefyapi",
+        "use",
+        "origin",
+        "static",
+        "get",
+        "request",
+        "response",
+        "sendFile",
+        "__dirname",
+        "pipeId",
+        "params",
+        "pipefyapi",
+        "get_all_cards",
+        "then",
+        "data",
+        "res",
+        "console",
+        "log",
+        "allCards",
+        "edges",
+        "length",
+        "json",
+        "catch",
+        "err",
+        "listener",
+        "listen",
+        "process",
+        "env",
+        "PORT",
+        "address",
+        "port"
+      ],
+      "mappings": ";;AAAA;;;;;;AAEA,IAAMA,cAAcC,QAAQ,aAAR,CAApB;AACA,IAAMC,OAAOD,QAAQ,MAAR,CAAb;AACA,IAAME,MAAM,wBAAZ;AACA,IAAMC,YAAYH,QAAQ,eAAR,CAAlB;;AAEA;AACAE,IAAIE,GAAJ,CAAQL,aAAR;;AAEA;AACAG,IAAIE,GAAJ,CAAQH,KAAK,EAAEI,QAAQ,GAAV,EAAL,CAAR;;AAEA;AACAH,IAAIE,GAAJ,CAAQ,kBAAQE,MAAR,CAAe,QAAf,CAAR;;AAEAJ,IAAIK,GAAJ,CAAQ,GAAR,EAAa,UAACC,OAAD,EAAUC,QAAV,EAAuB;AAClCA,WAASC,QAAT,CAAqBC,SAArB;AACD,CAFD;;AAIAT,IAAIK,GAAJ,CAAQ,gBAAR,EAA0B,UAACC,OAAD,EAAUC,QAAV,EAAuB;AAC/CA,WAASC,QAAT,CAAqBC,SAArB;AACD,CAFD;;AAIAT,IAAIK,GAAJ,CAAQ,YAAR,EAAsB,UAACC,OAAD,EAAUC,QAAV,EAAuB;AAC3CA,WAASC,QAAT,CAAqBC,SAArB;AACD,CAFD;;AAIAT,IAAIK,GAAJ,CAAQ,sBAAR,EAAgC,UAACC,OAAD,EAAUC,QAAV,EAAuB;AACrD,MAAMG,SAASJ,QAAQK,MAAR,CAAeD,MAA9B;AACA,MAAME,YAAY,IAAIX,SAAJ,EAAlB;AACAW,YACGC,aADH,CACiBH,MADjB,EAEGI,IAFH,CAEQ,eAAO;AACX,QAAMC,OAAOC,IAAID,IAAjB;AACAE,YAAQC,GAAR,CAAYH,KAAKA,IAAL,CAAUI,QAAV,CAAmBC,KAAnB,CAAyBC,MAArC;AACAd,aAASe,IAAT,CAAcN,IAAID,IAAlB;AACD,GANH,EAOGQ,KAPH,CAOS;AAAA,WAAOhB,SAASe,IAAT,CAAcE,GAAd,CAAP;AAAA,GAPT;AAQD,CAXD;;AAaA,IAAMC,WAAWzB,IAAI0B,MAAJ,CAAWC,QAAQC,GAAR,CAAYC,IAAvB,EAA6B,YAAM;AAClDZ,UAAQC,GAAR,oCAA6CO,SAASK,OAAT,GAAmBC,IAAhE;AACD,CAFgB,CAAjB",
+      "file": "server.js",
+      "sourceRoot": "/app",
+      "sourcesContent": [
+        "import express from \"express\";\n\nconst compression = require(\"compression\");\nconst cors = require(\"cors\");\nconst app = express();\nconst Pipefyapi = require(\"./back/api.js\");\n\n// Enable Compression\napp.use(compression());\n\n// Enable CORS\napp.use(cors({ origin: \"*\" }));\n\n// http://expressjs.com/en/starter/static-files.html\napp.use(express.static(\"public\"));\n\napp.get(\"/\", (request, response) => {\n  response.sendFile(`${__dirname}/views/index.html`);\n});\n\napp.get(\"/manifest.json\", (request, response) => {\n  response.sendFile(`${__dirname}/views/manifest.json`);\n});\n\napp.get(\"/view.html\", (request, response) => {\n  response.sendFile(`${__dirname}/views/pipe-view.html`);\n});\n\napp.get(\"/pipes/:pipeId/cards\", (request, response) => {\n  const pipeId = request.params.pipeId;\n  const pipefyapi = new Pipefyapi();\n  pipefyapi\n    .get_all_cards(pipeId)\n    .then(res => {\n      const data = res.data;\n      console.log(data.data.allCards.edges.length);\n      response.json(res.data);\n    })\n    .catch(err => response.json(err));\n});\n\nconst listener = app.listen(process.env.PORT, () => {\n  console.log(`Your app is listening on port ${listener.address().port}. 🚢`);\n});\n"
+      ]
+    },
+    "mtime": 1591669142000
+  },
+  "{\"filename\":\"/app/back/api.js\",\"env\":{\"development\":{\"plugins\":[]}},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}],[[],{\"spec\":false,\"loose\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/app/back\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.24.1": {
+    "metadata": {
+      "usedHelpers": [
+        "createClass",
+        "classCallCheck"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/app/back/api.js",
+      "filenameRelative": "/app/back/api.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "spec": false,
+            "loose": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "api.js",
+      "sourceFileName": "api.js",
+      "sourceRoot": "/app/back",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/app/back",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "api"
+    },
+    "ignored": false,
+    "code": "\"use strict\";\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nvar axios = require(\"axios\");\n\nvar BASE_URL = \"https://api.pipefy.com/graphql\";\n\n// const HEADERS = new Headers({\n//   \"Authorization\": `Bearer ${process.env.PIPEFY_TOKEN}`,\n//   \"Content-Type\": \"application/json\"\n// });\n\nmodule.exports = function () {\n  function PipefyApi() {\n    _classCallCheck(this, PipefyApi);\n\n    this.axios = axios.create({\n      baseURL: BASE_URL,\n      timeout: 3000,\n      headers: {\n        Authorization: \"Bearer \" + process.env.PIPEFY_TOKEN,\n        \"Content-Type\": \"application/json\"\n      }\n    });\n  }\n\n  _createClass(PipefyApi, [{\n    key: \"get_all_cards\",\n    value: function get_all_cards(pipeId) {\n      var _this = this;\n\n      var cursor = null;\n\n      var candidates = [];\n      var shouldContinue = true;\n\n      var _loop = function _loop() {\n        var allCards = _this.list_pipe_cards_paginated(pipeId, cursor).then(function (res) {\n          return res.data.data;\n        }).then(function (res) {\n          console.log(allCards);\n          candidates.push(allCards.edges);\n          console.log(candidates);\n          cursor = allCards.pageInfo.endCursor;\n\n          if (allCards.pageInfo.hasNextPage == false) {\n            shouldContinue = false;\n          }\n        });\n\n        return \"break\";\n      };\n\n      while (shouldContinue) {\n        var _ret = _loop();\n\n        if (_ret === \"break\") break;\n      }\n\n      return candidates;\n    }\n  }, {\n    key: \"list_pipe_cards_paginated\",\n    value: function list_pipe_cards_paginated(pipeId) {\n      var lastCursor = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\n      var afterCursor = lastCursor === null ? \"\" : \", after: \\\"\" + lastCursor + \"\\\"\";\n\n      return this.axios.post(\"\", {\n        query: \"\\n        {\\n          allCards(pipeId: \" + pipeId + \", first:500\" + afterCursor + \") {\\n              pageInfo {\\n                  startCursor\\n                  endCursor\\n                  hasNextPage\\n              }\\n\\n              edges {\\n                      node {\\n                          id,\\n                          title,\\n                          current_phase { name }\\n                      }\\n                  }\\n\\n\\n          }\\n        }  \\n      \"\n      });\n    }\n  }]);\n\n  return PipefyApi;\n}();\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwaS5qcyJdLCJuYW1lcyI6WyJheGlvcyIsInJlcXVpcmUiLCJCQVNFX1VSTCIsIm1vZHVsZSIsImV4cG9ydHMiLCJjcmVhdGUiLCJiYXNlVVJMIiwidGltZW91dCIsImhlYWRlcnMiLCJBdXRob3JpemF0aW9uIiwicHJvY2VzcyIsImVudiIsIlBJUEVGWV9UT0tFTiIsInBpcGVJZCIsImN1cnNvciIsImNhbmRpZGF0ZXMiLCJzaG91bGRDb250aW51ZSIsImFsbENhcmRzIiwibGlzdF9waXBlX2NhcmRzX3BhZ2luYXRlZCIsInRoZW4iLCJyZXMiLCJkYXRhIiwiY29uc29sZSIsImxvZyIsInB1c2giLCJlZGdlcyIsInBhZ2VJbmZvIiwiZW5kQ3Vyc29yIiwiaGFzTmV4dFBhZ2UiLCJsYXN0Q3Vyc29yIiwiYWZ0ZXJDdXJzb3IiLCJwb3N0IiwicXVlcnkiXSwibWFwcGluZ3MiOiI7Ozs7OztBQUFBLElBQU1BLFFBQVFDLFFBQVEsT0FBUixDQUFkOztBQUVBLElBQU1DLFdBQVcsZ0NBQWpCOztBQUVBO0FBQ0E7QUFDQTtBQUNBOztBQUVBQyxPQUFPQyxPQUFQO0FBQ0UsdUJBQWM7QUFBQTs7QUFDWixTQUFLSixLQUFMLEdBQWFBLE1BQU1LLE1BQU4sQ0FBYTtBQUN4QkMsZUFBU0osUUFEZTtBQUV4QkssZUFBUyxJQUZlO0FBR3hCQyxlQUFTO0FBQ1BDLG1DQUF5QkMsUUFBUUMsR0FBUixDQUFZQyxZQUQ5QjtBQUVQLHdCQUFnQjtBQUZUO0FBSGUsS0FBYixDQUFiO0FBUUQ7O0FBVkg7QUFBQTtBQUFBLGtDQVlnQkMsTUFaaEIsRUFZd0I7QUFBQTs7QUFDcEIsVUFBSUMsU0FBUyxJQUFiOztBQUVBLFVBQUlDLGFBQWEsRUFBakI7QUFDQSxVQUFJQyxpQkFBaUIsSUFBckI7O0FBSm9CO0FBT2xCLFlBQU1DLFdBQVcsTUFBS0MseUJBQUwsQ0FBK0JMLE1BQS9CLEVBQXVDQyxNQUF2QyxFQUNkSyxJQURjLENBQ1Q7QUFBQSxpQkFBT0MsSUFBSUMsSUFBSixDQUFTQSxJQUFoQjtBQUFBLFNBRFMsRUFFZEYsSUFGYyxDQUVULGVBQU87QUFDWEcsa0JBQVFDLEdBQVIsQ0FBWU4sUUFBWjtBQUNBRixxQkFBV1MsSUFBWCxDQUFnQlAsU0FBU1EsS0FBekI7QUFDQUgsa0JBQVFDLEdBQVIsQ0FBWVIsVUFBWjtBQUNBRCxtQkFBU0csU0FBU1MsUUFBVCxDQUFrQkMsU0FBM0I7O0FBRUEsY0FBSVYsU0FBU1MsUUFBVCxDQUFrQkUsV0FBbEIsSUFBaUMsS0FBckMsRUFBNEM7QUFDMUNaLDZCQUFpQixLQUFqQjtBQUNEO0FBQ0YsU0FYYyxDQUFqQjs7QUFhQTtBQXBCa0I7O0FBTXBCLGFBQU9BLGNBQVAsRUFBdUI7QUFBQTs7QUFBQSw4QkFjckI7QUFDRDs7QUFFRCxhQUFPRCxVQUFQO0FBQ0Q7QUFwQ0g7QUFBQTtBQUFBLDhDQXNDNEJGLE1BdEM1QixFQXNDdUQ7QUFBQSxVQUFuQmdCLFVBQW1CLHVFQUFOLElBQU07O0FBQ25ELFVBQU1DLGNBQWNELGVBQWUsSUFBZixHQUFzQixFQUF0QixtQkFBd0NBLFVBQXhDLE9BQXBCOztBQUVBLGFBQU8sS0FBSzdCLEtBQUwsQ0FBVytCLElBQVgsQ0FBZ0IsRUFBaEIsRUFBb0I7QUFDekJDLDREQUV1Qm5CLE1BRnZCLG1CQUUyQ2lCLFdBRjNDO0FBRHlCLE9BQXBCLENBQVA7QUF1QkQ7QUFoRUg7O0FBQUE7QUFBQSIsImZpbGUiOiJhcGkuanMiLCJzb3VyY2VSb290IjoiL2FwcC9iYWNrIiwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgYXhpb3MgPSByZXF1aXJlKFwiYXhpb3NcIik7XG5cbmNvbnN0IEJBU0VfVVJMID0gXCJodHRwczovL2FwaS5waXBlZnkuY29tL2dyYXBocWxcIjtcblxuLy8gY29uc3QgSEVBREVSUyA9IG5ldyBIZWFkZXJzKHtcbi8vICAgXCJBdXRob3JpemF0aW9uXCI6IGBCZWFyZXIgJHtwcm9jZXNzLmVudi5QSVBFRllfVE9LRU59YCxcbi8vICAgXCJDb250ZW50LVR5cGVcIjogXCJhcHBsaWNhdGlvbi9qc29uXCJcbi8vIH0pO1xuXG5tb2R1bGUuZXhwb3J0cyA9IGNsYXNzIFBpcGVmeUFwaSB7XG4gIGNvbnN0cnVjdG9yKCkge1xuICAgIHRoaXMuYXhpb3MgPSBheGlvcy5jcmVhdGUoe1xuICAgICAgYmFzZVVSTDogQkFTRV9VUkwsXG4gICAgICB0aW1lb3V0OiAzMDAwLFxuICAgICAgaGVhZGVyczoge1xuICAgICAgICBBdXRob3JpemF0aW9uOiBgQmVhcmVyICR7cHJvY2Vzcy5lbnYuUElQRUZZX1RPS0VOfWAsXG4gICAgICAgIFwiQ29udGVudC1UeXBlXCI6IFwiYXBwbGljYXRpb24vanNvblwiXG4gICAgICB9XG4gICAgfSk7XG4gIH1cblxuICBnZXRfYWxsX2NhcmRzKHBpcGVJZCkge1xuICAgIGxldCBjdXJzb3IgPSBudWxsO1xuXG4gICAgbGV0IGNhbmRpZGF0ZXMgPSBbXTtcbiAgICBsZXQgc2hvdWxkQ29udGludWUgPSB0cnVlO1xuXG4gICAgd2hpbGUgKHNob3VsZENvbnRpbnVlKSB7XG4gICAgICBjb25zdCBhbGxDYXJkcyA9IHRoaXMubGlzdF9waXBlX2NhcmRzX3BhZ2luYXRlZChwaXBlSWQsIGN1cnNvcilcbiAgICAgICAgLnRoZW4ocmVzID0+IHJlcy5kYXRhLmRhdGEpXG4gICAgICAgIC50aGVuKHJlcyA9PiB7XG4gICAgICAgICAgY29uc29sZS5sb2coYWxsQ2FyZHMpO1xuICAgICAgICAgIGNhbmRpZGF0ZXMucHVzaChhbGxDYXJkcy5lZGdlcyk7XG4gICAgICAgICAgY29uc29sZS5sb2coY2FuZGlkYXRlcyk7XG4gICAgICAgICAgY3Vyc29yID0gYWxsQ2FyZHMucGFnZUluZm8uZW5kQ3Vyc29yO1xuXG4gICAgICAgICAgaWYgKGFsbENhcmRzLnBhZ2VJbmZvLmhhc05leHRQYWdlID09IGZhbHNlKSB7XG4gICAgICAgICAgICBzaG91bGRDb250aW51ZSA9IGZhbHNlO1xuICAgICAgICAgIH1cbiAgICAgICAgfSk7XG4gICAgICBcbiAgICAgIGJyZWFrO1xuICAgIH1cblxuICAgIHJldHVybiBjYW5kaWRhdGVzO1xuICB9XG5cbiAgbGlzdF9waXBlX2NhcmRzX3BhZ2luYXRlZChwaXBlSWQsIGxhc3RDdXJzb3IgPSBudWxsKSB7XG4gICAgY29uc3QgYWZ0ZXJDdXJzb3IgPSBsYXN0Q3Vyc29yID09PSBudWxsID8gXCJcIiA6IGAsIGFmdGVyOiBcIiR7bGFzdEN1cnNvcn1cImA7XG5cbiAgICByZXR1cm4gdGhpcy5heGlvcy5wb3N0KFwiXCIsIHtcbiAgICAgIHF1ZXJ5OiBgXG4gICAgICAgIHtcbiAgICAgICAgICBhbGxDYXJkcyhwaXBlSWQ6ICR7cGlwZUlkfSwgZmlyc3Q6NTAwJHthZnRlckN1cnNvcn0pIHtcbiAgICAgICAgICAgICAgcGFnZUluZm8ge1xuICAgICAgICAgICAgICAgICAgc3RhcnRDdXJzb3JcbiAgICAgICAgICAgICAgICAgIGVuZEN1cnNvclxuICAgICAgICAgICAgICAgICAgaGFzTmV4dFBhZ2VcbiAgICAgICAgICAgICAgfVxuXG4gICAgICAgICAgICAgIGVkZ2VzIHtcbiAgICAgICAgICAgICAgICAgICAgICBub2RlIHtcbiAgICAgICAgICAgICAgICAgICAgICAgICAgaWQsXG4gICAgICAgICAgICAgICAgICAgICAgICAgIHRpdGxlLFxuICAgICAgICAgICAgICAgICAgICAgICAgICBjdXJyZW50X3BoYXNlIHsgbmFtZSB9XG4gICAgICAgICAgICAgICAgICAgICAgfVxuICAgICAgICAgICAgICAgICAgfVxuXG5cbiAgICAgICAgICB9XG4gICAgICAgIH0gIFxuICAgICAgYFxuICAgIH0pO1xuICB9XG59O1xuIl19",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "api.js"
+      ],
+      "names": [
+        "axios",
+        "require",
+        "BASE_URL",
+        "module",
+        "exports",
+        "create",
+        "baseURL",
+        "timeout",
+        "headers",
+        "Authorization",
+        "process",
+        "env",
+        "PIPEFY_TOKEN",
+        "pipeId",
+        "cursor",
+        "candidates",
+        "shouldContinue",
+        "allCards",
+        "list_pipe_cards_paginated",
+        "then",
+        "res",
+        "data",
+        "console",
+        "log",
+        "push",
+        "edges",
+        "pageInfo",
+        "endCursor",
+        "hasNextPage",
+        "lastCursor",
+        "afterCursor",
+        "post",
+        "query"
+      ],
+      "mappings": ";;;;;;AAAA,IAAMA,QAAQC,QAAQ,OAAR,CAAd;;AAEA,IAAMC,WAAW,gCAAjB;;AAEA;AACA;AACA;AACA;;AAEAC,OAAOC,OAAP;AACE,uBAAc;AAAA;;AACZ,SAAKJ,KAAL,GAAaA,MAAMK,MAAN,CAAa;AACxBC,eAASJ,QADe;AAExBK,eAAS,IAFe;AAGxBC,eAAS;AACPC,mCAAyBC,QAAQC,GAAR,CAAYC,YAD9B;AAEP,wBAAgB;AAFT;AAHe,KAAb,CAAb;AAQD;;AAVH;AAAA;AAAA,kCAYgBC,MAZhB,EAYwB;AAAA;;AACpB,UAAIC,SAAS,IAAb;;AAEA,UAAIC,aAAa,EAAjB;AACA,UAAIC,iBAAiB,IAArB;;AAJoB;AAOlB,YAAMC,WAAW,MAAKC,yBAAL,CAA+BL,MAA/B,EAAuCC,MAAvC,EACdK,IADc,CACT;AAAA,iBAAOC,IAAIC,IAAJ,CAASA,IAAhB;AAAA,SADS,EAEdF,IAFc,CAET,eAAO;AACXG,kBAAQC,GAAR,CAAYN,QAAZ;AACAF,qBAAWS,IAAX,CAAgBP,SAASQ,KAAzB;AACAH,kBAAQC,GAAR,CAAYR,UAAZ;AACAD,mBAASG,SAASS,QAAT,CAAkBC,SAA3B;;AAEA,cAAIV,SAASS,QAAT,CAAkBE,WAAlB,IAAiC,KAArC,EAA4C;AAC1CZ,6BAAiB,KAAjB;AACD;AACF,SAXc,CAAjB;;AAaA;AApBkB;;AAMpB,aAAOA,cAAP,EAAuB;AAAA;;AAAA,8BAcrB;AACD;;AAED,aAAOD,UAAP;AACD;AApCH;AAAA;AAAA,8CAsC4BF,MAtC5B,EAsCuD;AAAA,UAAnBgB,UAAmB,uEAAN,IAAM;;AACnD,UAAMC,cAAcD,eAAe,IAAf,GAAsB,EAAtB,mBAAwCA,UAAxC,OAApB;;AAEA,aAAO,KAAK7B,KAAL,CAAW+B,IAAX,CAAgB,EAAhB,EAAoB;AACzBC,4DAEuBnB,MAFvB,mBAE2CiB,WAF3C;AADyB,OAApB,CAAP;AAuBD;AAhEH;;AAAA;AAAA",
+      "file": "api.js",
+      "sourceRoot": "/app/back",
+      "sourcesContent": [
+        "const axios = require(\"axios\");\n\nconst BASE_URL = \"https://api.pipefy.com/graphql\";\n\n// const HEADERS = new Headers({\n//   \"Authorization\": `Bearer ${process.env.PIPEFY_TOKEN}`,\n//   \"Content-Type\": \"application/json\"\n// });\n\nmodule.exports = class PipefyApi {\n  constructor() {\n    this.axios = axios.create({\n      baseURL: BASE_URL,\n      timeout: 3000,\n      headers: {\n        Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,\n        \"Content-Type\": \"application/json\"\n      }\n    });\n  }\n\n  get_all_cards(pipeId) {\n    let cursor = null;\n\n    let candidates = [];\n    let shouldContinue = true;\n\n    while (shouldContinue) {\n      const allCards = this.list_pipe_cards_paginated(pipeId, cursor)\n        .then(res => res.data.data)\n        .then(res => {\n          console.log(allCards);\n          candidates.push(allCards.edges);\n          console.log(candidates);\n          cursor = allCards.pageInfo.endCursor;\n\n          if (allCards.pageInfo.hasNextPage == false) {\n            shouldContinue = false;\n          }\n        });\n      \n      break;\n    }\n\n    return candidates;\n  }\n\n  list_pipe_cards_paginated(pipeId, lastCursor = null) {\n    const afterCursor = lastCursor === null ? \"\" : `, after: \"${lastCursor}\"`;\n\n    return this.axios.post(\"\", {\n      query: `\n        {\n          allCards(pipeId: ${pipeId}, first:500${afterCursor}) {\n              pageInfo {\n                  startCursor\n                  endCursor\n                  hasNextPage\n              }\n\n              edges {\n                      node {\n                          id,\n                          title,\n                          current_phase { name }\n                      }\n                  }\n\n\n          }\n        }  \n      `\n    });\n  }\n};\n"
+      ]
+    },
+    "mtime": 1591669414000
+  }
+}
