@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Pipefy Apps Client.js -->
+    <script src="https://d1ukdhoxof1oxs.cloudfront.net/pipefy-client.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://app.pipefy.com/apps/style.css">
+
+  </head>
+  <body>
+    <script>
+      PipefyApp.initCall({
+        'pipe-buttons': function(p, pipe) {
+          return [
+            {
+              icon: 'https://cdn.glitch.com/17a05136-6c3c-441b-a277-9a2994c01a89%2Ficons8-foguete-100.png?v=1591587183353',
+              text: 'Ações card',
+              callback: function(p) {
+                
+                p.dropdown({
+                  title: 'Ações disponíveis',
+                  items: [{
+                    title: 'Mover cards',
+                    callback: function(p) {
+                      p.sidebar({title: 'Mover cards', url: './view.html'})
+                      p.closeDropdown()
+                    }
+                  }]
+                })
+  
+              }
+            }
+          ]
+        },
+    
+      });
+    </script>
+  </body>
+</html>
