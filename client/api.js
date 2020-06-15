@@ -1,25 +1,21 @@
+import axios from 'axios';
 
-
-const BASE_URL = "https://api.pipefy.com/graphql";
-const HEADERS = new Headers({
-  "Authorization": `Bearer ${process.env.PIPEFY_TOKEN}`,
-  "Content-Type": "application/json"
-});
-
+const BASE_URL = "https://tame-turquoise-marjoram.glitch.me";
+const TIMEOUT = 1000;  // time in miliseconds
 
 export default class PipefyApi {
   
   constructor() {
+  
+    this.api = axios.create({
+      baseURL: BASE_URL,
+      timeout: 10000,
+    });
     
-    console.log("Entrou constructor");
-    console.log(HEADERS);
-    console.log(`Bearer ${process.env.SECRET}`);
-
-    var myInit = { method: 'POST',
-                   headers: HEADERS,
-                   mode: 'cors',
-                   cache: 'default' };
   }
   
+  get_instance() {
+    return this.api;
+  }
   
 }

@@ -58,7 +58,14 @@ module.exports = class PipefyApi {
                       node {
                           id,
                           title,
-                          current_phase { id, name }
+                          current_phase { id, name },
+                          fields {
+                              field{ id },
+                              name,
+                              value,
+                              array_value,
+                              float_value
+                          },
                       }
                   }
 
@@ -67,5 +74,66 @@ module.exports = class PipefyApi {
         }  
       `
     });
+  }
+
+  get_phase(phaseId) {
+    return this.axios.post("", {
+      query: `
+        {
+          phase(id: ${phaseId}) {       
+            name, 
+            id,
+            fields { 
+                id,
+                internal_id,
+                uuid,
+                description,
+                label, 
+                options, 
+                required, 
+                type,
+                is_multiple
+            }
+          }
+        }  
+      `
+    });
+  }
+
+  updateCardsFields(cardsIds, fieldId, fieldValue) {
+    return Promise.all(
+      cardsIds.map(cardId => {
+        return this.axios.post("", {
+          query: `
+      mutation {
+        updateCardField(input: {
+            card_id: ${cardId},
+            field_id: "${fieldId}",
+            new_value: ["${fieldValue}"]
+
+        })
+
+        {success}
+      }
+                                  `
+        });
+      })
+    );
+  }
+
+  moveCardToPhase(cardsIds, toPhaseId) {
+    return Promise.all(
+      cardsIds.map(cardId => {
+        return this.axios.post("", {
+          query: `
+            mutation {
+                moveCardToPhase(input: {card_id: ${cardId}, destination_phase_id: ${toPhaseId}})
+
+                {card { updated_at id title}}
+            }
+          `
+        });
+      })
+    );
   }
 };
