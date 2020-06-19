@@ -1,51 +1,58 @@
 const axios = require("axios");
 const { flatten } = require("lodash");
+const { convert_date } = require("./utils");
 
 const BASE_URL = "https://api.pipefy.com/graphql";
 
 module.exports = class PipefyApi {
-  constructor() {
-    this.axios = axios.create({
-      baseURL: BASE_URL,
-      timeout: 10000,
-      headers: {
-        Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
-        "Content-Type": "application/json"
-      }
-    });
-  }
-
-  async get_all_cards(pipeId, phase = null) {
-    let cursor = null;
-
-    let candidates = [];
-
-    while (true) {
-      const { allCards } = await this.list_pipe_cards_paginated(
-        pipeId,
-        cursor
-      ).then(res => res.data.data);
-
-      candidates.push(allCards.edges);
-      cursor = allCards.pageInfo.endCursor;
-
-      if (allCards.pageInfo.hasNextPage == false) {
-        break;
-      }
+    constructor() {
+        this.axios = axios.create({
+            baseURL: BASE_URL,
+            timeout: 10000,
+            headers: {
+                Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
+                "Content-Type": "application/json"
+            }
+        });
     }
 
-    candidates = flatten(candidates);
+    async get_all_cards(pipeId, phases = []) {
+        let cursor = null;
 
-    return phase == null
-      ? candidates
-      : candidates.filter(c => c.node.current_phase.id == phase.toString());
-  }
+        let candidates = [];
 
-  list_pipe_cards_paginated(pipeId, lastCursor = null) {
-    const afterCursor = lastCursor === null ? "" : `, after: "${lastCursor}"`;
+        if (typeof(phases) !== typeof([])) {
+            phases = [phases];
+        }
 
-    return this.axios.post("", {
-      query: `
+        phases = phases.map(p => p.toString());
+
+        while (true) {
+            const { allCards } = await this.list_pipe_cards_paginated(
+                pipeId,
+                cursor
+            ).then(res => res.data.data);
+
+            candidates.push(allCards.edges);
+            cursor = allCards.pageInfo.endCursor;
+
+            if (allCards.pageInfo.hasNextPage == false) {
+                break;
+            }
+        }
+
+        candidates = flatten(candidates);
+
+        return phases.length === 0
+            ? candidates
+            : candidates.filter(c => phases.includes(c.node.current_phase.id));
+    }
+
+    list_pipe_cards_paginated(pipeId, lastCursor = null) {
+        const afterCursor = lastCursor === null ? "" : `, after: "${lastCursor}"`;
+
+        return this.axios.post("", {
+            query: `
         {
           allCards(pipeId: ${pipeId}, first:500${afterCursor}) {
               pageInfo {
@@ -66,6 +73,8 @@ module.exports = class PipefyApi {
                               array_value,
                               float_value
                           },
+                          due_date,
+                          late,
                       }
                   }
 
@@ -73,12 +82,12 @@ module.exports = class PipefyApi {
           }
         }  
       `
-    });
-  }
+        });
+    }
 
-  get_phase(phaseId) {
-    return this.axios.post("", {
-      query: `
+    get_phase(phaseId) {
+        return this.axios.post("", {
+            query: `
         {
           phase(id: ${phaseId}) {       
             name, 
@@ -97,14 +106,14 @@ module.exports = class PipefyApi {
           }
         }  
       `
-    });
-  }
+        });
+    }
 
-  updateCardsFields(cardsIds, fieldId, fieldValue) {
-    return Promise.all(
-      cardsIds.map(cardId => {
-        return this.axios.post("", {
-          query: `
+    updateCardsFields(cardsIds, fieldId, fieldValue) {
+        return Promise.all(
+            cardsIds.map(cardId => {
+                return this.axios.post("", {
+                    query: `
       mutation {
         updateCardField(input: {
             card_id: ${cardId},
@@ -116,24 +125,68 @@ module.exports = class PipefyApi {
         {success}
       }
                                   `
-        });
-      })
-    );
-  }
+                });
+            })
+        );
+    }
 
-  moveCardToPhase(cardsIds, toPhaseId) {
-    return Promise.all(
-      cardsIds.map(cardId => {
-        return this.axios.post("", {
-          query: `
+    updateCardsDueDate(cardsIds, newDueDate) {
+        return Promise.all(
+            cardsIds.map(cardId => {
+                return this.axios.post("", {
+                    query: `
+                              mutation {
+                                updateCard(input: {
+                                    id: ${cardId},
+                                    due_date: "${newDueDate}",
+                        
+                                })
+                        
+                                {
+                                    card {
+                                        id
+                                    }
+                                }
+                              }
+                                                          `
+                });
+            })
+        );
+    }
+
+    moveCardToPhase(cardsIds, toPhaseId) {
+        return Promise.all(
+            cardsIds.map(cardId => {
+                return this.axios.post("", {
+                    query: `
             mutation {
                 moveCardToPhase(input: {card_id: ${cardId}, destination_phase_id: ${toPhaseId}})
 
                 {card { updated_at id title}}
             }
           `
+                });
+            })
+        );
+    }
+
+    get_pipe_info(pipeId) {
+        return this.axios.post("", {
+            query: `
+        {
+          pipe(id: ${pipeId}) {       
+            name, 
+            id,
+            phases {
+              id,
+              name,
+              lateCardsCount
+            }
+          }
+        }  
+      `
         });
-      })
-    );
-  }
+    }
+
+
 };

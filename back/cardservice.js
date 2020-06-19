@@ -25,4 +25,16 @@ module.exports = class CardsService {
 
     return Promise.all(promises);
   }
+
+  updateCardsDueDate() {
+    const cardsId = this.cards.map(c => c.id);
+
+    if (this.phasesForms.length === 0) {
+      return;
+    }
+
+    const newDueDate = this.phasesForms[0].generate_answer();
+    return this.pipefyapi.updateCardsDueDate(cardsId, newDueDate)
+  }
+
 };

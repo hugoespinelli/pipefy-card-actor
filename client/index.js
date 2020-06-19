@@ -74,7 +74,8 @@ class CardMoverPage extends React.Component {
     return pipefyApi
       .post(MOVE_CARDS_ROUTE.replace(":pipeId", pipeId), {
         fromPhase,
-        toPhase
+        toPhase,
+        shouldUpdateDueDate: true
       })
       .then(() => pipefy.showNotification("Os cards foram movidos com sucesso!", "success"))
       .catch(err => pipefy.showNotification(err, "error"));
