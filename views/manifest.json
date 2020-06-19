@@ -5,6 +5,6 @@
   "icon": "https://cdn.glitch.com/921750f9-5c7c-4842-b805-9b8b2579d82e%2F68747470733a2f2f7261776769742e636f6d2f676f72616e67616a69632f72656163742d69636f6e732f6d61737465722f72656163742d69636f6e732e737667.svg?1507935372483",
   "author": "Starctecxp",
   "init_url": "./",
-  "screenshots": ["./images/screenshots/1.png"],
+  "screenshots": [],
   "features": ["pipe-buttons"]
 }

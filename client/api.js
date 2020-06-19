@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = "https://tame-turquoise-marjoram.glitch.me";
+const BASE_URL = "https://calm-island-50193.herokuapp.com";
 const TIMEOUT = 1000;  // time in miliseconds
 
 export default class PipefyApi {
