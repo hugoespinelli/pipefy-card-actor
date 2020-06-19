@@ -17,6 +17,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "lodash": "^4.17.15",
+    "node-cron": "^2.0.3",
     "pipestyle": "^0.90.3",
     "react": "^16.0.0",
     "react-bootstrap": "^1.0.1",

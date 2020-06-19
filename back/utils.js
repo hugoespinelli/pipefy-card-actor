@@ -1,11 +1,26 @@
-
-
 function convert_date(date) {
-  const day = date.getDate();
-  const month = date.getMonth();
-  const year = date.getFullYear();
-  
-  return `${year}-${month + 1}-${day}`;
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
 }
 
-module.exports = { convert_date }
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(date.getDate() + days);
+  return result;
+}
+
+function correctUTCtoBrazilZone(date) {
+  const BRAZIL_OFFSET = 3;
+  var result = new Date(date);
+  result.setHours(date.getHours() - BRAZIL_OFFSET);
+  return result;
+}
+
+module.exports = { convert_date, addDays, correctUTCtoBrazilZone };

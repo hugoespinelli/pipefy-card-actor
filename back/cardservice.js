@@ -25,4 +25,5 @@ module.exports = class CardsService {
 
     return Promise.all(promises);
   }
+
 };

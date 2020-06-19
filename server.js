@@ -1,8 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 
 const compression = require("compression");
 const cors = require("cors");
 const app = express();
+const cron = require("node-cron");
+
+const MoveLateCardsService = require("./back/movelatecardservice");
 const Pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
@@ -29,6 +33,18 @@ app.get("/manifest.json", (request, response) => {
 
 app.get("/view.html", (request, response) => {
   response.sendFile(`${__dirname}/views/pipe-view.html`);
+});
+
+app.get("/pipes/:pipeId", async (request, response) => {
+  const pipeId = request.params.pipeId;
+  const pipefyapi = new Pipefyapi();
+
+  try {
+    const { data } = await pipefyapi.get_pipe_info(pipeId);
+    response.json({ pipe: data.data.pipe });
+  } catch (e) {
+    response.json(e);
+  }
 });
 
 app.get("/pipes/:pipeId/cards", async (request, response) => {
@@ -61,12 +77,14 @@ app.get("/pipes/public/registered_candidates", async (request, response) => {
 });
 
 app.post("/pipes/:pipeId/move_cards", async (request, response) => {
-  const { fromPhase, toPhase } = request.body;
+  const { fromPhase, toPhase, shouldUpdateDueDate } = request.body;
   const { pipeId } = request.params;
   const pipefyapi = new Pipefyapi();
-  
+
   if (pipeId == null || fromPhase == null || toPhase == null) {
-    return response.json({error: "pipeId, fromPhase, toPhase não podem ser nulos!"});
+    return response.json({
+      error: "pipeId, fromPhase, toPhase não podem ser nulos!"
+    });
   }
 
   try {
@@ -75,43 +93,68 @@ app.post("/pipes/:pipeId/move_cards", async (request, response) => {
       ({ id, options, type, required, is_multiple }) =>
         new PhaseForm(id, options, type, required, is_multiple)
     );
-   
+
     const allCards = await pipefyapi.get_all_cards(pipeId, fromPhase);
-    await pipefyapi.moveCardToPhase(allCards.map(c => c.node.id), toPhase);
-    
-    response.json({message: "Cards foram movidos com sucesso!"});
+    const cardsIds = allCards.map(c => c.node.id);
+    await pipefyapi.moveCardToPhase(cardsIds, toPhase);
+
+    if (shouldUpdateDueDate) {
+      const phaseFormToGenerateDueDate = phasesForms.find(
+        phase => phase.type === "date"
+      );
+      if (phaseFormToGenerateDueDate) {
+        try {
+          await pipefyapi.updateCardsDueDate(
+            cardsIds,
+            phaseFormToGenerateDueDate.generate_answer()
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
+
+    response.json({ message: "Cards foram movidos com sucesso!" });
   } catch (e) {
     response.status(500).json(e);
   }
 });
 
+app.post(
+  "/pipes/:pipeId/phases/:phaseId/update_fields",
+  async (request, response) => {
+    const { field_value } = request.body;
+    const { pipeId, phaseId } = request.params;
+    const pipefyapi = new Pipefyapi();
 
-app.post("/pipes/:pipeId/phases/:phaseId/update_fields", async (request, response) => {
-  const { field_value } = request.body;
-  const { pipeId, phaseId } = request.params;
-  const pipefyapi = new Pipefyapi();
-  
-  if (pipeId == null || phaseId == null) {
-    return response.json({error: "O pipeId e o phaseId não podem ser nulos!"});
+    if (pipeId == null || phaseId == null) {
+      return response.json({
+        error: "O pipeId e o phaseId não podem ser nulos!"
+      });
+    }
+
+    try {
+      const { data } = await pipefyapi.get_phase(phaseId);
+      const phasesForms = data.data.phase.fields.map(
+        ({ id, options, type, required, is_multiple }) =>
+          new PhaseForm(id, options, type, required, is_multiple)
+      );
+
+      const allCards = await pipefyapi.get_all_cards(pipeId, phaseId);
+      const cardService = new CardsService(
+        phasesForms,
+        allCards.map(c => c.node),
+        pipefyapi
+      );
+
+      await cardService.updateCardsFields(field_value);
+
+      response.json({ message: "Cards foram atualizados com sucesso!" });
+    } catch (e) {
+      response.status(500).json({ error: e });
+    }
   }
-
-  try {
-    const { data } = await pipefyapi.get_phase(phaseId);
-    const phasesForms = data.data.phase.fields.map(
-      ({ id, options, type, required, is_multiple }) =>
-        new PhaseForm(id, options, type, required, is_multiple)
-    );
-   
-    const allCards = await pipefyapi.get_all_cards(pipeId, phaseId);
-    const cardService = new CardsService(phasesForms, allCards.map(c => c.node), pipefyapi);
-    
-    await cardService.updateCardsFields(field_value);
-    response.json({message: "Cards foram atualizados com sucesso!"});
-  } catch (e) {
-    response.status(500).json({error: e});
-  }
-});
-
+);
 
 app.get("/phases/:phaseId", async (request, response) => {
   const phaseId = request.params.phaseId;
@@ -125,6 +168,50 @@ app.get("/phases/:phaseId", async (request, response) => {
   }
 });
 
+// cron.schedule('* * * * *', async () => {
+//
+//     console.log("Iniciando Cron...");
+//     const pipefyapi = new Pipefyapi();
+//
+//     const pipesIds = [301320319];
+//     let pipeInfo = null;
+//
+//     const lateCardsService = new MoveLateCardsService();
+//
+//     pipesIds.map(async pipeId => {
+//
+//         try {
+//             const { data } = await pipefyapi.get_pipe_info(pipeId);
+//             pipeInfo = data.data.pipe;
+//         } catch (e) {
+//             console.log('Error pra pegar info do pipe');
+//             return;
+//         }
+//         const phaseFound = lateCardsService.findPhaseToCheckLateCards(pipeInfo.phases);
+//         if (!phaseFound || phaseFound.lateCardsCount === 0) {
+//             return;
+//         }
+//
+//         const phaseId = phaseFound.id;
+//         const allCards = await pipefyapi.get_all_cards(pipeId, phaseId);
+//         let lateCards = lateCardsService.filterLateCards(allCards.map(c => c.node));
+//
+//         lateCards = lateCards.slice(0, 2);
+//
+//         if (lateCards.length === 0) {
+//             console.log("Não há cards atasados...");
+//             return;
+//         }
+//         const phaseCardsToBeMoved = lateCardsService.findPhaseToSendEmail(pipeInfo.phases);
+//         if (!phaseCardsToBeMoved) {
+//             console.log(`Pipe não possui a fase de ${lateCardsService.phaseToBeMovedIfCardsAreLate}`);
+//             return;
+//         }
+//         await pipefyapi.moveCardToPhase(lateCards.map(c => c.id), phaseCardsToBeMoved.id);
+//         console.log(`Foram movidos ${lateCards.length}`);
+//     });
+//
+// });
 
 const listener = app.listen(process.env.PORT, () => {
   console.log(`Your app is listening on port ${listener.address().port}. 🚢`);

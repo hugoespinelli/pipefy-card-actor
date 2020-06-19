@@ -1,13 +1,30 @@
-# React/Babel/Webpack Boilerplate
+# Projecto Pipefy actor
 
-Hello friends! This project is set up and ready to go with React, webpack, and Babel. It will take care of fun stuff like supporting the latest and greatest ECMAScript features, compiling your JSX to JavaScript, and more.
+Este é um projeto que visa automatizar algumas ações da plataforma pipefy. Para o backend utilizou-se o node.js e para o front-end 
+a framework React.
 
-You can require CSS files in your components and everything will work as expected.
+## Iniciando o projeto
 
-## Getting Off the Ground
+Para iniciar o projeto em sua máquina, tenha instalado em seu computador a versão 8+ do node.js.
 
-The root of the project is in `client/index.js`. You can require other files from here. webpack will rebuild your project whenever you make a change. So, there is no need to refresh.
+Clone o repositório, entre na pasta do projeto e digite seu prompt de comando:
 
-Your server also supports the latest and greatest versions of the JavaScript programming language. If you'd prefer not to run it through Babel, then you can go ahead and change `babel-register` back to `node` in your `package.json`.
+  `npm install`
+  
+ou
 
-Other than that, all batteries are included and you're ready to go!
+  `yarn add`
+  
+  
+
+## Rodando o projeto
+
+Após instalar as dependencias no passo anterior. Para rodar o projeto, digite:
+
+  `npm start`
+  
+ou
+
+  `yarn start`
+  
+  
