@@ -9,7 +9,7 @@ module.exports = class CardsService {
 
   updateCardsFields(fieldAnswer = null) {
     let promises = [];
-
+    
     for (let card of this.cards) {
       
       const fieldsToUpdate = this.phasesForms.filter(

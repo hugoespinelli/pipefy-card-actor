@@ -158,12 +158,12 @@ app.get("/phases/:phaseId", async (request, response) => {
 });
 
 
-cron.schedule('*/10 * * * *', async () => {
+cron.schedule('*/5 * * * *', async () => {
 
     console.log(`[${new Date()}] - Iniciando Cron...`);
     const pipefyapi = new Pipefyapi();
 
-    const pipesIds = [301320319];
+    const pipesIds = [301334937, 301321230];
     let pipeInfo = null;
 
     const lateCardsService = new MoveLateCardsService();
