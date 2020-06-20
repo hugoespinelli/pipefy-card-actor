@@ -22,18 +22,7 @@ class CardMoverPage extends React.Component {
   }
   componentDidMount() {
     pipefy.pipe().then(pipe => {
-      this.setState({ pipe });
-    });
-
-    pipefy.fields().then(fields => {
-      let phases = fields.map(field => ({
-        id: field.phase.id,
-        name: field.phase.name
-      }));
-
-      phases = uniqWith(phases, (p1, p2) => p1.id === p2.id);
-
-      this.setState({ phases });
+      this.setState({ pipe, phases: pipe.phases });
     });
   }
 
