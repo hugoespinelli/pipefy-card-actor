@@ -1,7 +1,6 @@
 /* globals PipefyApp */
 import React from "react";
 import { render } from "react-dom";
-import { uniqWith } from "lodash";
 import { Button } from "pipestyle";
 import PipefyApi from "./api.js";
 import { UPDATE_FIELDS_ROUTE, MOVE_CARDS_ROUTE } from "./routes.js";

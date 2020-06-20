@@ -10,6 +10,7 @@ const MoveLateCardsService = require("./back/movelatecardservice");
 const Pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
+const { convert_date, addDays } = require("./back/utils");
 
 //Enable body parser
 app.use(express.json());
@@ -100,7 +101,9 @@ app.post("/pipes/:pipeId/move_cards", async (request, response) => {
             const phaseFormToGenerateDueDate = phasesForms.find(phase => phase.type === "date");
             if (phaseFormToGenerateDueDate) {
                 try {
-                    await pipefyapi.updateCardsDueDate(cardsIds, phaseFormToGenerateDueDate.generate_answer());
+                    let dueDate = phaseFormToGenerateDueDate.generate_answer();
+                    dueDate = addDays(dueDate, 1);
+                    await pipefyapi.updateCardsDueDate(cardsIds, convert_date(dueDate));
                 } catch (e) {
                     console.log(e);
                 }
@@ -155,9 +158,9 @@ app.get("/phases/:phaseId", async (request, response) => {
 });
 
 
-cron.schedule('*/5 * * * *', async () => {
+cron.schedule('*/10 * * * *', async () => {
 
-    console.log("Iniciando Cron...");
+    console.log(`[${new Date()}] - Iniciando Cron...`);
     const pipefyapi = new Pipefyapi();
 
     const pipesIds = [301320319];
@@ -176,6 +179,7 @@ cron.schedule('*/5 * * * *', async () => {
         }
         const phaseFound = lateCardsService.findPhaseToCheckLateCards(pipeInfo.phases);
         if (!phaseFound || phaseFound.lateCardsCount === 0) {
+            console.log("Não há cards atrasados...");
             return;
         }
 
@@ -183,10 +187,8 @@ cron.schedule('*/5 * * * *', async () => {
         const allCards = await pipefyapi.get_all_cards(pipeId, phaseId);
         let lateCards = lateCardsService.filterLateCards(allCards.map(c => c.node));
 
-        lateCards = lateCards.slice(0, 2);
-
         if (lateCards.length === 0) {
-            console.log("Não há cards atasados...");
+            console.log("Não há cards atrasados...");
             return;
         }
         const phaseCardsToBeMoved = lateCardsService.findPhaseToSendEmail(pipeInfo.phases);
