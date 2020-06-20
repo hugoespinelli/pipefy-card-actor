@@ -11,7 +11,6 @@ const Pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
 
-
 //Enable body parser
 app.use(express.json());
 
@@ -155,7 +154,8 @@ app.get("/phases/:phaseId", async (request, response) => {
     }
 });
 
-cron.schedule('*/10 * * * *', async () => {
+
+cron.schedule('*/5 * * * *', async () => {
 
     console.log("Iniciando Cron...");
     const pipefyapi = new Pipefyapi();

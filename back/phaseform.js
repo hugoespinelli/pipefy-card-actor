@@ -7,7 +7,7 @@ const CHECKLIST_TYPE = "checklist_vertical";
 const SHORT_TEXT_TYPE = "short_text";
 const LONG_TEXT_TYPE = "long_text";
 
-const LIMIT_DAYS_FOR_COMPLETE_REGISTER = 3;
+const LIMIT_DAYS_FOR_COMPLETE_REGISTER = 4;
 
 module.exports = class PhaseForm {
   constructor(id, options, type, required, isMultiple) {
