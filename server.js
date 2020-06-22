@@ -160,15 +160,16 @@ app.get("/phases/:phaseId", async (request, response) => {
 
 cron.schedule('*/5 * * * *', async () => {
 
-    console.log(`[${new Date()}] - Iniciando Cron...`);
     const pipefyapi = new Pipefyapi();
 
-    const pipesIds = [301334937, 301321230];
+    const pipesIds = [301334937, 301321230, 301338357, 301329844];
     let pipeInfo = null;
 
     const lateCardsService = new MoveLateCardsService();
 
     pipesIds.map(async pipeId => {
+
+        console.log(`[${new Date()}] - Iniciando Cron do pipe ${pipeId}...`);
 
         try {
             const { data } = await pipefyapi.get_pipe_info(pipeId);
