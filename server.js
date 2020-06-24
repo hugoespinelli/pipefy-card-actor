@@ -7,6 +7,7 @@ const app = express();
 const cron = require('node-cron');
 
 const MoveLateCardsService = require("./back/movelatecardservice");
+const MoveLateCardsController = require("./back/movelatecardscontroller");
 const Pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
@@ -158,47 +159,25 @@ app.get("/phases/:phaseId", async (request, response) => {
 });
 
 
-cron.schedule('*/5 * * * *', async () => {
+cron.schedule('*/1 * * * *', async () => {
 
-    const pipefyapi = new Pipefyapi();
+    const pipesIds = [301334937, 301321230, 301338357, 301329844, 301341122];
 
-    const pipesIds = [301334937, 301321230, 301338357, 301329844];
-    let pipeInfo = null;
+    const first_step_register = "F1: Completar cadastro";
+    const second_step_register = "F1: Completar cadastro2 (*)";
+    const third_step_register = "F1: Completar cadastro3";
 
-    const lateCardsService = new MoveLateCardsService();
 
     pipesIds.map(async pipeId => {
 
-        console.log(`[${new Date()}] - Iniciando Cron do pipe ${pipeId}...`);
-
+        const moveLateCardsController = new MoveLateCardsController(pipeId);
         try {
-            const { data } = await pipefyapi.get_pipe_info(pipeId);
-            pipeInfo = data.data.pipe;
+            await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
+            await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
         } catch (e) {
-            console.log('Error pra pegar info do pipe');
-            return;
-        }
-        const phaseFound = lateCardsService.findPhaseToCheckLateCards(pipeInfo.phases);
-        if (!phaseFound || phaseFound.lateCardsCount === 0) {
-            console.log("Não há cards atrasados...");
-            return;
+            console.log(e);
         }
 
-        const phaseId = phaseFound.id;
-        const allCards = await pipefyapi.get_all_cards(pipeId, phaseId);
-        let lateCards = lateCardsService.filterLateCards(allCards.map(c => c.node));
-
-        if (lateCards.length === 0) {
-            console.log("Não há cards atrasados...");
-            return;
-        }
-        const phaseCardsToBeMoved = lateCardsService.findPhaseToSendEmail(pipeInfo.phases);
-        if (!phaseCardsToBeMoved) {
-            console.log(`Pipe não possui a fase de ${lateCardsService.phaseToBeMovedIfCardsAreLate}`);
-            return;
-        }
-        await pipefyapi.moveCardToPhase(lateCards.map(c => c.id), phaseCardsToBeMoved.id);
-        console.log(`Foram movidos ${lateCards.length}`);
     });
 
 });
