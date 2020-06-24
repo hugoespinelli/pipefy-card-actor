@@ -161,7 +161,7 @@ app.get("/phases/:phaseId", async (request, response) => {
 
 cron.schedule('*/5 * * * *', async () => {
 
-    const pipesIds = [301334937, 301321230, 301338357, 301329844, 301341122];
+    const pipesIds = [301334937, 301321230, 301338357, 301329844, 301341122, 301342218];
 
     const first_step_register = "F1: Completar cadastro";
     const second_step_register = "F1: Completar cadastro2 (*)";
