@@ -159,7 +159,7 @@ app.get("/phases/:phaseId", async (request, response) => {
 });
 
 
-cron.schedule('*/1 * * * *', async () => {
+cron.schedule('*/5 * * * *', async () => {
 
     const pipesIds = [301334937, 301321230, 301338357, 301329844, 301341122];
 
