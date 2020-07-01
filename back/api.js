@@ -8,7 +8,7 @@ module.exports = class PipefyApi {
     constructor() {
         this.axios = axios.create({
             baseURL: BASE_URL,
-            timeout: 15000,
+            timeout: 30000,
             headers: {
                 Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
                 "Content-Type": "application/json"
@@ -35,9 +35,11 @@ module.exports = class PipefyApi {
             ).then(res => res.data.data);
 
             console.log('ok requisicao');
-            console.log(allCards);
+            // console.log(allCards);
             candidates.push(allCards.edges);
             cursor = allCards.pageInfo.endCursor;
+            console.log(allCards.edges.length);
+            console.log(candidates.length);
 
             if (allCards.pageInfo.hasNextPage == false) {
                 break;
@@ -63,7 +65,7 @@ module.exports = class PipefyApi {
         return this.axios.post("", {
             query: `
         {
-          allCards(pipeId: ${pipeId}, first:500${afterCursor}) {
+          allCards(pipeId: ${pipeId}, first:50${afterCursor}) {
               pageInfo {
                   startCursor
                   endCursor
@@ -116,22 +118,26 @@ module.exports = class PipefyApi {
     updateCardsFields(cardsIds, fieldId, fieldValue) {
         return Promise.all(
             cardsIds.map(cardId => {
-                return this.axios.post("", {
-                    query: `
-      mutation {
-        updateCardField(input: {
-            card_id: ${cardId},
-            field_id: "${fieldId}",
-            new_value: ["${fieldValue}"]
-
-        })
-
-        {success}
-      }
-                                  `
-                });
+                return this.updateCardField(cardId, fieldId, fieldValue);
             })
         );
+    }
+
+    updateCardField(cardId, fieldId, fieldValue) {
+        return this.axios.post("", {
+            query: `
+              mutation {
+                updateCardField(input: {
+                    card_id: ${cardId},
+                    field_id: "${fieldId}",
+                    new_value: ["${fieldValue}"]
+        
+                })
+        
+                {success}
+              }
+                                          `
+        });
     }
 
     updateCardsDueDate(cardsIds, newDueDate) {

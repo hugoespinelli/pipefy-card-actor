@@ -188,14 +188,14 @@ cron.schedule("* * * * *", async () => {
     const GENERAL_PIPE_ID = 1175536;
     const pipefyapi = new Pipefyapi();
 
-    console.log('começou');
+    console.log('Começou cron de conexão de cards de candidadtos cadastrados');
     // let allCards = [];
     // try {
     //     allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
     // } catch (e) {
     //     console.log('excecao', e);
     // }
-
+    //
     // console.log(allCards);
     // console.log('entrou');
 
@@ -203,13 +203,15 @@ cron.schedule("* * * * *", async () => {
 
     pipesIdsAutomated.map(async (pipeId) => {
 
-        const { data } = await this.pipefyapi.get_pipe_info(pipeId);
+        const { data } = await pipefyapi.get_pipe_info(pipeId);
         const phases = data.data.pipe.phases;
         const generalPipeController = new GeneralPipeController([
-            {title: "og@gmail.com", createdAt: '2020-06-28'}, {title: "og2@gmail.com", createdAt: '2020-06-28'}
+            {title: "og@gmail.com", createdAt: '2020-05-24T21:16:21-03:00', id: '373207812'},
+            {title: "og@gmail.com", createdAt: '2020-06-24T21:16:21-03:00'},
         ], phases);
 
         const enrollCards = await generalPipeController.getCardsFromEnrollPhase(pipeId);
+        console.log('enroll', enrollCards);
         await Promise.all(
             enrollCards.map(async enrollCard => {
                 return generalPipeController.connectGeneralPipeAndMove(enrollCard);
