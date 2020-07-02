@@ -23,6 +23,7 @@ module.exports = class MoveLateCardsController {
         }
         const lateCardsService = new LateCardsService(pipeInfo.phases);
         const phaseFound = lateCardsService.findPhase(fromPhase);
+
         if (!phaseFound || phaseFound.lateCardsCount === 0) {
             console.log("Não há cards atrasados...");
             return;
@@ -42,7 +43,7 @@ module.exports = class MoveLateCardsController {
             return;
         }
         console.log(`Foram movidos ${lateCards.length}`);
-        return await this.pipefyapi.moveCardToPhase(lateCards.map(c => c.id), phaseCardsToBeMoved.id);
+        return await this.pipefyapi.moveCardsToPhase(lateCards.map(c => c.id), phaseCardsToBeMoved.id);
 
     }
 

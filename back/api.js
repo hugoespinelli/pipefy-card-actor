@@ -8,7 +8,7 @@ module.exports = class PipefyApi {
     constructor() {
         this.axios = axios.create({
             baseURL: BASE_URL,
-            timeout: 10000,
+            timeout: 30000,
             headers: {
                 Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
                 "Content-Type": "application/json"
@@ -16,7 +16,7 @@ module.exports = class PipefyApi {
         });
     }
 
-    async get_all_cards(pipeId, phases = []) {
+    async get_all_cards(pipeId, phases = [], withoutFields=false) {
         let cursor = null;
 
         let candidates = [];
@@ -30,7 +30,8 @@ module.exports = class PipefyApi {
         while (true) {
             const { allCards } = await this.list_pipe_cards_paginated(
                 pipeId,
-                cursor
+                cursor,
+                withoutFields
             ).then(res => res.data.data);
 
             candidates.push(allCards.edges);
@@ -48,13 +49,19 @@ module.exports = class PipefyApi {
             : candidates.filter(c => phases.includes(c.node.current_phase.id));
     }
 
-    list_pipe_cards_paginated(pipeId, lastCursor = null) {
+    list_pipe_cards_paginated(pipeId, lastCursor = null, withoutFields=false) {
         const afterCursor = lastCursor === null ? "" : `, after: "${lastCursor}"`;
-
+        const fieldsString = withoutFields ? "" : `fields {
+              field{ id },
+              name,
+              value,
+              array_value,
+              float_value
+              },`;
         return this.axios.post("", {
             query: `
         {
-          allCards(pipeId: ${pipeId}, first:500${afterCursor}) {
+          allCards(pipeId: ${pipeId}, first:50${afterCursor}) {
               pageInfo {
                   startCursor
                   endCursor
@@ -66,15 +73,10 @@ module.exports = class PipefyApi {
                           id,
                           title,
                           current_phase { id, name },
-                          fields {
-                              field{ id },
-                              name,
-                              value,
-                              array_value,
-                              float_value
-                          },
+                          ${fieldsString}
                           due_date,
                           late,
+                          createdAt
                       }
                   }
 
@@ -112,22 +114,26 @@ module.exports = class PipefyApi {
     updateCardsFields(cardsIds, fieldId, fieldValue) {
         return Promise.all(
             cardsIds.map(cardId => {
-                return this.axios.post("", {
-                    query: `
-      mutation {
-        updateCardField(input: {
-            card_id: ${cardId},
-            field_id: "${fieldId}",
-            new_value: ["${fieldValue}"]
-
-        })
-
-        {success}
-      }
-                                  `
-                });
+                return this.updateCardField(cardId, fieldId, fieldValue);
             })
         );
+    }
+
+    updateCardField(cardId, fieldId, fieldValue) {
+        return this.axios.post("", {
+            query: `
+              mutation {
+                updateCardField(input: {
+                    card_id: ${cardId},
+                    field_id: "${fieldId}",
+                    new_value: ["${fieldValue}"]
+        
+                })
+        
+                {success}
+              }
+                                          `
+        });
     }
 
     updateCardsDueDate(cardsIds, newDueDate) {
@@ -154,20 +160,24 @@ module.exports = class PipefyApi {
         );
     }
 
-    moveCardToPhase(cardsIds, toPhaseId) {
+    moveCardsToPhase(cardsIds, toPhaseId) {
         return Promise.all(
             cardsIds.map(cardId => {
-                return this.axios.post("", {
-                    query: `
+                return this.moveCardToPhase(cardId, toPhaseId)
+            })
+        );
+    }
+
+    moveCardToPhase(cardId, toPhaseId) {
+        return this.axios.post("", {
+            query: `
             mutation {
                 moveCardToPhase(input: {card_id: ${cardId}, destination_phase_id: ${toPhaseId}})
 
                 {card { updated_at id title}}
             }
           `
-                });
-            })
-        );
+        });
     }
 
     get_pipe_info(pipeId) {

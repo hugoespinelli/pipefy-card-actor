@@ -8,6 +8,7 @@ const cron = require('node-cron');
 
 const MoveLateCardsService = require("./back/movelatecardservice");
 const MoveLateCardsController = require("./back/movelatecardscontroller");
+const GeneralPipeController = require("./back/generalpipecontroller");
 const Pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
@@ -96,7 +97,7 @@ app.post("/pipes/:pipeId/move_cards", async (request, response) => {
 
         const allCards = await pipefyapi.get_all_cards(pipeId, fromPhase);
         const cardsIds = allCards.map(c => c.node.id);
-        await pipefyapi.moveCardToPhase(cardsIds, toPhase);
+        await pipefyapi.moveCardsToPhase(cardsIds, toPhase);
 
         if (shouldUpdateDueDate) {
             const phaseFormToGenerateDueDate = phasesForms.find(phase => phase.type === "date");
@@ -159,7 +160,7 @@ app.get("/phases/:phaseId", async (request, response) => {
 });
 
 
-cron.schedule('*/5 * * * *', async () => {
+cron.schedule('*/3 * * * *', async () => {
 
     const pipesIds = [301334937, 301321230, 301338357, 301329844, 301341122, 301342218, 301345134, 301345140, 301345144];
 
@@ -179,6 +180,41 @@ cron.schedule('*/5 * * * *', async () => {
         }
 
     });
+
+});
+
+cron.schedule("*/10 * * * *", async () => {
+
+    const GENERAL_PIPE_ID = 1175536;
+    const pipefyapi = new Pipefyapi();
+
+    console.log('Começou cron de conexão de cards de candidadtos cadastrados');
+    let allCards = [];
+    try {
+        allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
+        allCards = allCards.map(c => c.node);
+    } catch (e) {
+        console.log('excecao', e);
+    }
+
+    const pipesIdsAutomated = [301345144];
+
+    pipesIdsAutomated.map(async (pipeId) => {
+
+        const { data } = await pipefyapi.get_pipe_info(pipeId);
+        const phases = data.data.pipe.phases;
+
+        const generalPipeController = new GeneralPipeController(allCards, phases);
+
+        const enrollCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
+        await Promise.all(
+            enrollCards.map(async enrollCard => {
+                return generalPipeController.connectGeneralPipeAndMove(enrollCard);
+            })
+        );
+    });
+
+    console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
 
 });
 
