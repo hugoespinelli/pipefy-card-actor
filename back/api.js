@@ -34,12 +34,8 @@ module.exports = class PipefyApi {
                 withoutFields
             ).then(res => res.data.data);
 
-            console.log('ok requisicao');
-            // console.log(allCards);
             candidates.push(allCards.edges);
             cursor = allCards.pageInfo.endCursor;
-            console.log(allCards.edges.length);
-            console.log(candidates.length);
 
             if (allCards.pageInfo.hasNextPage == false) {
                 break;

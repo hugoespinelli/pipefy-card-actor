@@ -160,58 +160,53 @@ app.get("/phases/:phaseId", async (request, response) => {
 });
 
 
-// cron.schedule('*/1 * * * *', async () => {
-//
-//     const pipesIds = [301334937, 301321230, 301338357, 301329844, 301341122, 301342218];
-//
-//     const first_step_register = "F1: Completar cadastro";
-//     const second_step_register = "F1: Completar cadastro2 (*)";
-//     const third_step_register = "F1: Completar cadastro3";
-//
-//
-//     pipesIds.map(async pipeId => {
-//
-//         const moveLateCardsController = new MoveLateCardsController(pipeId);
-//         try {
-//             await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
-//             await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
-//         } catch (e) {
-//             console.log(e);
-//         }
-//
-//     });
-//
-// });
+cron.schedule('*/3 * * * *', async () => {
 
-cron.schedule("* * * * *", async () => {
+    const pipesIds = [301334937, 301321230, 301338357, 301329844, 301341122, 301342218];
+
+    const first_step_register = "F1: Completar cadastro";
+    const second_step_register = "F1: Completar cadastro2 (*)";
+    const third_step_register = "F1: Completar cadastro3";
+
+
+    pipesIds.map(async pipeId => {
+
+        const moveLateCardsController = new MoveLateCardsController(pipeId);
+        try {
+            await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
+            await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
+        } catch (e) {
+            console.log(e);
+        }
+
+    });
+
+});
+
+cron.schedule("*/10 * * * *", async () => {
 
     const GENERAL_PIPE_ID = 1175536;
     const pipefyapi = new Pipefyapi();
 
     console.log('Começou cron de conexão de cards de candidadtos cadastrados');
-    // let allCards = [];
-    // try {
-    //     allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
-    // } catch (e) {
-    //     console.log('excecao', e);
-    // }
-    //
-    // console.log(allCards);
-    // console.log('entrou');
+    let allCards = [];
+    try {
+        allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
+        allCards = allCards.map(c => c.node);
+    } catch (e) {
+        console.log('excecao', e);
+    }
 
-    const pipesIdsAutomated = [301320319];
+    const pipesIdsAutomated = [301345144];
 
     pipesIdsAutomated.map(async (pipeId) => {
 
         const { data } = await pipefyapi.get_pipe_info(pipeId);
         const phases = data.data.pipe.phases;
-        const generalPipeController = new GeneralPipeController([
-            {title: "og@gmail.com", createdAt: '2020-05-24T21:16:21-03:00', id: '373207812'},
-            {title: "og@gmail.com", createdAt: '2020-06-24T21:16:21-03:00'},
-        ], phases);
 
-        const enrollCards = await generalPipeController.getCardsFromEnrollPhase(pipeId);
-        console.log('enroll', enrollCards);
+        const generalPipeController = new GeneralPipeController(allCards, phases);
+
+        const enrollCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
         await Promise.all(
             enrollCards.map(async enrollCard => {
                 return generalPipeController.connectGeneralPipeAndMove(enrollCard);
@@ -219,7 +214,7 @@ cron.schedule("* * * * *", async () => {
         );
     });
 
-
+    console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
 
 });
 
