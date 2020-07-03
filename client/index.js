@@ -77,7 +77,8 @@ class CardMoverPage extends React.Component {
         .get(PHASES_ROUTE.replace(":phaseId", phaseId))
         .then(({data}) => {
           this.setState({ fromPhase: phaseId, cardsCanBeMoveToPhases: data.phase.cards_can_be_moved_to_phases })
-        });
+        })
+        .catch(err => pipefy.showNotification(err, "error"));
   }
 
   render() {
@@ -85,14 +86,12 @@ class CardMoverPage extends React.Component {
       return <div />;
     }
 
-    console.log(this.state.pipe);
-    console.log(this.state.phases);
     const { phases, shouldFillAnswers, cardsCanBeMoveToPhases } = this.state;
 
     return (
         <div className="container-fluid">
           <div className="row">
-            <h4>(TESTE) Quero mover da fase:</h4>
+            <h4>Quero mover da fase:</h4>
             <div className="pp-custom-select-sm">
               <select
                   className="pp-select"
@@ -102,7 +101,7 @@ class CardMoverPage extends React.Component {
                   Escolha a fase
                 </option>
                 {phases.map(phase => (
-                    <option value={phase.id}> {phase.name} </option>
+                    <option value={phase.id} key={phase.id}> {phase.name} </option>
                 ))}
               </select>
             </div>
@@ -137,7 +136,7 @@ class CardMoverPage extends React.Component {
                   Escolha a fase
                 </option>
                 {cardsCanBeMoveToPhases.map(phase => (
-                    <option value={phase.id}> {phase.name} </option>
+                    <option value={phase.id} key={phase.id}> {phase.name} </option>
                 ))}
                 s
               </select>
