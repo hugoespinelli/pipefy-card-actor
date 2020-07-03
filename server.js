@@ -160,19 +160,16 @@ app.get("/phases/:phaseId", async (request, response) => {
 });
 
 
-const CRON_PIPES_IDS = [
-    1175536, 301341122, 301342218,
-    301329844
-];
-
 cron.schedule('*/3 * * * *', async () => {
 
     const first_step_register = "F1: Completar cadastro";
     const second_step_register = "F1: Completar cadastro2 (*)";
     const third_step_register = "F1: Completar cadastro3";
 
+    const pipefyapi = new Pipefyapi();
+    const pipeIds = await pipefyapi.getPipeIdsFromDatabase();
 
-    CRON_PIPES_IDS.map(async pipeId => {
+    pipeIds.map(async pipeId => {
 
         const moveLateCardsController = new MoveLateCardsController(pipeId);
         try {
@@ -189,7 +186,9 @@ cron.schedule('*/3 * * * *', async () => {
 cron.schedule("*/10 * * * *", async () => {
 
     const GENERAL_PIPE_ID = 1175536;
+
     const pipefyapi = new Pipefyapi();
+    const pipeIds = await pipefyapi.getPipeIdsFromDatabase();
 
     console.log('Começou cron de conexão de cards de candidadtos cadastrados');
     let allCards = [];
@@ -200,7 +199,7 @@ cron.schedule("*/10 * * * *", async () => {
         console.log('excecao', e);
     }
 
-    CRON_PIPES_IDS.map(async (pipeId) => {
+    pipeIds.map(async (pipeId) => {
 
         const { data } = await pipefyapi.get_pipe_info(pipeId);
         const phases = data.data.pipe.phases;
