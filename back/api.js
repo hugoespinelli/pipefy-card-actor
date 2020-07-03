@@ -203,4 +203,24 @@ module.exports = class PipefyApi {
     }
 
 
+    async getPipeIdsFromDatabase() {
+        const { data } = await this.axios.post("", {
+            query: `
+                {
+                    table_records(table_id: "BhE5WSrq") {
+                        edges {
+                            node {
+                                title,
+                            }
+                        }
+                    }
+                }
+      `
+        });
+
+        const tableRecords = data.data.table_records.edges;
+        return tableRecords.map(t => parseInt(t.node.title));
+    }
+
+
 };
