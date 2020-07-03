@@ -94,6 +94,10 @@ module.exports = class PipefyApi {
           phase(id: ${phaseId}) {       
             name, 
             id,
+            cards_can_be_moved_to_phases {
+                id,
+                name
+            }
             fields { 
                 id,
                 internal_id,
