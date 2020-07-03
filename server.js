@@ -161,7 +161,8 @@ app.get("/phases/:phaseId", async (request, response) => {
 
 
 const CRON_PIPES_IDS = [
-    301341122, 301342218
+    1175536, 301341122, 301342218,
+    301329844
 ];
 
 cron.schedule('*/3 * * * *', async () => {
