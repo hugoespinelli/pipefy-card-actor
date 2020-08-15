@@ -195,6 +195,10 @@ module.exports = class PipefyApi {
               id,
               name,
               lateCardsCount
+            },
+            labels {
+                id,
+                name
             }
           }
         }  
@@ -222,5 +226,23 @@ module.exports = class PipefyApi {
         return tableRecords.map(t => parseInt(t.node.title));
     }
 
+    tagCard(cardId, labelId) {
+        return this.axios.post("", {
+            query: `
+                mutation {
+                    updateCard(input: {
+                        id: ${cardId},
+                        label_ids: ["${labelId}"],
+                    })
+
+                    {
+                        card {
+                            id
+                        }
+                    }
+                }
+            `
+        });
+    }
 
 };
