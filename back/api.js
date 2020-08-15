@@ -245,4 +245,46 @@ module.exports = class PipefyApi {
         });
     }
 
+
+    getCard(cardId) {
+        return this.axios.post("", {
+            query: `
+               card(id: ${cardId}}) {
+                    expired,
+                    late,
+                    title,
+                    createdAt
+                    current_phase { id, name },
+                    labels { id, name },
+                    child_relations {
+                        cards {
+                            id,
+                            title,
+                            path
+                        },
+                        name,
+                        pipe {
+                            id,
+                            name
+                        },
+                        source_type
+                    },
+                    fields {
+                        array_value,
+                        name,
+                        value,
+                        field {
+                            id,
+                            internal_id,
+                            type,
+                            label
+                        },
+                        
+                    }
+            
+                }
+            `
+        });
+    }
+
 };
