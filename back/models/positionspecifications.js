@@ -1,9 +1,9 @@
 
 const EXPERIENCE_LEVELS = {
-    ESTAGIO: "Estágio",
-    JUNIOR: "Júnior",
-    PLENO: "Pleno",
-    SENIOR: "Senior",
+    ESTAGIO: "estágio",
+    JUNIOR: "júnior",
+    PLENO: "pleno",
+    SENIOR: "senior",
 };
 
 class PositionSpecifications {
