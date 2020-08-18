@@ -34,4 +34,12 @@ describe("Card tagger tests", () => {
         expect(cardTagger.pipefyApi.getCard).toHaveBeenCalled();
     });
 
+    test("should map api response correctly", async () => {
+        const cardTagger = new CardTagger(301345144);
+        await cardTagger.getCardsFromPipe();
+        const cards = await cardTagger.fillCardsInfoFromGeneralPipe(cardTagger.cards);
+        // console.log(cardTagger.cards);
+        console.log(cards);
+    });
+
 });

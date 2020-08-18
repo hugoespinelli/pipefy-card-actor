@@ -1,3 +1,6 @@
+// Only for testing, remove this on production
+require('dotenv').config();
+
 const axios = require("axios");
 const { flatten } = require("lodash");
 const { convert_date } = require("./utils");
@@ -76,7 +79,20 @@ module.exports = class PipefyApi {
                           ${fieldsString}
                           due_date,
                           late,
-                          createdAt
+                          createdAt,
+                          child_relations {
+                                cards {
+                                    id,
+                                    title,
+                                    path
+                                },
+                                name,
+                                pipe {
+                                    id,
+                                    name
+                                },
+                                source_type
+                            },
                       }
                   }
 
@@ -249,7 +265,8 @@ module.exports = class PipefyApi {
     getCard(cardId) {
         return this.axios.post("", {
             query: `
-               card(id: ${cardId}}) {
+            {
+               card(id: ${cardId}) {
                     expired,
                     late,
                     title,
@@ -283,6 +300,7 @@ module.exports = class PipefyApi {
                     }
             
                 }
+            }
             `
         });
     }

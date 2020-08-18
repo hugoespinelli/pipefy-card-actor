@@ -7,24 +7,39 @@ module.exports = class CardTagger {
         this.cards = [];
     }
 
-    getCardsFromPipe() {
-        this.cards = this.pipefyApi.get_all_cards(this.pipeId);
+    async getCardsFromPipe() {
+        try {
+            const cards = await this.pipefyApi.get_all_cards(this.pipeId);
+            this.cards = await this.fillCardsInfoFromGeneralPipe(cards);
+        } catch (e) {
+            throw new Error(e);
+        }
+
     }
 
-    async fillCardsInfoFromGeneralPipe(cards) {
-        return await cards.map(async card => {
+    fillCardsInfoFromGeneralPipe(cards) {
+        return Promise.all(cards.map(async node => {
+            const card = node.node;
             const child_relations = card.child_relations;
-
+            
             if(child_relations.length === 0) {
                 console.log(`Card ${card.title} não conectado com nenhum card`);
-                return {...card, specifications: []};
+                return card;
             }
 
-            const cardId = child_relations[0].cards[0].id;
-            const generalPipeCardInfo = this.pipefyApi.getCard(cardId);
-            return { ...card, specifications: generalPipeCardInfo.card.fields};
+            const pipeRelation = child_relations.find(card => card.source_type === 'PipeRelation');
 
-        }) ;
+            if(!pipeRelation || pipeRelation.cards.length === 0) {
+                console.log(`Card ${card.title} não conectado com nenhum card`);
+                return card;
+            }
+
+            const cardId = pipeRelation.cards[0].id;
+            const response = await this.pipefyApi.getCard(cardId);
+            const generalPipeCardInfo = response.data.data;
+            return { ...card, fields: card.fields.concat(generalPipeCardInfo.card.fields) };
+
+        }));
 
     }
 
