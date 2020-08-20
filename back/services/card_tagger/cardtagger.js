@@ -21,7 +21,7 @@ module.exports = class CardTagger {
         return Promise.all(cards.map(async node => {
             const card = node.node;
             const child_relations = card.child_relations;
-            
+
             if(child_relations.length === 0) {
                 console.log(`Card ${card.title} não conectado com nenhum card`);
                 return card;

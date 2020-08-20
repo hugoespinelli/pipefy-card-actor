@@ -238,8 +238,7 @@ module.exports = class PipefyApi {
       `
         });
 
-        const tableRecords = data.data.table_records.edges;
-        return tableRecords.map(t => parseInt(t.node.title));
+        return data.data.table_records.edges;
     }
 
     tagCard(cardId, labelId) {

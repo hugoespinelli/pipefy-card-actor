@@ -7,7 +7,8 @@ module.exports = class RequirementsAssessor {
 
     analyzeCards() {
         this.cards = cards.map(card => {
-
+            const feedbacks = this.analyzers.map(analyzer => analyzer.analyze(card));
+            return {...card, feedbacks};
         });
     }
 
