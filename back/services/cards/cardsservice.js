@@ -1,16 +1,15 @@
 const PipefyApi = require("../../api");
 
-module.exports = class CardTagger {
+module.exports = class CardsService {
     constructor(pipeId) {
         this.pipefyApi = new PipefyApi();
         this.pipeId = pipeId;
-        this.cards = [];
     }
 
     async getCardsFromPipe() {
         try {
             const cards = await this.pipefyApi.get_all_cards(this.pipeId);
-            this.cards = await this.fillCardsInfoFromGeneralPipe(cards);
+            return await this.fillCardsInfoFromGeneralPipe(cards);
         } catch (e) {
             throw new Error(e);
         }

@@ -1,12 +1,11 @@
 
-module.exports = class RequirementsAssessor {
-    constructor(cards, analyzers, positionSpecification) {
-        this.cards = cards;
+module.exports = class RequirementsAssessorService {
+    constructor(analyzers, positionSpecification) {
         this.analyzers = analyzers.map(analyzer => new analyzer(positionSpecification));
     }
 
-    analyzeCards() {
-        this.cards = cards.map(card => {
+    analyzeCards(cards) {
+        return cards.map(card => {
             const feedbacks = this.analyzers.map(analyzer => analyzer.analyze(card));
             return {...card, feedbacks};
         });

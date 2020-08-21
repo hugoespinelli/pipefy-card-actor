@@ -24,9 +24,21 @@ module.exports = class ExperienceAnalyzer {
             return new Feedback(false, REASON);
         }
 
-        const personLevelExperience = field.value.toLowerCase();
+        let personLevelExperience = field.value.toLowerCase();
+        personLevelExperience = this.removeTrailingFromExperienceString(personLevelExperience);
         const isApproved = JOB_FIT[personLevelExperience].includes(this.experienceRequired);
         return isApproved ? new Feedback(true) : new Feedback(false, REASON);
+    }
+
+    removeTrailingFromExperienceString(string) {
+        const stringSplitted = string.split(" ");
+        const stringSize = stringSplitted.length;
+        if(stringSize === 1) {
+            return stringSplitted[0];
+        }
+
+        return stringSplitted[stringSize-1]
+
     }
 
 };

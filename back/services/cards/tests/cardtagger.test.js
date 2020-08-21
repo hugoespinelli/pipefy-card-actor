@@ -1,5 +1,5 @@
 
-const CardTagger = require("../cardtagger");
+const CardTagger = require("../cardsservice");
 
 
 describe("Card tagger tests", () => {

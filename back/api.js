@@ -231,6 +231,10 @@ module.exports = class PipefyApi {
                         edges {
                             node {
                                 title,
+                                record_fields {
+                                    name,
+                                    value
+                                }
                             }
                         }
                     }

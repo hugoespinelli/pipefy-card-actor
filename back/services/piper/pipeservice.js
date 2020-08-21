@@ -1,6 +1,6 @@
 const PipefyApi = require("../../api");
 
-module.exports = class Pipe {
+module.exports = class PipeService {
 
     constructor(pipeId) {
         this.pipeId = pipeId;

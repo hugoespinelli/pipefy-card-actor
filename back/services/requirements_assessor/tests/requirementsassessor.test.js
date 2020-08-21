@@ -1,5 +1,5 @@
 
-const RequirementAssessor = require("../requirementsassessor");
+const RequirementAssessor = require("../requirementsassessorservice");
 const LocationAnalyzer = require("../analyzers/locationanalyzer");
 const {PositionSpecifications} = require("../../../models/positionspecifications");
 
