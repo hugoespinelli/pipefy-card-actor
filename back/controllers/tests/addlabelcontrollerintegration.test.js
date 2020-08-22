@@ -20,6 +20,8 @@ describe("Add label controller integration tests", () => {
 
         test("service label should be populated", async () => {
 
+            jest.setTimeout(15000);
+
             const addLabelCardController = new AddLabelCardController(301345144);
             const labelsMock = [
                 { id: '304536662', name: 'Shortlist' },

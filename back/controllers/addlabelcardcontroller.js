@@ -12,7 +12,7 @@ const LocationAnalyzer = require("../services/requirements_assessor/analyzers/lo
 
 const {PositionSpecifications, EXPERIENCE_LEVELS} = require("../models/positionspecifications");
 
-const PHASE_TO_GET_CARDS_TO_LABEL = "F1: Inscrito na vaga";
+const PHASES_TO_GET_CARDS_TO_LABEL = ["F1: Candidato da base", "F1: Cadastro completo"];
 const TABLE_ID = "zY3IsJ6P";
 
 const EXPERIENCE_POSITION_FIELD = "nivel_profissional_da_vaga";
@@ -38,8 +38,9 @@ module.exports = class AddLabelCardController {
         return this.pipe.labels;
     }
 
-    getPhase() {
-        return this.pipe.phases.find(phase => phase.name === PHASE_TO_GET_CARDS_TO_LABEL);
+    getPhasesIds() {
+        const phases = this.pipe.phases.filter(phase => PHASES_TO_GET_CARDS_TO_LABEL.includes(phase.name));
+        return phases.map(phase => phase.id);
     }
 
     async getPositionSpecification() {
@@ -67,8 +68,10 @@ module.exports = class AddLabelCardController {
         const labels = this.getLabelsFromPipe();
         const labelService = new LabelService(labels);
 
-        const phaseToFilter = this.getPhase();
-        let cards = await this.cardTaggerService.getCardsFromPipe([phaseToFilter.id]);
+        const phasesIds = this.getPhasesIds();
+        let cards = await this.cardTaggerService.getCardsFromPipe(phasesIds);
+
+        console.log(cards);
 
         const positionSpecifications = await this.getPositionSpecification();
 
