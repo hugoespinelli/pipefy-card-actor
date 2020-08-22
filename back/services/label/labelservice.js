@@ -12,14 +12,14 @@ module.exports = class LabelService {
         return labels.filter(label => this.labels_options.includes(label.name));
     }
 
-    async tagCard(cardId, label) {
+    async tagCard(cardId, label, oldLabelsIds = null) {
         if (!this.isLabelAvailable(label)) return false;
         if (!this.pipeHasLabelRegistered(label)) return false;
 
         const labelFromPipe = this.labels.find(l => l.name.toLowerCase() === label.toLowerCase());
 
         try {
-            await this.pipefyApi.tagCard(cardId, labelFromPipe.id);
+            await this.pipefyApi.tagCard(cardId, labelFromPipe.id, oldLabelsIds);
         } catch(e) {
             console.log(e);
             return false

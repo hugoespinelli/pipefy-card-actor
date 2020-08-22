@@ -86,7 +86,8 @@ module.exports = class AddLabelCardController {
 
         let cards = this.filterCardsByPhaseHistoryName(this.cards, CANDIDATO_BASE_PHASE);
         return Promise.all(cards.map(card => {
-            return labelService.tagCard(card.id, LABEL_OPTIONS.CANDIDATO_BASE);
+            const oldLabelsIds = card.labels.map(l => l.id);
+            return labelService.tagCard(card.id, LABEL_OPTIONS.CANDIDATO_BASE, oldLabelsIds);
         }));
     }
 
@@ -109,10 +110,11 @@ module.exports = class AddLabelCardController {
         cards = requirementsAssessor.analyzeCards(cards);
         return Promise.all(cards.map(async card => {
             const isEliminated = card.feedbacks.some(feedback => feedback.isApproved === false);
+            const labelsIds = card.labels.map(l => l.id);
             if (isEliminated) {
-                return labelService.tagCard(card.id, LABEL_OPTIONS.ELIMINADO)
+                return labelService.tagCard(card.id, LABEL_OPTIONS.ELIMINADO, labelsIds)
             } else {
-                return labelService.tagCard(card.id, LABEL_OPTIONS.POTENCIAL);
+                return labelService.tagCard(card.id, LABEL_OPTIONS.POTENCIAL, labelsIds);
             }
         }));
     }

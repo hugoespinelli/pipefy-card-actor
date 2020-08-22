@@ -98,7 +98,12 @@ module.exports = class PipefyApi {
                                   name,
                                   id
                               }
-                          }
+                            },
+                            labels {
+                                id,
+                                name
+                            }
+                          
                       }
                   }
 
@@ -273,13 +278,20 @@ module.exports = class PipefyApi {
         return data.data.table_records.edges;
     }
 
-    tagCard(cardId, labelId) {
+    tagCard(cardId, newLabelId, oldLabelsIds = null) {
+        if (!oldLabelsIds) {
+            oldLabelsIds = []
+        }
+        oldLabelsIds.push(newLabelId);
+        oldLabelsIds = oldLabelsIds.map(label => `"${label}"`);
+        const labelsIdsInputs = oldLabelsIds.join(",");
+
         return this.axios.post("", {
             query: `
                 mutation {
                     updateCard(input: {
                         id: ${cardId},
-                        label_ids: ["${labelId}"],
+                        label_ids: [${labelsIdsInputs}],
                     })
 
                     {
