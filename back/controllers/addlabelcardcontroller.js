@@ -12,7 +12,8 @@ const LocationAnalyzer = require("../services/requirements_assessor/analyzers/lo
 
 const {PositionSpecifications, EXPERIENCE_LEVELS} = require("../models/positionspecifications");
 
-const PHASES_TO_GET_CARDS_TO_LABEL = ["F1: Candidato da base", "F1: Cadastro completo"];
+const CANDIDATO_BASE_PHASE = "F1: Candidato da base";
+const PHASES_TO_GET_CARDS_TO_ELIMNATED_LABEL = [CANDIDATO_BASE_PHASE, "F1: Cadastro completo"];
 const TABLE_ID = "zY3IsJ6P";
 
 const EXPERIENCE_POSITION_FIELD = "nivel_profissional_da_vaga";
@@ -27,6 +28,12 @@ module.exports = class AddLabelCardController {
         this.pipeService = new PipeService(pipeId);
         this.tableService = new TableService(TABLE_ID);
         this.pipe = null;
+        this.cards = [];
+    }
+
+    async build() {
+        await this.loadPipe();
+        await this.loadCards();
     }
 
     async loadPipe() {
@@ -34,13 +41,16 @@ module.exports = class AddLabelCardController {
         this.pipe = pipe;
     }
 
+    async loadCards() {
+        this.cards = await this.cardTaggerService.getCardsFromPipe();
+    }
+
     getLabelsFromPipe() {
         return this.pipe.labels;
     }
 
-    getPhasesIds() {
-        const phases = this.pipe.phases.filter(phase => PHASES_TO_GET_CARDS_TO_LABEL.includes(phase.name));
-        return phases.map(phase => phase.id);
+    filterCardsByPhaseNames(cards, phasesNames) {
+        return cards.filter(c => phasesNames.includes(c.current_phase.name))
     }
 
     async getPositionSpecification() {
@@ -63,13 +73,28 @@ module.exports = class AddLabelCardController {
 
     }
 
-    async fillCardsLabelsInPipe() {
-        await this.loadPipe();
+    filterCardsByPhaseHistoryName(cards, phaseName) {
+        return cards.filter(card => {
+           const phasesHistory =  card.phases_history;
+           return phasesHistory.some(({phase}) => phase.name === phaseName);
+        });
+    }
+
+    async fillCandidatoBaseLabelsInPipe() {
         const labels = this.getLabelsFromPipe();
         const labelService = new LabelService(labels);
 
-        const phasesIds = this.getPhasesIds();
-        let cards = await this.cardTaggerService.getCardsFromPipe(phasesIds);
+        let cards = this.filterCardsByPhaseHistoryName(this.cards, CANDIDATO_BASE_PHASE);
+        return Promise.all(cards.map(card => {
+            return labelService.tagCard(card.id, LABEL_OPTIONS.CANDIDATO_BASE);
+        }));
+    }
+
+    async fillEliminatedCardsLabelsInPipe() {
+        const labels = this.getLabelsFromPipe();
+        const labelService = new LabelService(labels);
+
+        let cards = this.filterCardsByPhaseNames(this.cards, PHASES_TO_GET_CARDS_TO_ELIMNATED_LABEL);
 
         const positionSpecifications = await this.getPositionSpecification();
 
@@ -85,9 +110,9 @@ module.exports = class AddLabelCardController {
         return Promise.all(cards.map(async card => {
             const isEliminated = card.feedbacks.some(feedback => feedback.isApproved === false);
             if (isEliminated) {
-                await labelService.tagCard(card.id, LABEL_OPTIONS.ELIMINADO)
+                return labelService.tagCard(card.id, LABEL_OPTIONS.ELIMINADO)
             } else {
-                await labelService.tagCard(card.id, LABEL_OPTIONS.POTENCIAL);
+                return labelService.tagCard(card.id, LABEL_OPTIONS.POTENCIAL);
             }
         }));
     }

@@ -16,9 +16,6 @@ module.exports = class LabelService {
         if (!this.isLabelAvailable(label)) return false;
         if (!this.pipeHasLabelRegistered(label)) return false;
 
-        console.log(label);
-        console.log(this.labels);
-
         const labelFromPipe = this.labels.find(l => l.name.toLowerCase() === label.toLowerCase());
 
         try {

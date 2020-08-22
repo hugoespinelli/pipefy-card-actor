@@ -16,11 +16,11 @@ describe("Add label controller integration tests", () => {
         expect(labels.length).toBeGreaterThan(1);
     });
 
-    describe("function fillCardsLabelsInPipe should integrate services correctly",  () => {
+    describe("function fill labels functions should integrate services correctly",  () => {
+
+        jest.setTimeout(15000);
 
         test("service label should be populated", async () => {
-
-            jest.setTimeout(15000);
 
             const addLabelCardController = new AddLabelCardController(301345144);
             const labelsMock = [
@@ -33,19 +33,39 @@ describe("Add label controller integration tests", () => {
                 { id: '304536668', name: 'Avaliação' }
             ];
             addLabelCardController.getLabelsFromPipe = jest.fn().mockReturnValue(labelsMock);
-            await addLabelCardController.fillCardsLabelsInPipe();
+            await addLabelCardController.build();
+            await addLabelCardController.fillEliminatedCardsLabelsInPipe();
+        });
+
+
+        test("it should fill labels on cards that passed in candidatos base phase" , async () => {
+
+            const addLabelCardController = new AddLabelCardController(301345144);
+            const labelsMock = [
+                { id: '304536662', name: 'Shortlist' },
+                { id: '304536663', name: 'Potencial' },
+                { id: '304536664', name: 'Candidato da Base' },
+                { id: '304536665', name: 'Eliminado' },
+                { id: '304536666', name: 'Comunicação1' },
+                { id: '304536667', name: 'Comunicação2' },
+                { id: '304536668', name: 'Avaliação' }
+            ];
+            addLabelCardController.getLabelsFromPipe = jest.fn().mockReturnValue(labelsMock);
+            await addLabelCardController.build();
+            await addLabelCardController.fillCandidatoBaseLabelsInPipe();
         });
 
     });
-
-
 
     test("it should mount position specifiction correctly", async () => {
 
         const addLabelCardController = new AddLabelCardController(301345144);
 
-        const table = await addLabelCardController.getPositionSpecification();
-        console.log(table);
+        const positionSpecification = await addLabelCardController.getPositionSpecification();
+        expect(positionSpecification).toBeDefined();
     });
+
+
+
 
 });

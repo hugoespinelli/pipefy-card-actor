@@ -11,7 +11,7 @@ module.exports = class PipefyApi {
     constructor() {
         this.axios = axios.create({
             baseURL: BASE_URL,
-            timeout: 30000,
+            timeout: 50000,
             headers: {
                 Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
                 "Content-Type": "application/json"
@@ -93,6 +93,12 @@ module.exports = class PipefyApi {
                                 },
                                 source_type
                             },
+                            phases_history {
+                              phase {
+                                  name,
+                                  id
+                              }
+                          }
                       }
                   }
 
