@@ -71,8 +71,6 @@ module.exports = class AddLabelCardController {
         const phasesIds = this.getPhasesIds();
         let cards = await this.cardTaggerService.getCardsFromPipe(phasesIds);
 
-        console.log(cards);
-
         const positionSpecifications = await this.getPositionSpecification();
 
         if (!positionSpecifications) {
