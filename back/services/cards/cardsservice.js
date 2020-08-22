@@ -6,9 +6,9 @@ module.exports = class CardsService {
         this.pipeId = pipeId;
     }
 
-    async getCardsFromPipe() {
+    async getCardsFromPipe(phaseIds) {
         try {
-            const cards = await this.pipefyApi.get_all_cards(this.pipeId);
+            const cards = await this.pipefyApi.get_all_cards(this.pipeId, phaseIds);
             return await this.fillCardsInfoFromGeneralPipe(cards);
         } catch (e) {
             throw new Error(e);

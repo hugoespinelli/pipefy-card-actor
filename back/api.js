@@ -19,16 +19,16 @@ module.exports = class PipefyApi {
         });
     }
 
-    async get_all_cards(pipeId, phases = [], withoutFields=false) {
+    async get_all_cards(pipeId, phasesIds = [], withoutFields=false) {
         let cursor = null;
 
         let candidates = [];
 
-        if (typeof(phases) !== typeof([])) {
-            phases = [phases];
+        if (typeof(phasesIds) !== typeof([])) {
+            phasesIds = [phasesIds];
         }
 
-        phases = phases.map(p => p.toString());
+        phasesIds = phasesIds.map(p => p.toString());
 
         while (true) {
             const { allCards } = await this.list_pipe_cards_paginated(
@@ -47,9 +47,9 @@ module.exports = class PipefyApi {
 
         candidates = flatten(candidates);
 
-        return phases.length === 0
+        return phasesIds.length === 0
             ? candidates
-            : candidates.filter(c => phases.includes(c.node.current_phase.id));
+            : candidates.filter(c => phasesIds.includes(c.node.current_phase.id));
     }
 
     list_pipe_cards_paginated(pipeId, lastCursor = null, withoutFields=false) {
@@ -228,6 +228,28 @@ module.exports = class PipefyApi {
             query: `
                 {
                     table_records(table_id: "BhE5WSrq") {
+                        edges {
+                            node {
+                                title,
+                                record_fields {
+                                    name,
+                                    value
+                                }
+                            }
+                        }
+                    }
+                }
+      `
+        });
+
+        return data.data.table_records.edges;
+    }
+
+    async getTable(tableId) {
+        const { data } = await this.axios.post("", {
+            query: `
+                {
+                    table_records(table_id: "${tableId}") {
                         edges {
                             node {
                                 title,
