@@ -1,4 +1,4 @@
-
+const { KNOWHOW_POINTS } = require("./consts");
 
 module.exports = class RegularExperiencer {
 
@@ -16,7 +16,7 @@ module.exports = class RegularExperiencer {
     }
 
     isApprovedOnMinimumRequirements(fields) {
-        return fields.some(field => field.value.toLowerCase() === this.minimumRequirement);
+        return fields.some(field => KNOWHOW_POINTS[field.value.toLowerCase()] >= KNOWHOW_POINTS[this.minimumRequirement]);
     }
 
     isApprovedOnNonRequirements(fields) {

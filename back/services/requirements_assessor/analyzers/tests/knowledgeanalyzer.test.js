@@ -70,6 +70,24 @@ describe("Knowledge analyzer tests", () => {
             expect(feedback.isApproved).toBeFalsy();
         });
 
+        test("it should return true when candidate is senior", () => {
+            const knowledgeAnalyzer = new KnowledgeAnalyzer(new PositionSpecifications(EXPERIENCE_LEVELS.JUNIOR, null, null));
+            const cardMock = {
+                fields: [
+                    {
+                        "name": "conhecimento yyy",
+                        "value": "alto"
+                    },
+                    {
+                        "name": "conhecimento xxx",
+                        "value": "alto"
+                    }
+                ]
+            };
+            const feedback = knowledgeAnalyzer.analyze(cardMock);
+            expect(feedback.isApproved).toBeTruthy();
+        });
+
     });
 
     describe("tests for pleno", () => {
