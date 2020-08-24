@@ -3,7 +3,7 @@ const EXPERIENCE_LEVELS = {
     ESTAGIO: "estágio",
     JUNIOR: "júnior",
     PLENO: "pleno",
-    SENIOR: "senior",
+    SENIOR: "sênior",
 };
 
 class PositionSpecifications {
