@@ -192,7 +192,7 @@ cron.schedule("*/5 * * * *", async () => {
     const END_PHASE = "F2: Confirmação";
 
     console.log('Começou cron de mover cards candidato da base e cadastro completo para confirmação');
-    
+
     await Promise.all(pipeIds.map(async (pipeId) => {
 
         const { data } = await pipefyapi.get_pipe_info(pipeId);
