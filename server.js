@@ -183,6 +183,51 @@ cron.schedule('*/3 * * * *', async () => {
 
 });
 
+cron.schedule("*/5 * * * *", async () => {
+
+    const pipefyapi = new Pipefyapi();
+    const pipeIds = await pipefyapi.getPipeIdsFromDatabase();
+
+    const PHASES_TO_BE_MOVED = ["F1: Candidato da base", "F1: Cadastro completo"];
+    const END_PHASE = "F2: Confirmação";
+
+    console.log('Começou cron de mover cards candidato da base e cadastro completo para confirmação');
+
+    await Promise.all(pipeIds.map(async (pipeId) => {
+
+        const { data } = await pipefyapi.get_pipe_info(pipeId);
+        const phases = data.data.pipe.phases;
+
+        const phasesToBeMoved = phases.filter(phase => PHASES_TO_BE_MOVED.includes(phase.name));
+        const endPhase = phases.find(phase => phase.name === END_PHASE);
+        const phasesIdsToGet = phasesToBeMoved.map(phase => phase.id);
+
+        if (!endPhase) {
+            console.log(`O pipe ${pipeId} não possui a fase ${END_PHASE} cadastrada!`);
+            return Promise.resolve();
+        }
+
+        let allCards = [], cardsIds = [];
+        try {
+            allCards = await pipefyapi.get_all_cards(pipeId, phasesIdsToGet, true);
+            cardsIds = allCards.map(c => c.node.id);
+        } catch (e) {
+            console.log('excecao', e);
+        }
+
+        try {
+            return pipefyapi.moveCardsToPhase(cardsIds, endPhase.id);
+        } catch (e) {
+            console.log(e);
+        }
+
+    }));
+
+    console.log('Terminando cron de mover cards candidato da base e cadastro completo para confirmação');
+
+});
+
+
 cron.schedule("*/10 * * * *", async () => {
 
     const GENERAL_PIPE_ID = 1175536;
