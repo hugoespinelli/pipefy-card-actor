@@ -5,7 +5,7 @@ const InternshipExperiencer = require("./experiencers/internshipexperiencer");
 const RegularExperiencer = require("./experiencers/regularexperiencer");
 const { KNOWHOW_LEVELS } = require("./experiencers/consts");
 
-const REASON = "O candidato não possui proficiência das tecnologias necessárias para a vaga";
+const REASON = "Nível de conhecimento das tecnolgias";
 const KEYWORD_TO_SEARCH = "conhecimento";
 
 const MINIMUM_REQUIREMENTS = {

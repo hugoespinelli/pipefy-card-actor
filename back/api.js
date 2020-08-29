@@ -221,7 +221,18 @@ module.exports = class PipefyApi {
             phases {
               id,
               name,
-              lateCardsCount
+              lateCardsCount,
+              fields { 
+                id,
+                internal_id,
+                uuid,
+                description,
+                label, 
+                options, 
+                required, 
+                type,
+                is_multiple
+               }
             },
             labels {
                 id,

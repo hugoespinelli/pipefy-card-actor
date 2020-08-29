@@ -2,7 +2,7 @@
 const { EXPERIENCE_LEVELS } = require("../../../models/positionspecifications");
 const Feedback = require("../../../models/feedback");
 
-const REASON = "O candidato não atende ao nível profissional da vaga";
+const REASON = "Nível profissional ";
 const KEYWORD_TO_SEARCH = "Nível profissional";
 
 const JOB_FIT = {
