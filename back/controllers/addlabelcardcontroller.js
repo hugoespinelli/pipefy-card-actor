@@ -14,7 +14,7 @@ const {PositionSpecifications, EXPERIENCE_LEVELS} = require("../models/positions
 
 const CANDIDATO_BASE_PHASE = "F1: Candidato da base";
 const PHASES_TO_GET_CARDS_TO_ELIMNATED_LABEL = [CANDIDATO_BASE_PHASE, "F1: Cadastro completo"];
-const TABLE_ID = "zY3IsJ6P";
+const TABLE_ID = "BhE5WSrq";
 
 const EXPERIENCE_POSITION_FIELD = "nivel_profissional_da_vaga";
 const SALARY_POSITION_FIELD = "salario";
@@ -55,7 +55,7 @@ module.exports = class AddLabelCardController {
 
     async getPositionSpecification() {
         const table_records = await this.tableService.getTable();
-        const pipeIdFound = table_records.find(row => row.node.title == this.pipeId);
+        const pipeIdFound = table_records.find(row => parseInt(row.node.title) === this.pipeId);
 
         if (!pipeIdFound) {
             console.log(`O pipe ${this.pipeId} não está cadastrado!`);

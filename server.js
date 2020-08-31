@@ -223,7 +223,7 @@ cron.schedule("*/10 * * * *", async () => {
 });
 
 
-cron.schedule("*/1 * * * *", async () => {
+cron.schedule("*/5 * * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
 
