@@ -7,6 +7,7 @@
   "description": "A project to interact with pipefy api.",
   "main": "server.js",
   "scripts": {
+    "test": "jest back",
     "start": "rimraf ./public && webpack && node server.js"
   },
   "dependencies": {
@@ -35,17 +36,19 @@
     "css-loader": "^0.27.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "html-webpack-plugin": "*",
+    "jest": "^26.4.0",
     "rimraf": "^2.6.1",
+    "style-loader": "^0.16.1",
     "webpack": "^2.5.0",
-    "webpack-dev-server": "^2.5.0",
-    "style-loader": "^0.16.1"
+    "webpack-dev-server": "^2.5.0"
   },
   "babel": {
     "presets": [
       "env",
       "react",
       "stage-2"
-    ]
+    ],
+    "test": ["jest"]
   },
   "engines": {
     "node": "10.1.x"

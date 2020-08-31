@@ -12,6 +12,8 @@ const GeneralPipeController = require("./back/generalpipecontroller");
 const Pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
+const LabelService = require("./back/services/label/labelservice");
+const AddLabelCardController = require("./back/controllers/addlabelcardcontroller");
 const { convert_date, addDays } = require("./back/utils");
 
 //Enable body parser
@@ -159,7 +161,6 @@ app.get("/phases/:phaseId", async (request, response) => {
     }
 });
 
-
 cron.schedule('*/3 * * * *', async () => {
 
     const first_step_register = "F1: Completar cadastro";
@@ -167,7 +168,8 @@ cron.schedule('*/3 * * * *', async () => {
     const third_step_register = "F1: Completar cadastro3";
 
     const pipefyapi = new Pipefyapi();
-    const pipeIds = await pipefyapi.getPipeIdsFromDatabase();
+    const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
+    const pipeIds = tableRecords.map(t => parseInt(t.node.title));
 
     pipeIds.map(async pipeId => {
 
@@ -233,7 +235,9 @@ cron.schedule("*/10 * * * *", async () => {
     const GENERAL_PIPE_ID = 1175536;
 
     const pipefyapi = new Pipefyapi();
-    const pipeIds = await pipefyapi.getPipeIdsFromDatabase();
+
+    const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
+    const pipeIds = tableRecords.map(t => parseInt(t.node.title));
 
     console.log('Começou cron de conexão de cards de candidadtos cadastrados');
     let allCards = [];
@@ -261,6 +265,38 @@ cron.schedule("*/10 * * * *", async () => {
 
     console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
 
+});
+
+
+cron.schedule("*/5 * * * *", async () => {
+
+    console.log("Começou cron de etiquetação de cards...");
+
+    const pipefyapi = new Pipefyapi();
+    const TABLE_ID = "BhE5WSrq";
+
+    const rows = await pipefyapi.getTable(TABLE_ID);
+    const pipeIds = rows.map(row => parseInt(row.node.title));
+
+    await Promise.all(
+        pipeIds.map(async pipeId => {
+
+            const addLabelCardController = new AddLabelCardController(pipeId);
+            await addLabelCardController.build();
+
+            console.log("Etiquetando cards potenciais e eliminados...");
+            await addLabelCardController.fillEliminatedCardsLabelsInPipe();
+            console.log("Finalizada etiquetacao de cards potenciais e eliminados.");
+
+            await addLabelCardController.build();
+
+            console.log("Etiquetando cards que passaram pelo candidato base...");
+            await addLabelCardController.fillCandidatoBaseLabelsInPipe();
+            console.log("Finalizada etiquetacao de cards que passaram pelo candidato base.");
+        })
+    );
+
+    console.log("Finalizada cron de etiquetação de cards.");
 });
 
 const listener = app.listen(process.env.PORT, () => {

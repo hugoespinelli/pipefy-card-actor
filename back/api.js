@@ -1,3 +1,6 @@
+// Only for testing, remove this on production
+require('dotenv').config();
+
 const axios = require("axios");
 const { flatten } = require("lodash");
 const { convert_date } = require("./utils");
@@ -8,7 +11,7 @@ module.exports = class PipefyApi {
     constructor() {
         this.axios = axios.create({
             baseURL: BASE_URL,
-            timeout: 30000,
+            timeout: 50000,
             headers: {
                 Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
                 "Content-Type": "application/json"
@@ -16,16 +19,16 @@ module.exports = class PipefyApi {
         });
     }
 
-    async get_all_cards(pipeId, phases = [], withoutFields=false) {
+    async get_all_cards(pipeId, phasesIds = [], withoutFields=false) {
         let cursor = null;
 
         let candidates = [];
 
-        if (typeof(phases) !== typeof([])) {
-            phases = [phases];
+        if (typeof(phasesIds) !== typeof([])) {
+            phasesIds = [phasesIds];
         }
 
-        phases = phases.map(p => p.toString());
+        phasesIds = phasesIds.map(p => p.toString());
 
         while (true) {
             const { allCards } = await this.list_pipe_cards_paginated(
@@ -44,9 +47,9 @@ module.exports = class PipefyApi {
 
         candidates = flatten(candidates);
 
-        return phases.length === 0
+        return phasesIds.length === 0
             ? candidates
-            : candidates.filter(c => phases.includes(c.node.current_phase.id));
+            : candidates.filter(c => phasesIds.includes(c.node.current_phase.id));
     }
 
     list_pipe_cards_paginated(pipeId, lastCursor = null, withoutFields=false) {
@@ -76,7 +79,31 @@ module.exports = class PipefyApi {
                           ${fieldsString}
                           due_date,
                           late,
-                          createdAt
+                          createdAt,
+                          child_relations {
+                                cards {
+                                    id,
+                                    title,
+                                    path
+                                },
+                                name,
+                                pipe {
+                                    id,
+                                    name
+                                },
+                                source_type
+                            },
+                            phases_history {
+                              phase {
+                                  name,
+                                  id
+                              }
+                            },
+                            labels {
+                                id,
+                                name
+                            }
+                          
                       }
                   }
 
@@ -195,6 +222,10 @@ module.exports = class PipefyApi {
               id,
               name,
               lateCardsCount
+            },
+            labels {
+                id,
+                name
             }
           }
         }  
@@ -211,6 +242,10 @@ module.exports = class PipefyApi {
                         edges {
                             node {
                                 title,
+                                record_fields {
+                                    name,
+                                    value
+                                }
                             }
                         }
                     }
@@ -218,9 +253,99 @@ module.exports = class PipefyApi {
       `
         });
 
-        const tableRecords = data.data.table_records.edges;
-        return tableRecords.map(t => parseInt(t.node.title));
+        return data.data.table_records.edges;
     }
 
+    async getTable(tableId) {
+        const { data } = await this.axios.post("", {
+            query: `
+                {
+                    table_records(table_id: "${tableId}") {
+                        edges {
+                            node {
+                                title,
+                                record_fields {
+                                    name,
+                                    value
+                                }
+                            }
+                        }
+                    }
+                }
+      `
+        });
+
+        return data.data.table_records.edges;
+    }
+
+    tagCard(cardId, newLabelId, oldLabelsIds = null) {
+        if (!oldLabelsIds) {
+            oldLabelsIds = []
+        }
+        oldLabelsIds.push(newLabelId);
+        oldLabelsIds = oldLabelsIds.map(label => `"${label}"`);
+        const labelsIdsInputs = oldLabelsIds.join(",");
+
+        return this.axios.post("", {
+            query: `
+                mutation {
+                    updateCard(input: {
+                        id: ${cardId},
+                        label_ids: [${labelsIdsInputs}],
+                    })
+
+                    {
+                        card {
+                            id
+                        }
+                    }
+                }
+            `
+        });
+    }
+
+
+    getCard(cardId) {
+        return this.axios.post("", {
+            query: `
+            {
+               card(id: ${cardId}) {
+                    expired,
+                    late,
+                    title,
+                    createdAt
+                    current_phase { id, name },
+                    labels { id, name },
+                    child_relations {
+                        cards {
+                            id,
+                            title,
+                            path
+                        },
+                        name,
+                        pipe {
+                            id,
+                            name
+                        },
+                        source_type
+                    },
+                    fields {
+                        array_value,
+                        name,
+                        value,
+                        field {
+                            id,
+                            internal_id,
+                            type,
+                            label
+                        },
+                        
+                    }
+            
+                }
+            }
+            `
+        });
+    }
 
 };
