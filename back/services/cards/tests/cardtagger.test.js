@@ -16,7 +16,7 @@ describe("Card tagger tests", () => {
         expect(cardTagger.pipefyApi.get_all_cards).toHaveBeenCalled();
     });
 
-    test("should call get cards info from general pipe when get cards", () => {
+    test("should call get cards info from general pipe when get EliminatedCandidatecards", () => {
         const cardTagger = new CardTagger(2323);
         cardTagger.pipefyApi.getCard = jest
             .fn()
@@ -38,7 +38,7 @@ describe("Card tagger tests", () => {
         const cardTagger = new CardTagger(301345144);
         await cardTagger.getCardsFromPipe();
         const cards = await cardTagger.fillCardsInfoFromGeneralPipe(cardTagger.cards);
-        // console.log(cardTagger.cards);
+        // console.log(cardTagger.EliminatedCandidatecards);
         console.log(cards);
     });
 

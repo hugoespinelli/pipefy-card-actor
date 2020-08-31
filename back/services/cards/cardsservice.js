@@ -42,4 +42,14 @@ module.exports = class CardsService {
 
     }
 
+    moveLateCards(cards, toPhaseId) {
+        const lateCards = this.filterLateCards(cards);
+        const cardsIds = lateCards.map(c => c.id);
+        return this.pipefyApi.moveCardsToPhase(cardsIds, toPhaseId);
+    }
+
+    filterLateCards(cards) {
+        return cards.filter(c => c.late);
+    }
+
 };

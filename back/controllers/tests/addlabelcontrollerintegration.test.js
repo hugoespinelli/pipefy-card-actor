@@ -38,7 +38,7 @@ describe("Add label controller integration tests", () => {
         });
 
 
-        test("it should fill labels on cards that passed in candidatos base phase" , async () => {
+        test("it should fill labels on EliminatedCandidatecards that passed in candidatos base phase" , async () => {
 
             const addLabelCardController = new AddLabelCardController(301345144);
             const labelsMock = [
