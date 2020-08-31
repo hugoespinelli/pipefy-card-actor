@@ -14,6 +14,7 @@ const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
 const LabelService = require("./back/services/label/labelservice");
 const AddLabelCardController = require("./back/controllers/addlabelcardcontroller");
+const FeedbackController = require("./back/controllers/feedbackcontroller");
 const { convert_date, addDays } = require("./back/utils");
 
 //Enable body parser
@@ -242,6 +243,13 @@ cron.schedule("*/1 * * * *", async () => {
             console.log("Etiquetando cards potenciais e eliminados...");
             await addLabelCardController.fillEliminatedCardsLabelsInPipe();
             console.log("Finalizada etiquetacao de cards potenciais e eliminados.");
+
+            const feedbackController = new FeedbackController(addLabelCardController.cards, addLabelCardController.pipe);
+            await Promise.all([
+                await feedbackController.updateCardFeedback(),
+                await feedbackController.moveCardsToEliminatedPhase(),
+                await feedbackController.moveCardsToPotentialPhase(),
+            ]);
 
             await addLabelCardController.build();
 
