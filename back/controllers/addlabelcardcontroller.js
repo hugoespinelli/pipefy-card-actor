@@ -65,6 +65,11 @@ module.exports = class AddLabelCardController {
         const experience = pipeIdFound.node.record_fields.find(field => field.name === EXPERIENCE_POSITION_FIELD);
         const salary = pipeIdFound.node.record_fields.find(field => field.name === SALARY_POSITION_FIELD);
 
+        if (!experience || !salary) {
+            console.log(`O salario e/ou a experiencia nao estao cadastrados no pipe ${this.pipeId}!`);
+            return null;
+        }
+
         return new PositionSpecifications(
             experience.value,
             false,

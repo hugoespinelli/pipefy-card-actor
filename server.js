@@ -228,7 +228,7 @@ cron.schedule("*/1 * * * *", async () => {
     console.log("Começou cron de etiquetação de cards...");
 
     const pipefyapi = new Pipefyapi();
-    const TABLE_ID = "zY3IsJ6P";
+    const TABLE_ID = "BhE5WSrq";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
     const pipeIds = rows.map(row => parseInt(row.node.title));
