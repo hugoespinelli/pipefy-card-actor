@@ -47,8 +47,7 @@
       "env",
       "react",
       "stage-2"
-    ],
-    "test": ["jest"]
+    ]
   },
   "engines": {
     "node": "10.1.x"
