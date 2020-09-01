@@ -14,7 +14,7 @@ const {PositionSpecifications, EXPERIENCE_LEVELS} = require("../models/positions
 
 const CANDIDATO_BASE_PHASE = "F1: Candidato da base";
 const PHASES_TO_GET_CARDS_TO_ELIMNATED_LABEL = [CANDIDATO_BASE_PHASE, "F1: Cadastro completo"];
-const TABLE_ID = "BhE5WSrq";
+const TABLE_ID = "zY3IsJ6P";
 
 const EXPERIENCE_POSITION_FIELD = "nivel_profissional_da_vaga";
 const SALARY_POSITION_FIELD = "salario";
@@ -113,6 +113,7 @@ module.exports = class AddLabelCardController {
         ], positionSpecifications);
 
         cards = requirementsAssessor.analyzeCards(cards);
+        this.cards = cards;
         return Promise.all(cards.map(async card => {
             const isEliminated = card.feedbacks.some(feedback => feedback.isApproved === false);
             const labelsIds = card.labels.map(l => l.id);

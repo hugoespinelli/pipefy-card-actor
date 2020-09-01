@@ -249,7 +249,7 @@ module.exports = class PipefyApi {
         const { data } = await this.axios.post("", {
             query: `
                 {
-                    table_records(table_id: "BhE5WSrq") {
+                    table_records(table_id: "zY3IsJ6P") {
                         edges {
                             node {
                                 title,

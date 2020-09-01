@@ -162,119 +162,119 @@ app.get("/phases/:phaseId", async (request, response) => {
     }
 });
 
-cron.schedule('*/3 * * * *', async () => {
-
-    const first_step_register = "F1: Completar cadastro";
-    const second_step_register = "F1: Completar cadastro2 (*)";
-    const third_step_register = "F1: Completar cadastro3";
-
-    const pipefyapi = new Pipefyapi();
-    const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
-    const pipeIds = tableRecords.map(t => parseInt(t.node.title));
-
-    pipeIds.map(async pipeId => {
-
-        const moveLateCardsController = new MoveLateCardsController(pipeId);
-        try {
-            await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
-            await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
-        } catch (e) {
-            console.log(e);
-        }
-
-    });
-
-});
-
-cron.schedule("*/5 * * * *", async () => {
-
-    const pipefyapi = new Pipefyapi();
-    const pipeIds = await pipefyapi.getPipeIdsFromDatabase();
-
-    const PHASES_TO_BE_MOVED = ["F1: Candidato da base", "F1: Cadastro completo"];
-    const END_PHASE = "F2: Confirmação";
-
-    console.log('Começou cron de mover cards candidato da base e cadastro completo para confirmação');
-
-    await Promise.all(pipeIds.map(async (pipeId) => {
-
-        const { data } = await pipefyapi.get_pipe_info(pipeId);
-        const phases = data.data.pipe.phases;
-
-        const phasesToBeMoved = phases.filter(phase => PHASES_TO_BE_MOVED.includes(phase.name));
-        const endPhase = phases.find(phase => phase.name === END_PHASE);
-        const phasesIdsToGet = phasesToBeMoved.map(phase => phase.id);
-
-        if (!endPhase) {
-            console.log(`O pipe ${pipeId} não possui a fase ${END_PHASE} cadastrada!`);
-            return Promise.resolve();
-        }
-
-        let allCards = [], cardsIds = [];
-        try {
-            allCards = await pipefyapi.get_all_cards(pipeId, phasesIdsToGet, true);
-            cardsIds = allCards.map(c => c.node.id);
-        } catch (e) {
-            console.log('excecao', e);
-        }
-
-        try {
-            return pipefyapi.moveCardsToPhase(cardsIds, endPhase.id);
-        } catch (e) {
-            console.log(e);
-        }
-
-    }));
-
-    console.log('Terminando cron de mover cards candidato da base e cadastro completo para confirmação');
-
-});
-
-
-cron.schedule("*/10 * * * *", async () => {
-
-    const GENERAL_PIPE_ID = 1175536;
-
-    const pipefyapi = new Pipefyapi();
-
-    const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
-    const pipeIds = tableRecords.map(t => parseInt(t.node.title));
-
-    console.log('Começou cron de conexão de cards de candidadtos cadastrados');
-    let allCards = [];
-    try {
-        allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
-        allCards = allCards.map(c => c.node);
-    } catch (e) {
-        console.log('excecao', e);
-    }
-
-    pipeIds.map(async (pipeId) => {
-
-        const { data } = await pipefyapi.get_pipe_info(pipeId);
-        const phases = data.data.pipe.phases;
-
-        const generalPipeController = new GeneralPipeController(allCards, phases);
-
-        const enrollCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
-        await Promise.all(
-            enrollCards.map(async enrollCard => {
-                return generalPipeController.connectGeneralPipeAndMove(enrollCard);
-            })
-        );
-    });
-
-    console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
-
-});
+// cron.schedule('*/3 * * * *', async () => {
+//
+//     const first_step_register = "F1: Completar cadastro";
+//     const second_step_register = "F1: Completar cadastro2 (*)";
+//     const third_step_register = "F1: Completar cadastro3";
+//
+//     const pipefyapi = new Pipefyapi();
+//     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
+//     const pipeIds = tableRecords.map(t => parseInt(t.node.title));
+//
+//     pipeIds.map(async pipeId => {
+//
+//         const moveLateCardsController = new MoveLateCardsController(pipeId);
+//         try {
+//             await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
+//             await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
+//         } catch (e) {
+//             console.log(e);
+//         }
+//
+//     });
+//
+// });
+//
+// cron.schedule("*/5 * * * *", async () => {
+//
+//     const pipefyapi = new Pipefyapi();
+//     const pipeIds = await pipefyapi.getPipeIdsFromDatabase();
+//
+//     const PHASES_TO_BE_MOVED = ["F1: Candidato da base", "F1: Cadastro completo"];
+//     const END_PHASE = "F2: Confirmação";
+//
+//     console.log('Começou cron de mover cards candidato da base e cadastro completo para confirmação');
+//
+//     await Promise.all(pipeIds.map(async (pipeId) => {
+//
+//         const { data } = await pipefyapi.get_pipe_info(pipeId);
+//         const phases = data.data.pipe.phases;
+//
+//         const phasesToBeMoved = phases.filter(phase => PHASES_TO_BE_MOVED.includes(phase.name));
+//         const endPhase = phases.find(phase => phase.name === END_PHASE);
+//         const phasesIdsToGet = phasesToBeMoved.map(phase => phase.id);
+//
+//         if (!endPhase) {
+//             console.log(`O pipe ${pipeId} não possui a fase ${END_PHASE} cadastrada!`);
+//             return Promise.resolve();
+//         }
+//
+//         let allCards = [], cardsIds = [];
+//         try {
+//             allCards = await pipefyapi.get_all_cards(pipeId, phasesIdsToGet, true);
+//             cardsIds = allCards.map(c => c.node.id);
+//         } catch (e) {
+//             console.log('excecao', e);
+//         }
+//
+//         try {
+//             return pipefyapi.moveCardsToPhase(cardsIds, endPhase.id);
+//         } catch (e) {
+//             console.log(e);
+//         }
+//
+//     }));
+//
+//     console.log('Terminando cron de mover cards candidato da base e cadastro completo para confirmação');
+//
+// });
 
 
-cron.schedule("*/5 * * * *", async () => {
+// cron.schedule("*/10 * * * *", async () => {
+//
+//     const GENERAL_PIPE_ID = 1175536;
+//
+//     const pipefyapi = new Pipefyapi();
+//
+//     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
+//     const pipeIds = tableRecords.map(t => parseInt(t.node.title));
+//
+//     console.log('Começou cron de conexão de cards de candidadtos cadastrados');
+//     let allCards = [];
+//     try {
+//         allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
+//         allCards = allCards.map(c => c.node);
+//     } catch (e) {
+//         console.log('excecao', e);
+//     }
+//
+//     pipeIds.map(async (pipeId) => {
+//
+//         const { data } = await pipefyapi.get_pipe_info(pipeId);
+//         const phases = data.data.pipe.phases;
+//
+//         const generalPipeController = new GeneralPipeController(allCards, phases);
+//
+//         const enrollCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
+//         await Promise.all(
+//             enrollCards.map(async enrollCard => {
+//                 return generalPipeController.connectGeneralPipeAndMove(enrollCard);
+//             })
+//         );
+//     });
+//
+//     console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
+//
+// });
+
+
+cron.schedule("*/1 * * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
 
     const pipefyapi = new Pipefyapi();
-    const TABLE_ID = "BhE5WSrq";
+    const TABLE_ID = "zY3IsJ6P";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
     const pipeIds = rows.map(row => parseInt(row.node.title));
@@ -285,7 +285,7 @@ cron.schedule("*/5 * * * *", async () => {
             const addLabelCardController = new AddLabelCardController(pipeId);
             await addLabelCardController.build();
 
-            console.log("Etiquetando cards potenciais e eliminados...");
+            console.log(`Etiquetando cards potenciais e eliminados do pipe ${pipeId}...`);
             await addLabelCardController.fillEliminatedCardsLabelsInPipe();
             console.log("Finalizada etiquetacao de cards potenciais e eliminados.");
 
@@ -293,7 +293,6 @@ cron.schedule("*/5 * * * *", async () => {
             await Promise.all([
                 await feedbackController.updateCardFeedback(),
                 await feedbackController.moveCardsToEliminatedPhase(),
-                await feedbackController.moveCardsToPotentialPhase(),
             ]);
 
             await addLabelCardController.build();
