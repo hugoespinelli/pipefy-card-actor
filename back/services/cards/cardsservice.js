@@ -42,6 +42,11 @@ module.exports = class CardsService {
 
     }
 
+    async getCardsFromPhase(phaseName) {
+        const cards = await this.pipefyApi.get_all_cards(this.pipeId);
+        return cards.filter(c => c.node.current_phase.name === phaseName);
+    }
+
     moveLateCards(cards, toPhaseId) {
         const lateCards = this.filterLateCards(cards);
         const cardsIds = lateCards.map(c => c.id);
