@@ -15,6 +15,7 @@ const CardsService = require("./back/cardservice.js");
 const LabelService = require("./back/services/label/labelservice");
 const AddLabelCardController = require("./back/controllers/addlabelcardcontroller");
 const { convert_date, addDays } = require("./back/utils");
+const { LABEL_OPTIONS } = require("./back/services/label/consts");
 
 //Enable body parser
 app.use(express.json());
@@ -264,6 +265,45 @@ cron.schedule("*/10 * * * *", async () => {
     });
 
     console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
+
+});
+
+cron.schedule("0 18 * * *", async () => {
+
+    console.log("Começou etiquetação de novos candidatos");
+
+    const NEW_CANDIDATES_PHASE = "F1: Cadastro completo";
+
+    const pipefyapi = new Pipefyapi();
+    const TABLE_ID = "BhE5WSrq";
+
+    const rows = await pipefyapi.getTable(TABLE_ID);
+    const pipeIds = rows.map(row => parseInt(row.node.title));
+
+    await Promise.all(pipeIds.map(async pipeId => {
+
+        console.log(`Etiquetando novos candidados do pipe ${pipeId}`);
+        const addLabelCardController = new AddLabelCardController(pipeId);
+        await addLabelCardController.build();
+
+        const cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
+            addLabelCardController.cards,
+            NEW_CANDIDATES_PHASE
+        );
+
+        console.log(`novos candidatos do pipe: ${cardsToBeTagged.length}`);
+
+        const labels = addLabelCardController.getLabelsFromPipe();
+        const labelService = new LabelService(labels);
+
+        return await Promise.all(cardsToBeTagged.map(card => {
+            const labelsIds = card.labels.map(l => l.id);
+            return labelService.tagCard(card.id, LABEL_OPTIONS.NOVO_CANDIDATO, labelsIds);
+        }));
+
+    }));
+
+    console.log("Terminou etiquetação de novos candidatos");
 
 });
 
