@@ -6,7 +6,7 @@ const RegularExperiencer = require("./experiencers/regularexperiencer");
 const { KNOWHOW_LEVELS } = require("./experiencers/consts");
 
 const REASON = "Nível de conhecimento das tecnolgias";
-const KEYWORD_TO_SEARCH = "conhecimento";
+const KEYWORDS_TO_SEARCH = ["conhecimento", "experiência", "experiencia"];
 
 const MINIMUM_REQUIREMENTS = {
     [EXPERIENCE_LEVELS.ESTAGIO]: new InternshipExperiencer(),
@@ -22,7 +22,9 @@ class KnowledgeAnalyzer {
     }
 
     analyze(card) {
-        const fields = card.fields.filter(field => field.name.search(KEYWORD_TO_SEARCH) !== -1 );
+        const fields = card.fields.filter(field =>
+            KEYWORDS_TO_SEARCH.some(keyword => field.name.toLowerCase().search(keyword) !== -1)
+        );
         if(fields.length === 0) {
             return new Feedback(true);
         }

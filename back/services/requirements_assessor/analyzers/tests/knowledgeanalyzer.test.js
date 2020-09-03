@@ -190,6 +190,44 @@ describe("Knowledge analyzer tests", () => {
             expect(feedback.isApproved).toBeFalsy();
         });
 
+
+        test("it should return false when candidate have a low experience in some technology", () => {
+            const knowledgeAnalyzer = new KnowledgeAnalyzer(new PositionSpecifications(EXPERIENCE_LEVELS.SENIOR, null, null));
+            const cardMock = {
+                fields: [
+                    {
+                        "name": "experiência",
+                        "value": "alto"
+                    },
+                    {
+                        "name": "experiência",
+                        "value": "baixo"
+                    }
+                ]
+            };
+            const feedback = knowledgeAnalyzer.analyze(cardMock);
+            expect(feedback.isApproved).toBeFalsy();
+        });
+
+
+        test("it should return true when candidate have minimum experience requirements", () => {
+            const knowledgeAnalyzer = new KnowledgeAnalyzer(new PositionSpecifications(EXPERIENCE_LEVELS.SENIOR, null, null));
+            const cardMock = {
+                fields: [
+                    {
+                        "name": "experiência",
+                        "value": "alto"
+                    },
+                    {
+                        "name": "experiência",
+                        "value": "medio"
+                    }
+                ]
+            };
+            const feedback = knowledgeAnalyzer.analyze(cardMock);
+            expect(feedback.isApproved).toBeTruthy();
+        });
+
     });
 
 });
