@@ -2,7 +2,7 @@
 const FeedbackService = require("../services/feedback/feedbackservice");
 const CardsService = require("../services/cards/cardsservice");
 
-const FEEDBACK_PHASE = "F6: Eliminado";
+const FEEDBACK_PHASE = "F6: Eliminado cadastro";
 const POTENTIAL_PHASE = "F4: Potencial";
 
 module.exports = class FeedbackController {
