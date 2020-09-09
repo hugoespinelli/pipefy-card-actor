@@ -181,6 +181,19 @@ app.get("/phases/:phaseId", async (request, response) => {
     }
 });
 
+app.get("/table/:tableId", async (request, response) => {
+    const { tableId } = request.params;
+
+    const pipefyapi = new Pipefyapi();
+
+    try {
+        const table = await pipefyapi.getTable(tableId);
+        response.json(table);
+    } catch (e) {
+        response.json(e);
+    }
+});
+
 
 // cron.schedule('*/3 * * * *', async () => {
 //
