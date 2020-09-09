@@ -113,6 +113,7 @@ module.exports = class AddLabelCardController {
         ], positionSpecifications);
 
         cards = requirementsAssessor.analyzeCards(cards);
+        this.cards = cards;
         return Promise.all(cards.map(async card => {
             const isEliminated = card.feedbacks.some(feedback => feedback.isApproved === false);
             const labelsIds = card.labels.map(l => l.id);

@@ -1,7 +1,7 @@
 
 const Feedback = require("../../../models/feedback");
 
-const REASON = "O candidato não possui disponibilidade para trabalhar no modelo do candidato adequado";
+const REASON = "Modelo de trabalho";
 const KEYWORD_TO_SEARCH = "disponibilidade";
 const POSITIVE_ANSWER = "sim";
 const NEGATIVE_ANSWER = "não";

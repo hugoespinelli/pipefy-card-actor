@@ -5,7 +5,7 @@ const { EXPERIENCE_LEVELS } = require("../../../models/positionspecifications");
 const Feedback = require("../../../models/feedback");
 const ApplicantPaymentRange = require("../../../models/applicantpaymentrange");
 
-const REASON = "O candidato não está dentro da faixa salarial do cargo";
+const REASON = "Pretensão salarial";
 const KEYWORD_TO_SEARCH = "salarial";
 
 const regexToFindSalary = /(\d\.?)\d*,/gm;
