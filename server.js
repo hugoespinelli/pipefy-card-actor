@@ -13,8 +13,10 @@ const Pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const CardsService = require("./back/cardservice.js");
 const LabelService = require("./back/services/label/labelservice");
+const PipeService = require("./back/services/piper/pipeservice");
 const AddLabelCardController = require("./back/controllers/addlabelcardcontroller");
 const FeedbackController = require("./back/controllers/feedbackcontroller");
+const MoverController = require("./back/controllers/movercontroller");
 const { convert_date, addDays } = require("./back/utils");
 const { LABEL_OPTIONS } = require("./back/services/label/consts");
 
@@ -347,6 +349,33 @@ cron.schedule("*/5 * * * *", async () => {
     );
 
     console.log("Finalizada cron de etiquetação de cards.");
+});
+
+
+cron.schedule("0 22 * * *", async () => {
+
+    console.log("Começou cron de movimentação de cards de feedback...");
+
+    const pipefyapi = new Pipefyapi();
+    const TABLE_ID = "BhE5WSrq";
+
+    const ELIMINATED_CANDIDATES_PHASE = "F6: Eliminado cadastro";
+    const FEEDBACK_CANDIDATES_PHASE = "F6: [Feedback] Eliminado";
+
+    const rows = await pipefyapi.getTable(TABLE_ID);
+    const pipeIds = rows.map(row => parseInt(row.node.title));
+
+    await Promise.all(
+        pipeIds.map(pipeId => {
+
+            const moverController = new MoverController(pipeId);
+            return moverController.moveLateCardsFromTo(ELIMINATED_CANDIDATES_PHASE, FEEDBACK_CANDIDATES_PHASE);
+
+        })
+    );
+
+    console.log("Finalizada cron de movimentação de cards de feedback.");
+
 });
 
 const listener = app.listen(process.env.PORT, () => {
