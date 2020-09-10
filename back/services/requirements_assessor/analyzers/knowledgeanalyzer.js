@@ -5,7 +5,7 @@ const InternshipExperiencer = require("./experiencers/internshipexperiencer");
 const RegularExperiencer = require("./experiencers/regularexperiencer");
 const { KNOWHOW_LEVELS } = require("./experiencers/consts");
 
-const REASON = "Nível de conhecimento das tecnolgias";
+const REASON = "aderência aos pré-requisitos";
 const KEYWORDS_TO_SEARCH = ["conhecimento", "experiência", "experiencia"];
 
 const MINIMUM_REQUIREMENTS = {
