@@ -274,7 +274,7 @@ cron.schedule("*/10 * * * *", async () => {
 
 });
 
-cron.schedule("0 18 * * *", async () => {
+cron.schedule("0 9,21 * * *", async () => {
 
     console.log("Começou etiquetação de novos candidatos");
 
@@ -314,7 +314,7 @@ cron.schedule("0 18 * * *", async () => {
 });
 
 
-cron.schedule("*/5 * * * *", async () => {
+cron.schedule("*/15 * * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
 
@@ -352,7 +352,7 @@ cron.schedule("*/5 * * * *", async () => {
 });
 
 
-cron.schedule("0 22 * * *", async () => {
+cron.schedule("0 13 * * *", async () => {
 
     console.log("Começou cron de movimentação de cards de feedback...");
 
