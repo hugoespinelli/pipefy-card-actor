@@ -352,7 +352,7 @@ cron.schedule("*/5 * * * *", async () => {
 });
 
 
-cron.schedule("0 15 * * *", async () => {
+cron.schedule("0 22 * * *", async () => {
 
     console.log("Começou cron de movimentação de cards de feedback...");
 
