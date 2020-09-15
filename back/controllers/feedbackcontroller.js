@@ -49,7 +49,7 @@ module.exports = class FeedbackController {
                 return;
             }
 
-            return this.feedbackService.sendFeedback(card.id, this.feedbackQuestionId, feedbackToSend.reason);
+            return this.feedbackService.sendFeedback(card.id, this.feedbackQuestionId, feedbackToSend.reason.toLowerCase());
         }));
     }
 
