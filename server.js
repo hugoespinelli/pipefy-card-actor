@@ -359,7 +359,7 @@ cron.schedule("0 13 * * *", async () => {
     const pipefyapi = new Pipefyapi();
     const TABLE_ID = "BhE5WSrq";
 
-    const ELIMINATED_CANDIDATES_PHASE = "F6: Eliminado cadastro";
+    const ELIMINATED_CANDIDATES_PHASE = "F6: Eliminado";
     const FEEDBACK_CANDIDATES_PHASE = "F6: [Feedback] Eliminado";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
