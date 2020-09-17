@@ -49,6 +49,7 @@ module.exports = class FeedbackController {
                 return;
             }
 
+            console.log(`O card id ${card.id} foi reprovado por ${feedbackToSend.reason.toLowerCase()}`);
             return this.feedbackService.sendFeedback(card.id, this.feedbackQuestionId, feedbackToSend.reason.toLowerCase());
         }));
     }
