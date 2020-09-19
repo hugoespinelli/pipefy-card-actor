@@ -124,6 +124,23 @@ app.post("/pipes/:pipeId/move_cards", async (request, response) => {
     }
 });
 
+app.post("/pipes/:pipeId/move_cards_ids", async (request, response) => {
+    const { toPhaseName, cardsIds } = request.body;
+    const { pipeId } = request.params;
+
+    if (pipeId == null || toPhaseName == null) {
+        return response.json({error: "pipeId, toPhaseName não podem ser nulos!"});
+    }
+
+    const moveController = new MoverController(pipeId);
+
+    try {
+        await moveController.moveCardsToPhaseName(cardsIds, toPhaseName);
+        response.json({message: "Cards foram movidos com sucesso!"});
+    } catch (e) {
+        response.status(500).json(e);
+    }
+});
 
 app.post("/pipes/:pipeId/phases/:phaseId/update_fields", async (request, response) => {
     const { field_value } = request.body;
@@ -152,7 +169,6 @@ app.post("/pipes/:pipeId/phases/:phaseId/update_fields", async (request, respons
     }
 });
 
-
 app.get("/phases/:phaseId", async (request, response) => {
     const phaseId = request.params.phaseId;
     const pipefyapi = new Pipefyapi();
@@ -160,6 +176,19 @@ app.get("/phases/:phaseId", async (request, response) => {
     try {
         const { data } = await pipefyapi.get_phase(phaseId);
         response.json(data.data);
+    } catch (e) {
+        response.json(e);
+    }
+});
+
+app.get("/table/:tableId", async (request, response) => {
+    const { tableId } = request.params;
+
+    const pipefyapi = new Pipefyapi();
+
+    try {
+        const table = await pipefyapi.getTable(tableId);
+        response.json(table);
     } catch (e) {
         response.json(e);
     }

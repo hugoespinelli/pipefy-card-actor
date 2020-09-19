@@ -24,4 +24,17 @@ module.exports = class MoverController {
         return this.cardService.moveLateCards(cardsToBeMoved.map(c => c.node), toPhase.id);
     }
 
+    async moveCardsToPhaseName(cardsIds, toPhaseName) {
+
+        await this.pipeService.loadPipe();
+        const toPhase = await this.pipeService.getPhaseInfoByName(toPhaseName);
+
+        if (!toPhase) {
+            console.log(`Nao existe a fase ${toPhase} do pipe ${this.pipeId}`);
+            return Promise.resolve();
+        }
+
+        return this.cardService.moveCardsToPhaseId(cardsIds, toPhase.id);
+    }
+
 };
