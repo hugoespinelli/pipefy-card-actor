@@ -14,7 +14,7 @@ const regexToFindSalary = /(\d\.?)\d*,/gm;
 // Second position of array is max value accepted
 const JOB_ACCEPTED_SALARIES_RANGE = {
     0: [0, 3000],
-    1500: [0, 3000],
+    1500: [0, 6000],
     3000: [1500, 8000],
     6000: [3000, 999999],
     8000: [6000, 999999],
@@ -34,6 +34,7 @@ module.exports = class SalaryAnalyzer {
         }
 
         const paymentRange = this.extractValueFromString(field.value);
+        console.log(paymentRange);
         return this.isOnRange(paymentRange.min) ? new Feedback(true) : new Feedback(false, REASON);
     }
 
@@ -47,6 +48,7 @@ module.exports = class SalaryAnalyzer {
             paymentRange.push(fullGroupMatch);
         }
 
+        console.log(paymentRange);
         if(paymentRange.length === 1) {
 
             if(paymentRange[0] >= 5000) {

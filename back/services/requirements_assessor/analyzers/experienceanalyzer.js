@@ -2,7 +2,7 @@
 const { EXPERIENCE_LEVELS } = require("../../../models/positionspecifications");
 const Feedback = require("../../../models/feedback");
 
-const REASON = "Nível profissional ";
+const REASON = "Nível profissional";
 const KEYWORD_TO_SEARCH = "Nível profissional";
 
 const JOB_FIT = {

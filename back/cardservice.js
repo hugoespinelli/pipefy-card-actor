@@ -2,7 +2,7 @@ const { convert_date } = require("./utils");
 
 module.exports = class CardsService {
   constructor(phasesForms, cards, pipefyapi) {
-    this.phasesForms = phasesForms.filter(phaseform => phaseform.required);
+    this.phasesForms = phasesForms.filter(phaseform => phaseform.type === 'date');
     this.pipefyapi = pipefyapi;
     this.cards = cards;
   }
