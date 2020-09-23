@@ -3,7 +3,6 @@ require('dotenv').config();
 
 const axios = require("axios");
 const { flatten } = require("lodash");
-const { convert_date } = require("./utils");
 
 const BASE_URL = "https://calm-island-50193.herokuapp.com";
 
