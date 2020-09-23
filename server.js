@@ -7,16 +7,17 @@ const app = express();
 const cron = require('node-cron');
 
 const MoveLateCardsService = require("./back/movelatecardservice");
-const MoveLateCardsController = require("./back/movelatecardscontroller");
-const GeneralPipeController = require("./back/generalpipecontroller");
-const Pipefyapi = require("./back/api.js");
-const PhaseForm = require("./back/phaseform.js");
-const CardsService = require("./back/cardservice.js");
+const LMSApiService = require("./back/services/lms/lmsapiservice");
 const LabelService = require("./back/services/label/labelservice");
 const PipeService = require("./back/services/piper/pipeservice");
+const MoveLateCardsController = require("./back/movelatecardscontroller");
+const GeneralPipeController = require("./back/generalpipecontroller");
 const AddLabelCardController = require("./back/controllers/addlabelcardcontroller");
 const FeedbackController = require("./back/controllers/feedbackcontroller");
 const MoverController = require("./back/controllers/movercontroller");
+const Pipefyapi = require("./back/api.js");
+const PhaseForm = require("./back/phaseform.js");
+const CardsService = require("./back/cardservice.js");
 const { convert_date, addDays } = require("./back/utils");
 const { LABEL_OPTIONS } = require("./back/services/label/consts");
 
@@ -404,6 +405,24 @@ cron.schedule("0 13 * * *", async () => {
     );
 
     console.log("Finalizada cron de movimentação de cards de feedback.");
+
+});
+
+
+cron.schedule("0 */1 * * *", async () => {
+
+    console.log("Começou cron de mapeamento de avaliacoes LMS...");
+
+    const lmsApiService= new LMSApiService();
+
+    try {
+        const response = await lmsApiService.search_lms();
+        console.log(response);
+    } catch (e) {
+        console.log(e);
+    }
+
+    console.log("Finalizada cron de mapeamento de avaliacoes LMS.");
 
 });
 
