@@ -62,4 +62,8 @@ module.exports = class CardsService {
         return cards.filter(c => c.late);
     }
 
+    filterByLabel(cards, labelName) {
+        return cards.filter(c => c.labels.some(label => label.name === labelName));
+    }
+
 };
