@@ -4,7 +4,7 @@ require('dotenv').config();
 const axios = require("axios");
 const { flatten } = require("lodash");
 
-const BASE_URL = "https://calm-island-50193.herokuapp.com";
+const BASE_URL = "https://crawler-lms-server.herokuapp.com";
 
 module.exports = class LMSApiService {
 
@@ -19,7 +19,7 @@ module.exports = class LMSApiService {
     }
 
     search_lms() {
-        return this.axios.get(`${BASE_URL}/start_exams_craw`);
+        return this.axios.get(`/start_exams_craw`);
     }
 
 };
