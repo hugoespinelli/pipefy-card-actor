@@ -440,10 +440,9 @@ cron.schedule("* * * * *", async () => {
 
             let cards = await cardService.getCardsFromPhase(REGISTER_COMPLETED_PHASE);
             cards = cards.map(c => c.node);
-            console.log(cards);
             cards = cardService.filterByLabel(cards, LABEL_OPTIONS.POTENCIAL);
             await phaseController.updateCardsFormValue(cards, REGISTER_COMPLETED_PHASE);
-            console.log("Atualizou");
+            console.log(`Atualizou data limite de ${cards.length}`);
 
             const moverController = new MoverController(pipeId);
             return Promise.all([
