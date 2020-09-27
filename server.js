@@ -197,226 +197,226 @@ app.get("/table/:tableId", async (request, response) => {
     }
 });
 
-// cron.schedule('*/3 * * * *', async () => {
-//
-//     const first_step_register = "F1: Completar cadastro";
-//     const second_step_register = "F1: Completar cadastro2 (*)";
-//     const third_step_register = "F1: Completar cadastro3";
-//
-//     const pipefyapi = new Pipefyapi();
-//     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
-//     const pipeIds = tableRecords.map(t => parseInt(t.node.title));
-//
-//     pipeIds.map(async pipeId => {
-//
-//         const moveLateCardsController = new MoveLateCardsController(pipeId);
-//         try {
-//             await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
-//             await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
-//         } catch (e) {
-//             console.log(e);
-//         }
-//
-//     });
-//
-// });
-//
-// cron.schedule("*/13 * * * *", async () => {
-//
-//     const pipefyapi = new Pipefyapi();
-//     const tableRows = await pipefyapi.getPipeIdsFromDatabase();
-//
-//     const PHASES_TO_BE_MOVED = ["F1: Candidato da base", "F1: Cadastro completo"];
-//     const END_PHASE = "F2: Confirmação";
-//
-//     console.log('Começou cron de mover cards candidato da base e cadastro completo para confirmação');
-//
-//     await Promise.all(tableRows.map(async ({node}) => {
-//
-//         const pipeId = node.title;
-//         const { data } = await pipefyapi.get_pipe_info(pipeId);
-//         const phases = data.data.pipe.phases;
-//
-//         const phasesToBeMoved = phases.filter(phase => PHASES_TO_BE_MOVED.includes(phase.name));
-//         const endPhase = phases.find(phase => phase.name === END_PHASE);
-//         const phasesIdsToGet = phasesToBeMoved.map(phase => phase.id);
-//
-//         if (!endPhase) {
-//             console.log(`O pipe ${pipeId} não possui a fase ${END_PHASE} cadastrada!`);
-//             return Promise.resolve();
-//         }
-//
-//         let allCards = [], potentialCardsIds = [];
-//         try {
-//             allCards = await pipefyapi.get_all_cards(pipeId, phasesIdsToGet, true);
-//             potentialCardsIds = allCards
-//                 .filter(c => c.node.labels.some(label => label.name === LABEL_OPTIONS.POTENCIAL))
-//                 .map(c => c.node.id);
-//         } catch (e) {
-//             console.log('excecao', e);
-//         }
-//
-//         try {
-//             return pipefyapi.moveCardsToPhase(potentialCardsIds, endPhase.id);
-//         } catch (e) {
-//             console.log(e);
-//         }
-//
-//     }));
-//
-//     console.log('Terminando cron de mover cards candidato da base e cadastro completo para confirmação');
-//
-// });
-//
-//
-// cron.schedule("*/10 * * * *", async () => {
-//
-//     const GENERAL_PIPE_ID = 1175536;
-//
-//     const pipefyapi = new Pipefyapi();
-//
-//     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
-//     const pipeIds = tableRecords.map(t => parseInt(t.node.title));
-//
-//     console.log('Começou cron de conexão de cards de candidadtos cadastrados');
-//     let allCards = [];
-//     try {
-//         allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
-//         allCards = allCards.map(c => c.node);
-//     } catch (e) {
-//         console.log('excecao', e);
-//     }
-//
-//     pipeIds.map(async (pipeId) => {
-//
-//         const { data } = await pipefyapi.get_pipe_info(pipeId);
-//         const phases = data.data.pipe.phases;
-//
-//         const generalPipeController = new GeneralPipeController(allCards, phases);
-//
-//         const enrollCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
-//         await Promise.all(
-//             enrollCards.map(async enrollCard => {
-//                 return generalPipeController.connectGeneralPipeAndMove(enrollCard);
-//             })
-//         );
-//     });
-//
-//     console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
-//
-// });
-//
-// cron.schedule("0 9,21 * * *", async () => {
-//
-//     console.log("Começou etiquetação de novos candidatos");
-//
-//     const NEW_CANDIDATES_PHASE = "F1: Cadastro completo";
-//
-//     const pipefyapi = new Pipefyapi();
-//     const TABLE_ID = "BhE5WSrq";
-//
-//     const rows = await pipefyapi.getTable(TABLE_ID);
-//     const pipeIds = rows.map(row => parseInt(row.node.title));
-//
-//     await Promise.all(pipeIds.map(async pipeId => {
-//
-//         console.log(`Etiquetando novos candidados do pipe ${pipeId}`);
-//         const addLabelCardController = new AddLabelCardController(pipeId);
-//         await addLabelCardController.build();
-//
-//         const cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
-//             addLabelCardController.cards,
-//             NEW_CANDIDATES_PHASE
-//         );
-//
-//         console.log(`novos candidatos do pipe: ${cardsToBeTagged.length}`);
-//
-//         const labels = addLabelCardController.getLabelsFromPipe();
-//         const labelService = new LabelService(labels);
-//
-//         return await Promise.all(cardsToBeTagged.map(card => {
-//             const labelsIds = card.labels.map(l => l.id);
-//             return labelService.tagCard(card.id, LABEL_OPTIONS.NOVO_CANDIDATO, labelsIds);
-//         }));
-//
-//     }));
-//
-//     console.log("Terminou etiquetação de novos candidatos");
-//
-// });
-//
-//
-// cron.schedule("*/15 * * * *", async () => {
-//
-//     console.log("Começou cron de etiquetação de cards...");
-//
-//     const pipefyapi = new Pipefyapi();
-//     const TABLE_ID = "BhE5WSrq";
-//
-//     const rows = await pipefyapi.getTable(TABLE_ID);
-//     const pipeIds = rows.map(row => parseInt(row.node.title));
-//
-//     await Promise.all(
-//         pipeIds.map(async pipeId => {
-//
-//             const addLabelCardController = new AddLabelCardController(pipeId);
-//             await addLabelCardController.build();
-//
-//             console.log(`Etiquetando cards potenciais e eliminados do pipe ${pipeId}...`);
-//             await addLabelCardController.fillEliminatedCardsLabelsInPipe();
-//             console.log("Finalizada etiquetacao de cards potenciais e eliminados.");
-//
-//             const feedbackController = new FeedbackController(addLabelCardController.cards, addLabelCardController.pipe);
-//             await Promise.all([
-//                 await feedbackController.updateCardFeedback(),
-//                 await feedbackController.moveCardsToEliminatedPhase(),
-//             ]);
-//
-//             await addLabelCardController.build();
-//
-//             console.log("Etiquetando cards que passaram pelo candidato base...");
-//             await addLabelCardController.fillCandidatoBaseLabelsInPipe();
-//             console.log("Finalizada etiquetacao de cards que passaram pelo candidato base.");
-//         })
-//     );
-//
-//     console.log("Finalizada cron de etiquetação de cards.");
-// });
-//
-//
-// cron.schedule("0 13 * * *", async () => {
-//
-//     console.log("Começou cron de movimentação de cards de feedback...");
-//
-//     const pipefyapi = new Pipefyapi();
-//     const TABLE_ID = "BhE5WSrq";
-//
-//     const ELIMINATED_CANDIDATES_PHASE = "F6: Eliminado";
-//     const FEEDBACK_CANDIDATES_PHASE = "F6: [Feedback] Eliminado";
-//
-//     const rows = await pipefyapi.getTable(TABLE_ID);
-//     const pipeIds = rows.map(row => parseInt(row.node.title));
-//
-//     await Promise.all(
-//         pipeIds.map(pipeId => {
-//
-//             const moverController = new MoverController(pipeId);
-//             return moverController.moveLateCardsFromTo(ELIMINATED_CANDIDATES_PHASE, FEEDBACK_CANDIDATES_PHASE);
-//
-//         })
-//     );
-//
-//     console.log("Finalizada cron de movimentação de cards de feedback.");
-//
-// });
+cron.schedule('*/3 * * * *', async () => {
+
+    const first_step_register = "F1: Completar cadastro";
+    const second_step_register = "F1: Completar cadastro2 (*)";
+    const third_step_register = "F1: Completar cadastro3";
+
+    const pipefyapi = new Pipefyapi();
+    const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
+    const pipeIds = tableRecords.map(t => parseInt(t.node.title));
+
+    pipeIds.map(async pipeId => {
+
+        const moveLateCardsController = new MoveLateCardsController(pipeId);
+        try {
+            await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
+            await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
+        } catch (e) {
+            console.log(e);
+        }
+
+    });
+
+});
+
+cron.schedule("*/13 * * * *", async () => {
+
+    const pipefyapi = new Pipefyapi();
+    const tableRows = await pipefyapi.getPipeIdsFromDatabase();
+
+    const PHASES_TO_BE_MOVED = ["F1: Candidato da base", "F1: Cadastro completo"];
+    const END_PHASE = "F2: Confirmação";
+
+    console.log('Começou cron de mover cards candidato da base e cadastro completo para confirmação');
+
+    await Promise.all(tableRows.map(async ({node}) => {
+
+        const pipeId = node.title;
+        const { data } = await pipefyapi.get_pipe_info(pipeId);
+        const phases = data.data.pipe.phases;
+
+        const phasesToBeMoved = phases.filter(phase => PHASES_TO_BE_MOVED.includes(phase.name));
+        const endPhase = phases.find(phase => phase.name === END_PHASE);
+        const phasesIdsToGet = phasesToBeMoved.map(phase => phase.id);
+
+        if (!endPhase) {
+            console.log(`O pipe ${pipeId} não possui a fase ${END_PHASE} cadastrada!`);
+            return Promise.resolve();
+        }
+
+        let allCards = [], potentialCardsIds = [];
+        try {
+            allCards = await pipefyapi.get_all_cards(pipeId, phasesIdsToGet, true);
+            potentialCardsIds = allCards
+                .filter(c => c.node.labels.some(label => label.name === LABEL_OPTIONS.POTENCIAL))
+                .map(c => c.node.id);
+        } catch (e) {
+            console.log('excecao', e);
+        }
+
+        try {
+            return pipefyapi.moveCardsToPhase(potentialCardsIds, endPhase.id);
+        } catch (e) {
+            console.log(e);
+        }
+
+    }));
+
+    console.log('Terminando cron de mover cards candidato da base e cadastro completo para confirmação');
+
+});
 
 
-cron.schedule("* * * * *", async () => {
+cron.schedule("*/10 * * * *", async () => {
+
+    const GENERAL_PIPE_ID = 1175536;
+
+    const pipefyapi = new Pipefyapi();
+
+    const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
+    const pipeIds = tableRecords.map(t => parseInt(t.node.title));
+
+    console.log('Começou cron de conexão de cards de candidadtos cadastrados');
+    let allCards = [];
+    try {
+        allCards = await pipefyapi.get_all_cards(GENERAL_PIPE_ID, [], true);
+        allCards = allCards.map(c => c.node);
+    } catch (e) {
+        console.log('excecao', e);
+    }
+
+    pipeIds.map(async (pipeId) => {
+
+        const { data } = await pipefyapi.get_pipe_info(pipeId);
+        const phases = data.data.pipe.phases;
+
+        const generalPipeController = new GeneralPipeController(allCards, phases);
+
+        const enrollCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
+        await Promise.all(
+            enrollCards.map(async enrollCard => {
+                return generalPipeController.connectGeneralPipeAndMove(enrollCard);
+            })
+        );
+    });
+
+    console.log('Terminando cron de conexão de cards de candidadtos cadastrados');
+
+});
+
+cron.schedule("0 9,21 * * *", async () => {
+
+    console.log("Começou etiquetação de novos candidatos");
+
+    const NEW_CANDIDATES_PHASE = "F1: Cadastro completo";
+
+    const pipefyapi = new Pipefyapi();
+    const TABLE_ID = "BhE5WSrq";
+
+    const rows = await pipefyapi.getTable(TABLE_ID);
+    const pipeIds = rows.map(row => parseInt(row.node.title));
+
+    await Promise.all(pipeIds.map(async pipeId => {
+
+        console.log(`Etiquetando novos candidados do pipe ${pipeId}`);
+        const addLabelCardController = new AddLabelCardController(pipeId);
+        await addLabelCardController.build();
+
+        const cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
+            addLabelCardController.cards,
+            NEW_CANDIDATES_PHASE
+        );
+
+        console.log(`novos candidatos do pipe: ${cardsToBeTagged.length}`);
+
+        const labels = addLabelCardController.getLabelsFromPipe();
+        const labelService = new LabelService(labels);
+
+        return await Promise.all(cardsToBeTagged.map(card => {
+            const labelsIds = card.labels.map(l => l.id);
+            return labelService.tagCard(card.id, LABEL_OPTIONS.NOVO_CANDIDATO, labelsIds);
+        }));
+
+    }));
+
+    console.log("Terminou etiquetação de novos candidatos");
+
+});
+
+
+cron.schedule("*/15 * * * *", async () => {
+
+    console.log("Começou cron de etiquetação de cards...");
+
+    const pipefyapi = new Pipefyapi();
+    const TABLE_ID = "BhE5WSrq";
+
+    const rows = await pipefyapi.getTable(TABLE_ID);
+    const pipeIds = rows.map(row => parseInt(row.node.title));
+
+    await Promise.all(
+        pipeIds.map(async pipeId => {
+
+            const addLabelCardController = new AddLabelCardController(pipeId);
+            await addLabelCardController.build();
+
+            console.log(`Etiquetando cards potenciais e eliminados do pipe ${pipeId}...`);
+            await addLabelCardController.fillEliminatedCardsLabelsInPipe();
+            console.log("Finalizada etiquetacao de cards potenciais e eliminados.");
+
+            const feedbackController = new FeedbackController(addLabelCardController.cards, addLabelCardController.pipe);
+            await Promise.all([
+                await feedbackController.updateCardFeedback(),
+                await feedbackController.moveCardsToEliminatedPhase(),
+            ]);
+
+            await addLabelCardController.build();
+
+            console.log("Etiquetando cards que passaram pelo candidato base...");
+            await addLabelCardController.fillCandidatoBaseLabelsInPipe();
+            console.log("Finalizada etiquetacao de cards que passaram pelo candidato base.");
+        })
+    );
+
+    console.log("Finalizada cron de etiquetação de cards.");
+});
+
+
+cron.schedule("0 13 * * *", async () => {
+
+    console.log("Começou cron de movimentação de cards de feedback...");
+
+    const pipefyapi = new Pipefyapi();
+    const TABLE_ID = "BhE5WSrq";
+
+    const ELIMINATED_CANDIDATES_PHASE = "F6: Eliminado";
+    const FEEDBACK_CANDIDATES_PHASE = "F6: [Feedback] Eliminado";
+
+    const rows = await pipefyapi.getTable(TABLE_ID);
+    const pipeIds = rows.map(row => parseInt(row.node.title));
+
+    await Promise.all(
+        pipeIds.map(pipeId => {
+
+            const moverController = new MoverController(pipeId);
+            return moverController.moveLateCardsFromTo(ELIMINATED_CANDIDATES_PHASE, FEEDBACK_CANDIDATES_PHASE);
+
+        })
+    );
+
+    console.log("Finalizada cron de movimentação de cards de feedback.");
+
+});
+
+
+cron.schedule("0 */1 * * *", async () => {
 
     console.log("Começou cron de movimentação de cards de follow up...");
 
     const pipefyapi = new Pipefyapi();
-    const TABLE_ID = "zY3IsJ6P";
+    const TABLE_ID = "BhE5WSrq";
 
     const REGISTER_COMPLETED_PHASE = "F1: Cadastro completo";
     const BEGIN_JOURNEY_PHASE = "F2: Início da jornada";
