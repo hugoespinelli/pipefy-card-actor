@@ -223,7 +223,7 @@ app.get("/table/:tableId", async (request, response) => {
     }
 });
 
-cron.schedule('*/7 * * * *', async () => {
+cron.schedule('*/20 * * * *', async () => {
 
     const first_step_register = "F1: Completar cadastro";
     const second_step_register = "F1: Completar cadastro2 (*)";
