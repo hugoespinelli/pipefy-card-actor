@@ -247,7 +247,7 @@ cron.schedule('*/20 * * * *', async () => {
 
 });
 
-cron.schedule("*/13 * * *", async () => {
+cron.schedule("*/13 * * * *", async () => {
 
     const pipefyapi = new Pipefyapi();
     const tableRows = await pipefyapi.getPipeIdsFromDatabase();
