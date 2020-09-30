@@ -54,6 +54,15 @@ module.exports = class FeedbackController {
         }));
     }
 
+    sendFeedback(cardId, reason) {
+        if (this.isFeedbackMapped(reason)) {
+            return this.feedbackService.sendFeedback(cardId, this.feedbackQuestionId, reason)
+        }
+
+        throw new Error(`A razao ${reason} não está mapeada!`);
+
+    }
+
     getPhase(phaseName) {
         const phase = this.pipeInfo.phases.find(phase => phase.name === phaseName);
         if (!phase) {

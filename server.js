@@ -145,6 +145,32 @@ app.post("/pipes/:pipeId/move_cards_ids", async (request, response) => {
     }
 });
 
+app.post("/pipes/:pipeId/cards/:cardId/send_feedback", async (request, response) => {
+    const { reason } = request.body;
+    const { pipeId, cardId } = request.params;
+
+    if (pipeId == null || cardId == null || reason == null) {
+        return response.json({error: "pipeId, cardId ou reason não podem ser nulos!"});
+    }
+
+    const pipeService = new PipeService(pipeId);
+    try {
+        var { pipe } = await pipeService.getInfo();
+    } catch (e) {
+        return response.status(500).json(e);
+    }
+
+
+    const feedbackController = new FeedbackController([], pipe);
+
+    try {
+        await feedbackController.sendFeedback(cardId, reason);
+        return response.json({message: "Feedback dos cards foram enviados com sucesso!!"});
+    } catch (e) {
+        return response.status(500).json(e);
+    }
+});
+
 app.post("/pipes/:pipeId/phases/:phaseId/update_fields", async (request, response) => {
     const { field_value } = request.body;
     const { pipeId, phaseId} = request.params;
@@ -197,7 +223,7 @@ app.get("/table/:tableId", async (request, response) => {
     }
 });
 
-cron.schedule('*/3 * * * *', async () => {
+cron.schedule('*/7 * * * *', async () => {
 
     const first_step_register = "F1: Completar cadastro";
     const second_step_register = "F1: Completar cadastro2 (*)";
@@ -221,7 +247,7 @@ cron.schedule('*/3 * * * *', async () => {
 
 });
 
-cron.schedule("*/13 * * * *", async () => {
+cron.schedule("*/13 * * *", async () => {
 
     const pipefyapi = new Pipefyapi();
     const tableRows = await pipefyapi.getPipeIdsFromDatabase();
@@ -266,6 +292,36 @@ cron.schedule("*/13 * * * *", async () => {
 
     console.log('Terminando cron de mover cards candidato da base e cadastro completo para confirmação');
 
+    console.log('Começando cron de movimentação cadastro completo para inicio da jornada');
+
+    const TABLE_ID = "BhE5WSrq";
+
+    const REGISTER_COMPLETED_PHASE = "F1: Cadastro completo";
+    const BEGIN_JOURNEY_PHASE = "F2: Início da jornada";
+
+    const rows = await pipefyapi.getTable(TABLE_ID);
+    const pipeIds = rows.map(row => parseInt(row.node.title));
+
+    await Promise.all(
+        pipeIds.map(async pipeId => {
+
+            const phaseController = new PhaseController(pipeId);
+            const cardService = new CardService(pipeId);
+
+            let cards = await cardService.getCardsFromPhase(REGISTER_COMPLETED_PHASE);
+            cards = cards.map(c => c.node);
+            cards = cardService.filterByLabel(cards, LABEL_OPTIONS.POTENCIAL);
+            await phaseController.updateCardsFormValue(cards, REGISTER_COMPLETED_PHASE);
+            console.log(`Atualizou data limite de ${cards.length}`);
+
+            const moverController = new MoverController(pipeId);
+            return moverController.moveCardsToPhaseName(cards.map(c => c.id), BEGIN_JOURNEY_PHASE)
+
+        })
+    );
+
+    console.log('Terminando cron de movimentação cadastro completo para inicio da jornada');
+
 });
 
 
@@ -306,7 +362,7 @@ cron.schedule("*/10 * * * *", async () => {
 
 });
 
-cron.schedule("0 9,21 * * *", async () => {
+cron.schedule("0 21 * * *", async () => {
 
     console.log("Começou etiquetação de novos candidatos");
 
@@ -346,7 +402,7 @@ cron.schedule("0 9,21 * * *", async () => {
 });
 
 
-cron.schedule("*/15 * * * *", async () => {
+cron.schedule("*/10 * * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
 
@@ -418,8 +474,6 @@ cron.schedule("0 */1 * * *", async () => {
     const pipefyapi = new Pipefyapi();
     const TABLE_ID = "BhE5WSrq";
 
-    const REGISTER_COMPLETED_PHASE = "F1: Cadastro completo";
-    const BEGIN_JOURNEY_PHASE = "F2: Início da jornada";
     const FOLLOW_UPS_PHASES = [
         "F2: Follow up #3d",
         "F2: Follow up #2d (*)",
@@ -428,6 +482,7 @@ cron.schedule("0 */1 * * *", async () => {
     ];
 
     const PROCESS_NOT_COMPLETED_PHASE = "F3: Processo não completo";
+    const ELIMINATED_PHASE = "F6: Eliminado";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
     const pipeIds = rows.map(row => parseInt(row.node.title));
@@ -435,22 +490,13 @@ cron.schedule("0 */1 * * *", async () => {
     await Promise.all(
         pipeIds.map(async pipeId => {
 
-            const phaseController = new PhaseController(pipeId);
-            const cardService = new CardService(pipeId);
-
-            let cards = await cardService.getCardsFromPhase(REGISTER_COMPLETED_PHASE);
-            cards = cards.map(c => c.node);
-            cards = cardService.filterByLabel(cards, LABEL_OPTIONS.POTENCIAL);
-            await phaseController.updateCardsFormValue(cards, REGISTER_COMPLETED_PHASE);
-            console.log(`Atualizou data limite de ${cards.length}`);
-
             const moverController = new MoverController(pipeId);
             return Promise.all([
-                moverController.moveCardsToPhaseName(cards.map(c => c.id), BEGIN_JOURNEY_PHASE),
                 moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[0], FOLLOW_UPS_PHASES[1]),
                 moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[1], FOLLOW_UPS_PHASES[2]),
                 moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[2], PROCESS_NOT_COMPLETED_PHASE),
                 moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[3], PROCESS_NOT_COMPLETED_PHASE),
+                moverController.moveLateCardsFromTo(PROCESS_NOT_COMPLETED_PHASE, ELIMINATED_PHASE),
             ]);
 
         })
@@ -461,7 +507,7 @@ cron.schedule("0 */1 * * *", async () => {
 });
 
 
-cron.schedule("0 */1 * * *", async () => {
+cron.schedule("0,30 * * * *", async () => {
 
     console.log("Começou cron de mapeamento de avaliacoes LMS...");
 
