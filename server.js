@@ -364,9 +364,10 @@ cron.schedule("*/10 * * * *", async () => {
 
 cron.schedule("0 21 * * *", async () => {
 
-    console.log("Começou etiquetação de novos candidatos");
+    console.log("Começou etiquetação de novos candidatos/processos incompletos");
 
     const NEW_CANDIDATES_PHASE = "F1: Cadastro completo";
+    const INCOMPLETE_PROCESS = "F3: Processo não completo";
 
     const pipefyapi = new Pipefyapi();
     const TABLE_ID = "BhE5WSrq";
@@ -376,11 +377,11 @@ cron.schedule("0 21 * * *", async () => {
 
     await Promise.all(pipeIds.map(async pipeId => {
 
-        console.log(`Etiquetando novos candidados do pipe ${pipeId}`);
+        console.log(`Etiquetando novos candidados/processos incompletos do pipe ${pipeId}`);
         const addLabelCardController = new AddLabelCardController(pipeId);
         await addLabelCardController.build();
 
-        const cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
+        let cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
             addLabelCardController.cards,
             NEW_CANDIDATES_PHASE
         );
@@ -390,14 +391,30 @@ cron.schedule("0 21 * * *", async () => {
         const labels = addLabelCardController.getLabelsFromPipe();
         const labelService = new LabelService(labels);
 
-        return await Promise.all(cardsToBeTagged.map(card => {
+         await Promise.all(cardsToBeTagged.map(card => {
             const labelsIds = card.labels.map(l => l.id);
             return labelService.tagCard(card.id, LABEL_OPTIONS.NOVO_CANDIDATO, labelsIds);
         }));
 
+        console.log("Terminou etiquetação de novos candidatos");
+
+        await addLabelCardController.build();
+
+        cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
+            addLabelCardController.cards,
+            INCOMPLETE_PROCESS
+        );
+
+        console.log(`candidadatos com processo incompleto do pipe: ${cardsToBeTagged.length}`);
+
+        return Promise.all(cardsToBeTagged.map(card => {
+            const labelsIds = card.labels.map(l => l.id);
+            return labelService.tagCard(card.id, LABEL_OPTIONS.PROCESSO_INCOMPLETO, labelsIds);
+        }));
+
     }));
 
-    console.log("Terminou etiquetação de novos candidatos");
+    console.log("Terminou etiquetação de novos candidatos/processos incompletos");
 
 });
 
