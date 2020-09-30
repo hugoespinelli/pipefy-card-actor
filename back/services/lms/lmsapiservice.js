@@ -11,7 +11,7 @@ module.exports = class LMSApiService {
     constructor() {
         this.axios = axios.create({
             baseURL: BASE_URL,
-            timeout: 6000000, // 10 minutos de request
+            timeout: 60000000, // 100 minutos de request
             headers: {
                 "Content-Type": "application/json"
             }
