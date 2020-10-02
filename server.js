@@ -113,7 +113,6 @@ app.post("/pipes/:pipeId/move_cards", async (request, response) => {
             if (phaseFormToGenerateDueDate) {
                 try {
                     let dueDate = phaseFormToGenerateDueDate.generate_answer();
-                    dueDate = addDays(dueDate, 1);
                     await pipefyapi.updateCardsDueDate(cardsIds, convert_date(dueDate));
                 } catch (e) {
                     console.log(e);
@@ -297,7 +296,6 @@ cron.schedule("*/13 * * * *", async () => {
     const TABLE_ID = "BhE5WSrq";
 
     const REGISTER_COMPLETED_PHASE = "F1: Cadastro completo";
-    const BASE_PHASE = "F1: Candidato da base";
     const BEGIN_JOURNEY_PHASE = "F2: Início da jornada";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
@@ -309,14 +307,10 @@ cron.schedule("*/13 * * * *", async () => {
             const phaseController = new PhaseController(pipeId);
             const cardService = new CardService(pipeId);
 
-            let registerCards = await cardService.getCardsFromPhase(REGISTER_COMPLETED_PHASE);
-            let baseCards = await cardService.getCardsFromPhase(BASE_PHASE);
-            let cards = registerCards.concat(baseCards);
+            let cards = await cardService.getCardsFromPhase(REGISTER_COMPLETED_PHASE);
             cards = cards.map(c => c.node);
             cards = cardService.filterByLabel(cards, LABEL_OPTIONS.POTENCIAL);
             await Promise.all([
-                await phaseController.updateCardsFormValue(cards, BASE_PHASE),
-                await phaseController.updateCardsDueDate(cards, BASE_PHASE),
                 await phaseController.updateCardsFormValue(cards, REGISTER_COMPLETED_PHASE),
                 await phaseController.updateCardsDueDate(cards, REGISTER_COMPLETED_PHASE),
             ]);

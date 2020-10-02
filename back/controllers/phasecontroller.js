@@ -37,7 +37,6 @@ module.exports = class PhaseController {
         );
         const phaseFormToGenerateDueDate = phasesForms.find(phase => phase.type === "date");
         let dueDate = phaseFormToGenerateDueDate.generate_answer();
-        dueDate = addDays(dueDate, 1);
         return this.pipefyapi.updateCardsDueDate(cards.map(c => c.id), convert_date(dueDate));
     }
 
