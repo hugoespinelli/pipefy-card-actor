@@ -23,20 +23,20 @@ module.exports = class CardsService {
 
             if(child_relations.length === 0) {
                 console.log(`Card ${card.title} não conectado com nenhum card`);
-                return card;
+                return { ...card, should_label_feedback: false};
             }
 
             const pipeRelation = child_relations.filter(card => card.cards.length > 0);
 
             if(pipeRelation.length === 0) {
                 console.log(`Card ${card.title} não conectado com nenhum card`);
-                return card;
+                return { ...card, should_label_feedback: false};
             }
 
             const cardId = pipeRelation[0].cards[0].id;
             const response = await this.pipefyApi.getCard(cardId);
             const generalPipeCardInfo = response.data.data;
-            return { ...card, fields: card.fields.concat(generalPipeCardInfo.card.fields) };
+            return { ...card, fields: card.fields.concat(generalPipeCardInfo.card.fields), should_label_feedback: true };
 
         }));
 

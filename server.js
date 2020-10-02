@@ -297,6 +297,7 @@ cron.schedule("*/13 * * * *", async () => {
     const TABLE_ID = "BhE5WSrq";
 
     const REGISTER_COMPLETED_PHASE = "F1: Cadastro completo";
+    const BASE_PHASE = "F1: Candidato da base";
     const BEGIN_JOURNEY_PHASE = "F2: Início da jornada";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
@@ -308,10 +309,19 @@ cron.schedule("*/13 * * * *", async () => {
             const phaseController = new PhaseController(pipeId);
             const cardService = new CardService(pipeId);
 
-            let cards = await cardService.getCardsFromPhase(REGISTER_COMPLETED_PHASE);
+            let registerCards = await cardService.getCardsFromPhase(REGISTER_COMPLETED_PHASE);
+            let baseCards = await cardService.getCardsFromPhase(BASE_PHASE);
+            let cards = registerCards.concat(baseCards);
             cards = cards.map(c => c.node);
             cards = cardService.filterByLabel(cards, LABEL_OPTIONS.POTENCIAL);
-            await phaseController.updateCardsFormValue(cards, REGISTER_COMPLETED_PHASE);
+            await Promise.all([
+                await phaseController.updateCardsFormValue(cards, BASE_PHASE),
+                await phaseController.updateCardsDueDate(cards, BASE_PHASE),
+                await phaseController.updateCardsFormValue(cards, REGISTER_COMPLETED_PHASE),
+                await phaseController.updateCardsDueDate(cards, REGISTER_COMPLETED_PHASE),
+            ]);
+
+
             console.log(`Atualizou data limite de ${cards.length}`);
 
             const moverController = new MoverController(pipeId);
@@ -378,7 +388,7 @@ cron.schedule("0 21 * * *", async () => {
     await Promise.all(pipeIds.map(async pipeId => {
 
         console.log(`Etiquetando novos candidados/processos incompletos do pipe ${pipeId}`);
-        const addLabelCardController = new AddLabelCardController(pipeId);
+        const addLabelCardController = new AddLabelCardController(pipeId, TABLE_ID);
         await addLabelCardController.build();
 
         let cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
@@ -432,7 +442,7 @@ cron.schedule("*/10 * * * *", async () => {
     await Promise.all(
         pipeIds.map(async pipeId => {
 
-            const addLabelCardController = new AddLabelCardController(pipeId);
+            const addLabelCardController = new AddLabelCardController(pipeId, TABLE_ID);
             await addLabelCardController.build();
 
             console.log(`Etiquetando cards potenciais e eliminados do pipe ${pipeId}...`);

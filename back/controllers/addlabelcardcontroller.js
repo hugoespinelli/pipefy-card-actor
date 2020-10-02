@@ -14,7 +14,6 @@ const {PositionSpecifications, EXPERIENCE_LEVELS} = require("../models/positions
 
 const CANDIDATO_BASE_PHASE = "F1: Candidato da base";
 const PHASES_TO_GET_CARDS_TO_ELIMNATED_LABEL = [CANDIDATO_BASE_PHASE, "F1: Cadastro completo"];
-const TABLE_ID = "BhE5WSrq";
 
 const EXPERIENCE_POSITION_FIELD = "nivel_profissional_da_vaga";
 const SALARY_POSITION_FIELD = "salario";
@@ -22,11 +21,11 @@ const SALARY_POSITION_FIELD = "salario";
 
 module.exports = class AddLabelCardController {
 
-    constructor(pipeId) {
+    constructor(pipeId, tableId) {
         this.pipeId = pipeId;
         this.cardTaggerService = new CardsService(pipeId);
         this.pipeService = new PipeService(pipeId);
-        this.tableService = new TableService(TABLE_ID);
+        this.tableService = new TableService(tableId);
         this.pipe = null;
         this.cards = [];
     }
@@ -42,7 +41,8 @@ module.exports = class AddLabelCardController {
     }
 
     async loadCards() {
-        this.cards = await this.cardTaggerService.getCardsFromPipe();
+        const cards = await this.cardTaggerService.getCardsFromPipe();
+        this.cards = cards.filter(c => c.should_label_feedback);
     }
 
     getLabelsFromPipe() {
