@@ -496,12 +496,12 @@ cron.schedule("0 */1 * * *", async () => {
     const TABLE_ID = "BhE5WSrq";
 
     const FOLLOW_UPS_PHASES = [
-        "F2: Follow up #3d",
         "F2: Follow up #2d (*)",
         "F2: Follow up #1d",
         "F2: Última Chance",
     ];
 
+    const BEGIN_JOURNEY_PHASE = "F2: Início da jornada";
     const PROCESS_NOT_COMPLETED_PHASE = "F3: Processo não completo";
     const ELIMINATED_PHASE = "F6: Eliminado";
 
@@ -513,10 +513,10 @@ cron.schedule("0 */1 * * *", async () => {
 
             const moverController = new MoverController(pipeId);
             return Promise.all([
+                moverController.moveLateCardsFromTo(BEGIN_JOURNEY_PHASE, FOLLOW_UPS_PHASES[0]),
                 moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[0], FOLLOW_UPS_PHASES[1]),
-                moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[1], FOLLOW_UPS_PHASES[2]),
+                moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[1], PROCESS_NOT_COMPLETED_PHASE),
                 moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[2], PROCESS_NOT_COMPLETED_PHASE),
-                moverController.moveLateCardsFromTo(FOLLOW_UPS_PHASES[3], PROCESS_NOT_COMPLETED_PHASE),
                 moverController.moveLateCardsFromTo(PROCESS_NOT_COMPLETED_PHASE, ELIMINATED_PHASE),
             ]);
 
