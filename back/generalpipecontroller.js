@@ -60,16 +60,20 @@ module.exports = class GeneralPipeController {
 
     }
 
-    async connectGeneralPipeAndMove(enrollCard) {
+    async connectGeneralPipe(enrollCard) {
         const cardEmail = enrollCard.title;
         const cardInGeneralPipeWithThisEmail = this.searchCardEmailInGeneralPipe(cardEmail);
         if (cardInGeneralPipeWithThisEmail === null) {
             const completeRegisterPhase = this.getPhase(COMPLETE_REGISTER_PHASE_1);
             return this.pipefyapi.moveCardToPhase(enrollCard.id, completeRegisterPhase.id);
         }
-        const phaseToMove = this.getPhaseToMove(cardInGeneralPipeWithThisEmail.current_phase.name);
-        await this.pipefyapi.updateCardField(enrollCard.id, FIELD_LINK_CARD_NAME, cardInGeneralPipeWithThisEmail.id);
-        return this.pipefyapi.moveCardToPhase(enrollCard.id, phaseToMove.id);
+
+        return this.pipefyapi.updateCardField(enrollCard.id, FIELD_LINK_CARD_NAME, cardInGeneralPipeWithThisEmail.id);
+    }
+
+    moveCardToCompletedProcess(card) {
+        const phaseToMove = this.getPhaseToMove(card.current_phase.name);
+        return this.pipefyapi.moveCardToPhase(card.id, phaseToMove.id);
     }
 
 

@@ -357,9 +357,16 @@ cron.schedule("*/10 * * * *", async () => {
         const enrollCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
         await Promise.all(
             enrollCards.map(async enrollCard => {
-                return generalPipeController.connectGeneralPipeAndMove(enrollCard);
+                return generalPipeController.connectGeneralPipe(enrollCard);
             })
         );
+
+        allCards = await generalPipeController.getCardsFromEnrollPhases(pipeId);
+        allCards = allCards.filter(c => CardService.isCardConnected(c));
+        await Promise.all(
+            allCards.map( card => generalPipeController.moveCardToCompletedProcess(card))
+        );
+
     });
 
     console.log('Terminando cron de conexão de cards de candidadtos cadastrados');

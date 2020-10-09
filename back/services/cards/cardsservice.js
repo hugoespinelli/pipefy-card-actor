@@ -6,6 +6,10 @@ module.exports = class CardsService {
         this.pipeId = pipeId;
     }
 
+    static isCardConnected(card) {
+        return card.child_relations.some(card => card.cards.length > 0);
+    }
+
     async getCardsFromPipe(phaseIds) {
         try {
             const cards = await this.pipefyApi.get_all_cards(this.pipeId, phaseIds);
@@ -45,6 +49,11 @@ module.exports = class CardsService {
     async getCardsFromPhase(phaseName) {
         const cards = await this.pipefyApi.get_all_cards(this.pipeId);
         return cards.filter(c => c.node.current_phase.name === phaseName);
+    }
+
+    async getCardsFromPhases(phasesName) {
+        const cards = await this.pipefyApi.get_all_cards(this.pipeId);
+        return cards.filter(c => phasesName.includes(c.node.current_phase.name));
     }
 
     moveLateCards(cards, toPhaseId) {
