@@ -36,6 +36,12 @@ module.exports = class PhaseController {
                 new PhaseForm(id, options, type, required, is_multiple)
         );
         const phaseFormToGenerateDueDate = phasesForms.find(phase => phase.type === "date");
+
+        if (!phaseFormToGenerateDueDate) {
+            console.log(`${this.pipeId} não possui o formulario do tipo date para fase ${phaseName}`);
+            return;
+        }
+
         let dueDate = phaseFormToGenerateDueDate.generate_answer();
         return this.pipefyapi.updateCardsDueDate(cards.map(c => c.id), convert_date(dueDate));
     }
