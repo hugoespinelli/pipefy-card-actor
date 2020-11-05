@@ -4,7 +4,7 @@ module.exports = class PipeService {
 
     constructor(pipeId) {
         this.pipeId = pipeId;
-        this.pipefyApi = new PipefyApi();
+        this.pipefyApi = PipefyApi;
         this.pipe = null;
     }
 

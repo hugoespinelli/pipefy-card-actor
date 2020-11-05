@@ -14,7 +14,7 @@ const FIELD_LINK_CARD_NAME = "informa_es_de_cadastro";
 module.exports = class GeneralPipeController {
 
     constructor(cards, phases) {
-        this.pipefyapi = new Pipefyapi();
+        this.pipefyapi = Pipefyapi;
         this.cards = cards;
         this.pipePhases = phases;
     }

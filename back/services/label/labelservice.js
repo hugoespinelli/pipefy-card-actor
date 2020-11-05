@@ -5,7 +5,7 @@ module.exports = class LabelService {
     constructor(labels) {
         this.labels_options = Object.values(LABEL_OPTIONS);
         this.labels = this.searchLabels(labels);
-        this.pipefyApi = new PipefyApi();
+        this.pipefyApi = PipefyApi;
     }
 
     searchLabels(labels) {

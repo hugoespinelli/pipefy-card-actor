@@ -4,7 +4,7 @@ module.exports = class TableService {
 
     constructor(tableId) {
         this.tableId = tableId;
-        this.pipefyApi = new PipefyApi();
+        this.pipefyApi = PipefyApi;
     }
 
     async getTable() {

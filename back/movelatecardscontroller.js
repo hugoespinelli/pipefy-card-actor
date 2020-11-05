@@ -5,7 +5,7 @@ module.exports = class MoveLateCardsController {
 
     constructor(pipeId) {
         this.pipeId = pipeId;
-        this.pipefyapi = new Pipefyapi();
+        this.pipefyapi = Pipefyapi;
     }
 
     async moveCardsToFrom(fromPhase, toPhase) {

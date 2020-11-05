@@ -4,19 +4,31 @@ require('dotenv').config();
 const axios = require("axios");
 const { flatten } = require("lodash");
 const { convert_date } = require("./utils");
+const { setupCache } = require("axios-cache-adapter");
 
 const BASE_URL = "https://api.pipefy.com/graphql";
 
-module.exports = class PipefyApi {
+const cache = setupCache({
+    maxAge: 15 * 60 * 1000  // 15 min de cache
+});
+
+class PipefyApi {
     constructor() {
-        this.axios = axios.create({
-            baseURL: BASE_URL,
-            timeout: 50000,
-            headers: {
-                Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
-                "Content-Type": "application/json"
-            }
-        });
+        if (!PipefyApi.instance) {
+            this.axios = axios.create({
+                adapter: cache.adapter,
+                baseURL: BASE_URL,
+                timeout: 50000,
+                headers: {
+                    Authorization: `Bearer ${process.env.PIPEFY_TOKEN}`,
+                    "Content-Type": "application/json"
+                }
+            });
+            PipefyApi.instance = this;
+        }
+
+        return PipefyApi.instance;
+
     }
 
     async get_all_cards(pipeId, phasesIds = [], withoutFields=false) {
@@ -359,4 +371,9 @@ module.exports = class PipefyApi {
         });
     }
 
-};
+}
+
+const instance = new PipefyApi();
+Object.freeze(instance);
+
+module.exports = instance;
