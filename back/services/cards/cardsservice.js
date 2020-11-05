@@ -2,7 +2,7 @@ const PipefyApi = require("../../api");
 
 module.exports = class CardsService {
     constructor(pipeId) {
-        this.pipefyApi = new PipefyApi();
+        this.pipefyApi = PipefyApi;
         this.pipeId = pipeId;
     }
 

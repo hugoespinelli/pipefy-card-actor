@@ -5,7 +5,7 @@ const PipefyApi = require("../../api");
 module.exports = class FeedbackService {
 
     constructor() {
-        this.api = new PipefyApi();
+        this.api = PipefyApi;
     }
 
     sendFeedback(cardId, feedbackQuestionId, feedback) {

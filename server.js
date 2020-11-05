@@ -17,7 +17,7 @@ const AddLabelCardController = require("./back/controllers/addlabelcardcontrolle
 const FeedbackController = require("./back/controllers/feedbackcontroller");
 const MoverController = require("./back/controllers/movercontroller");
 const PhaseController = require("./back/controllers/phasecontroller");
-const Pipefyapi = require("./back/api.js");
+const pipefyapi = require("./back/api.js");
 const PhaseForm = require("./back/phaseform.js");
 const FormService = require("./back/cardservice.js");
 const { convert_date, addDays } = require("./back/utils");
@@ -49,8 +49,6 @@ app.get("/view.html", (request, response) => {
 
 app.get("/pipes/:pipeId", async (request, response) => {
     const pipeId = request.params.pipeId;
-    const pipefyapi = new Pipefyapi();
-
     try {
         const { data } = await pipefyapi.get_pipe_info(pipeId);
         response.json({pipe: data.data.pipe});
@@ -62,7 +60,6 @@ app.get("/pipes/:pipeId", async (request, response) => {
 app.get("/pipes/:pipeId/cards", async (request, response) => {
     const pipeId = request.params.pipeId;
     const { phase } = request.query;
-    const pipefyapi = new Pipefyapi();
 
     try {
         const allCards = await pipefyapi.get_all_cards(pipeId, phase);
@@ -75,7 +72,6 @@ app.get("/pipes/:pipeId/cards", async (request, response) => {
 app.get("/pipes/public/registered_candidates", async (request, response) => {
     const PUBLIC_PIPE_ID = 1175536;
     const REGISTERED_CANDIDATES_PHASE_ID = 7862849;
-    const pipefyapi = new Pipefyapi();
 
     try {
         const allCards = await pipefyapi.get_all_cards(
@@ -91,7 +87,6 @@ app.get("/pipes/public/registered_candidates", async (request, response) => {
 app.post("/pipes/:pipeId/move_cards", async (request, response) => {
     const { fromPhase, toPhase, shouldUpdateDueDate} = request.body;
     const { pipeId } = request.params;
-    const pipefyapi = new Pipefyapi();
 
     if (pipeId == null || fromPhase == null || toPhase == null) {
         return response.json({error: "pipeId, fromPhase, toPhase não podem ser nulos!"});
@@ -173,7 +168,6 @@ app.post("/pipes/:pipeId/cards/:cardId/send_feedback", async (request, response)
 app.post("/pipes/:pipeId/phases/:phaseId/update_fields", async (request, response) => {
     const { field_value } = request.body;
     const { pipeId, phaseId} = request.params;
-    const pipefyapi = new Pipefyapi();
 
     if (pipeId == null || phaseId == null) {
         return response.json({error: "O pipeId e o phaseId não podem ser nulos!"});
@@ -199,7 +193,6 @@ app.post("/pipes/:pipeId/phases/:phaseId/update_fields", async (request, respons
 
 app.get("/phases/:phaseId", async (request, response) => {
     const phaseId = request.params.phaseId;
-    const pipefyapi = new Pipefyapi();
 
     try {
         const { data } = await pipefyapi.get_phase(phaseId);
@@ -211,8 +204,6 @@ app.get("/phases/:phaseId", async (request, response) => {
 
 app.get("/table/:tableId", async (request, response) => {
     const { tableId } = request.params;
-
-    const pipefyapi = new Pipefyapi();
 
     try {
         const table = await pipefyapi.getTable(tableId);
@@ -228,7 +219,7 @@ cron.schedule('*/20 * * * *', async () => {
     const second_step_register = "F1: Completar cadastro2 (*)";
     const third_step_register = "F1: Completar cadastro3";
 
-    const pipefyapi = new Pipefyapi();
+
     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
     const pipeIds = tableRecords.map(t => parseInt(t.node.title));
 
@@ -248,7 +239,6 @@ cron.schedule('*/20 * * * *', async () => {
 
 cron.schedule("*/13 * * * *", async () => {
 
-    const pipefyapi = new Pipefyapi();
     const tableRows = await pipefyapi.getPipeIdsFromDatabase();
 
     const PHASES_TO_BE_MOVED = ["F1: Candidato da base", "F1: Cadastro completo"];
@@ -333,8 +323,6 @@ cron.schedule("*/10 * * * *", async () => {
 
     const GENERAL_PIPE_ID = 1175536;
 
-    const pipefyapi = new Pipefyapi();
-
     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
     const pipeIds = tableRecords.map(t => parseInt(t.node.title));
 
@@ -380,7 +368,6 @@ cron.schedule("0 21 * * *", async () => {
     const NEW_CANDIDATES_PHASE = "F1: Cadastro completo";
     const INCOMPLETE_PROCESS = "F3: Processo não completo";
 
-    const pipefyapi = new Pipefyapi();
     const TABLE_ID = "BhE5WSrq";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
@@ -434,7 +421,6 @@ cron.schedule("*/10 * * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
 
-    const pipefyapi = new Pipefyapi();
     const TABLE_ID = "BhE5WSrq";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
@@ -472,7 +458,6 @@ cron.schedule("0 13 * * *", async () => {
 
     console.log("Começou cron de movimentação de cards de feedback...");
 
-    const pipefyapi = new Pipefyapi();
     const TABLE_ID = "BhE5WSrq";
 
     const ELIMINATED_CANDIDATES_PHASE = "F6: Eliminado";
@@ -499,7 +484,6 @@ cron.schedule("0 */1 * * *", async () => {
 
     console.log("Começou cron de movimentação de cards de follow up...");
 
-    const pipefyapi = new Pipefyapi();
     const TABLE_ID = "BhE5WSrq";
 
     const FOLLOW_UPS_PHASES = [

@@ -9,7 +9,7 @@ module.exports = class PhaseController {
 
     constructor(pipeId) {
         this.pipeId = pipeId;
-        this.pipefyapi = new PipefyApi();
+        this.pipefyapi = PipefyApi;
         this.pipeService = new PipeService(pipeId);
     }
 
