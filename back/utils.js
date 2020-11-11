@@ -27,4 +27,10 @@ function correctUTCtoBrazilZone(date) {
     return result;
 }
 
-module.exports = { convert_date, addDays, correctUTCtoBrazilZone };
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
+module.exports = { convert_date, addDays, correctUTCtoBrazilZone, sleep };

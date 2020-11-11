@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const axios = require("axios");
 const { flatten } = require("lodash");
-const { convert_date } = require("./utils");
+const { sleep } = require("./utils");
 const { setupCache } = require("axios-cache-adapter");
 
 const BASE_URL = "https://api.pipefy.com/graphql";
@@ -11,6 +11,8 @@ const BASE_URL = "https://api.pipefy.com/graphql";
 const cache = setupCache({
     maxAge: 15 * 60 * 1000  // 15 min de cache
 });
+
+const TOO_MANY_REQUESTS_STATUS = 429;  // Tempo em milissegundos
 
 class PipefyApi {
     constructor() {
@@ -24,6 +26,16 @@ class PipefyApi {
                     "Content-Type": "application/json"
                 }
             });
+            this.axios.interceptors.response.use(null, async error => {
+                    if (error.response.status === TOO_MANY_REQUESTS_STATUS) {
+                        const backoffFactor = error.response.headers['retry-after'] * 1000;  // Tempo em millissegundos
+                        console.log(`Limite de requests excedida. Retentando em ${backoffFactor}ms`);
+                        await sleep(backoffFactor);
+                        return this.axios.request(error.config);
+                    }
+                    return Promise.reject(error);
+                }
+            );
             PipefyApi.instance = this;
         }
 
