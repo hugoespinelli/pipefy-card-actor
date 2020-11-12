@@ -459,8 +459,7 @@ cron.schedule("0 13 * * *", async () => {
     console.log("Começou cron de movimentação de cards de feedback...");
 
     const TABLE_ID = "BhE5WSrq";
-
-    const ELIMINATED_CANDIDATES_PHASE = "F6: Eliminado";
+    const ELIMINATED_CANDIDATES_PHASE = "F6: Análise";
     const FEEDBACK_CANDIDATES_PHASE = "F6: [Feedback] Eliminado";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
@@ -494,7 +493,7 @@ cron.schedule("0 */1 * * *", async () => {
 
     const BEGIN_JOURNEY_PHASE = "F2: Início da jornada";
     const PROCESS_NOT_COMPLETED_PHASE = "F3: Processo não completo";
-    const ELIMINATED_PHASE = "F6: Eliminado";
+    const ELIMINATED_PHASE = "F6: Análise";
 
     const rows = await pipefyapi.getTable(TABLE_ID);
     const pipeIds = rows.map(row => parseInt(row.node.title));
