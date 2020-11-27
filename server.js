@@ -518,7 +518,7 @@ cron.schedule("0 */1 * * *", async () => {
 });
 
 
-cron.schedule("15,45 * * * *", async () => {
+cron.schedule("15,30,45 * * * *", async () => {
 
     console.log("Começou cron de mapeamento de avaliacoes LMS...");
 
