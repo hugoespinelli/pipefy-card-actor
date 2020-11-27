@@ -237,7 +237,7 @@ cron.schedule('*/20 * * * *', async () => {
 
 });
 
-cron.schedule("*/13 * * * *", async () => {
+cron.schedule("0,30 * * * *", async () => {
 
     const tableRows = await pipefyapi.getPipeIdsFromDatabase();
 
@@ -319,7 +319,7 @@ cron.schedule("*/13 * * * *", async () => {
 });
 
 
-cron.schedule("*/10 * * * *", async () => {
+cron.schedule("5,25,50 * * * *", async () => {
 
     const GENERAL_PIPE_ID = 1175536;
 
@@ -361,7 +361,7 @@ cron.schedule("*/10 * * * *", async () => {
 
 });
 
-cron.schedule("0 21 * * *", async () => {
+cron.schedule("0 22 * * *", async () => {
 
     console.log("Começou etiquetação de novos candidatos/processos incompletos");
 
@@ -417,7 +417,7 @@ cron.schedule("0 21 * * *", async () => {
 });
 
 
-cron.schedule("*/10 * * * *", async () => {
+cron.schedule("0 21 * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
 
@@ -518,7 +518,7 @@ cron.schedule("0 */1 * * *", async () => {
 });
 
 
-cron.schedule("0,30 * * * *", async () => {
+cron.schedule("15,30,45 * * * *", async () => {
 
     console.log("Começou cron de mapeamento de avaliacoes LMS...");
 
