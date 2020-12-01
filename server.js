@@ -361,7 +361,7 @@ cron.schedule("5,25,50 * * * *", async () => {
 
 });
 
-cron.schedule("*/10 * * * *", async () => {
+cron.schedule("*/20 * * * *", async () => {
 
     console.log("Começou etiquetação de novos candidatos/processos incompletos");
 
