@@ -361,7 +361,7 @@ cron.schedule("5,25,50 * * * *", async () => {
 
 });
 
-cron.schedule("*/20 * * * *", async () => {
+cron.schedule("0 21 * * *", async () => {
 
     console.log("Começou etiquetação de novos candidatos/processos incompletos");
 
@@ -417,7 +417,7 @@ cron.schedule("*/20 * * * *", async () => {
 });
 
 
-cron.schedule("0 21 * * *", async () => {
+cron.schedule("*/20 * * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
 
