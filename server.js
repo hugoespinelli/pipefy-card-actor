@@ -368,62 +368,6 @@ cron.schedule("5,25,50 * * * *", async () => {
 
 });
 
-cron.schedule("0 21 * * *", async () => {
-
-    console.log("Começou etiquetação de novos candidatos/processos incompletos");
-
-    const NEW_CANDIDATES_PHASE = "F1: Cadastro completo";
-    const INCOMPLETE_PROCESS = "F3: Processo não completo";
-
-    const TABLE_ID = "BhE5WSrq";
-
-    const rows = await pipefyapi.getTable(TABLE_ID);
-    const pipeIds = rows.map(row => parseInt(row.node.title));
-
-    await Promise.all(pipeIds.map(async pipeId => {
-
-        console.log(`Etiquetando novos candidados/processos incompletos do pipe ${pipeId}`);
-        const addLabelCardController = new AddLabelCardController(pipeId, TABLE_ID);
-        await addLabelCardController.build();
-
-        let cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
-            addLabelCardController.cards,
-            NEW_CANDIDATES_PHASE
-        );
-
-        console.log(`novos candidatos do pipe: ${cardsToBeTagged.length}`);
-
-        const labels = addLabelCardController.getLabelsFromPipe();
-        const labelService = new LabelService(labels);
-
-         await Promise.all(cardsToBeTagged.map(card => {
-            const labelsIds = card.labels.map(l => l.id);
-            return labelService.tagCard(card.id, LABEL_OPTIONS.NOVO_CANDIDATO, labelsIds);
-        }));
-
-        console.log("Terminou etiquetação de novos candidatos");
-
-        await addLabelCardController.build();
-
-        cardsToBeTagged = addLabelCardController.filterCardsByPhaseHistoryName(
-            addLabelCardController.cards,
-            INCOMPLETE_PROCESS
-        );
-
-        console.log(`candidadatos com processo incompleto do pipe: ${cardsToBeTagged.length}`);
-
-        return Promise.all(cardsToBeTagged.map(card => {
-            const labelsIds = card.labels.map(l => l.id);
-            return labelService.tagCard(card.id, LABEL_OPTIONS.PROCESSO_INCOMPLETO, labelsIds);
-        }));
-
-    }));
-
-    console.log("Terminou etiquetação de novos candidatos/processos incompletos");
-
-});
-
-
 cron.schedule("*/20 * * * *", async () => {
 
     console.log("Começou cron de etiquetação de cards...");
@@ -448,12 +392,6 @@ cron.schedule("*/20 * * * *", async () => {
                 await feedbackController.updateCardFeedback(),
                 await feedbackController.moveCardsToEliminatedPhase(),
             ]);
-
-            await addLabelCardController.build();
-
-            console.log("Etiquetando cards que passaram pelo candidato base...");
-            await addLabelCardController.fillCandidatoBaseLabelsInPipe();
-            console.log("Finalizada etiquetacao de cards que passaram pelo candidato base.");
         })
     );
 
