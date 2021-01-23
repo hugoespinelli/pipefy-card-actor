@@ -218,6 +218,9 @@ cron.schedule('*/20 * * * *', async () => {
     const first_step_register = "F1: Completar cadastro";
     const second_step_register = "F1: Completar cadastro2 (*)";
     const third_step_register = "F1: Completar cadastro3";
+    const first_step_potential = "F4: Potencial";
+    const second_step_potential = "F4: Potencial2";
+    const third_step_potential = "F4: Potencial3";
 
 
     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
@@ -227,8 +230,12 @@ cron.schedule('*/20 * * * *', async () => {
 
         const moveLateCardsController = new MoveLateCardsController(pipeId);
         try {
-            await moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register);
-            await moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register);
+            await Promise.all([
+                moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register),
+                moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register),
+                moveLateCardsController.moveCardsToFrom(first_step_potential, second_step_potential),
+                moveLateCardsController.moveCardsToFrom(second_step_potential, third_step_potential)
+            ]);
         } catch (e) {
             console.log(e);
         }
