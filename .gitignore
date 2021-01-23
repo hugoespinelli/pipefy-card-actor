@@ -135,5 +135,5 @@ Procfile
 .glitch-assets
 .config
 
-public
+public/
 

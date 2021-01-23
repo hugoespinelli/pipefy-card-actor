@@ -9,7 +9,9 @@ module.exports = class PipeService {
     }
 
     async loadPipe() {
-        this.pipe = await this.getInfo();
+        if (this.pipe === null) {
+            this.pipe = await this.getInfo();
+        }
     }
 
     async getInfo() {

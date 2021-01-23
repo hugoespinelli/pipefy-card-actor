@@ -215,30 +215,38 @@ app.get("/table/:tableId", async (request, response) => {
 
 cron.schedule('*/20 * * * *', async () => {
 
+    const step_completed_process = "F3: Processo completo";
     const first_step_register = "F1: Completar cadastro";
     const second_step_register = "F1: Completar cadastro2 (*)";
     const third_step_register = "F1: Completar cadastro3";
     const first_step_potential = "F4: Potencial";
     const second_step_potential = "F4: Potencial2";
     const third_step_potential = "F4: Potencial3";
+    const step_analysis = "F6: Análise";
 
+    const FEEDBACK_REASON = 'perfil técnico';
 
     const tableRecords = await pipefyapi.getPipeIdsFromDatabase();
     const pipeIds = tableRecords.map(t => parseInt(t.node.title));
 
     pipeIds.map(async pipeId => {
 
-        const moveLateCardsController = new MoveLateCardsController(pipeId);
+        console.log(`Começou movimentação de cards das fases Completar cadastro/Processo completo/Potencial ${pipeId}...`);
+
+        const moverController = new MoverController(pipeId);
         try {
             await Promise.all([
-                moveLateCardsController.moveCardsToFrom(first_step_register, second_step_register),
-                moveLateCardsController.moveCardsToFrom(second_step_register, third_step_register),
-                moveLateCardsController.moveCardsToFrom(first_step_potential, second_step_potential),
-                moveLateCardsController.moveCardsToFrom(second_step_potential, third_step_potential)
+                moverController.moveLateCardsFromTo(first_step_register, second_step_register),
+                moverController.moveLateCardsFromTo(second_step_register, third_step_register),
+                moverController.moveLateCardsFromTo(first_step_potential, second_step_potential),
+                moverController.moveLateCardsFromTo(second_step_potential, third_step_potential),
+                moverController.moveCardsToPhaseNameAndFillFeedback(third_step_potential, step_analysis, FEEDBACK_REASON),
+                moverController.moveCardsToPhaseNameAndFillFeedback(step_completed_process, step_analysis, FEEDBACK_REASON),
             ]);
         } catch (e) {
             console.log(e);
         }
+        console.log(`Terminou movimentação de cards das fases Completar cadastro/Processo completo/Potencial ${pipeId}`);
 
     });
 
