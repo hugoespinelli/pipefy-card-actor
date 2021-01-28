@@ -18,7 +18,7 @@ module.exports = class MoverController {
         const toPhase = await this.pipeService.getPhaseInfoByName(toPhaseName);
 
         if (!toPhase) {
-            console.log(`Nao existe a fase ${toPhase} do pipe ${this.pipeId}`);
+            console.log(`Nao existe a fase ${toPhaseName} do pipe ${this.pipeId}`);
             return Promise.resolve();
         }
 
@@ -32,7 +32,7 @@ module.exports = class MoverController {
         const toPhase = await this.pipeService.getPhaseInfoByName(toPhaseName);
 
         if (!toPhase) {
-            console.log(`Nao existe a fase ${toPhase} do pipe ${this.pipeId}`);
+            console.log(`Nao existe a fase ${toPhaseName} do pipe ${this.pipeId}`);
             return Promise.resolve();
         }
 
@@ -45,7 +45,7 @@ module.exports = class MoverController {
         const toPhase = await this.pipeService.getPhaseInfoByName(toPhaseName);
 
         if (!toPhase) {
-            console.log(`Nao existe a fase ${toPhase} do pipe ${this.pipeId}`);
+            console.log(`Nao existe a fase ${toPhaseName} do pipe ${this.pipeId}`);
             return Promise.resolve();
         }
 
