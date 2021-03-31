@@ -265,9 +265,6 @@ cron.schedule('* */1 * * *', async () => {
             await Promise.all([
                 moverController.moveLateCardsFromTo(first_step_potential, second_step_potential),
                 moverController.moveLateCardsFromTo(second_step_potential, third_step_potential),
-                moverController.moveCardsToPhaseNameAndFillFeedback(third_step_potential, step_analysis, FEEDBACK_REASON),
-                moverController.moveCardsToPhaseNameAndFillFeedback(step_completed_process, step_analysis, FEEDBACK_REASON),
-                moverController.moveCardsToPhaseNameAndFillFeedback(step_confirmation, step_analysis, FEEDBACK_REASON),
             ]);
         } catch (e) {
             console.log(e);
